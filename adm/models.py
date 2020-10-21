@@ -1,9 +1,9 @@
+from auditlog import registry
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
-from auditlog import registry
 
-from rechum.validators import general_name_validator, positive_number_validator
 from rechum.models import BaseUrls
+from rechum.validators import general_name_validator, positive_number_validator
 
 
 class SeccionSindical(BaseUrls, models.Model):
@@ -48,12 +48,13 @@ class UnidadOrg(BaseUrls, models.Model):
 class Departamento(BaseUrls, models.Model):
     codigo = models.CharField(
         'código', max_length=5, unique=True, validators=[
-        RegexValidator(
-            regex="^[0-9]{5}$",
-            message="Campo obligatorio. Cadena numérica de 5 dígitos")
-    ])
+            RegexValidator(
+                regex="^[0-9]{5}$",
+                message="Campo obligatorio. Cadena numérica de 5 dígitos")
+        ])
     nombre = models.CharField(max_length=60, validators=[general_name_validator])
-    unidad = models.ForeignKey(UnidadOrg, on_delete=models.DO_NOTHING, verbose_name='unidad organizacional', related_name='departamentos')
+    unidad = models.ForeignKey(UnidadOrg, on_delete=models.DO_NOTHING, verbose_name='unidad organizacional',
+                               related_name='departamentos')
     seccion = models.ForeignKey(SeccionSindical, on_delete=models.DO_NOTHING, verbose_name='sección sindical')
     dirige = models.ForeignKey('self', null=True, blank=True, related_name='departamentos', on_delete=models.DO_NOTHING)
     cargos = models.ManyToManyField(Cargo, through='plantilla.Plantilla', through_fields=('departamento', 'cargo'))
@@ -72,7 +73,8 @@ class EscalaSalarial(BaseUrls, models.Model):
     grupo = models.CharField(max_length=8, unique=True)
     coeficientes = models.DecimalField(max_digits=3, decimal_places=2, validators=[positive_number_validator])
     salario_escala = models.DecimalField(max_digits=5, decimal_places=2, validators=[positive_number_validator])
-    tarifa_horaria = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(1)])
+    tarifa_horaria = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True,
+                                         validators=[MinValueValidator(1)])
 
     def __str__(self):
         return self.grupo
@@ -99,7 +101,8 @@ class CIES(BaseUrls, models.Model):
     tecnico = models.BooleanField('técnico')
     pago_adicional = models.BooleanField()
     porciento_30 = models.BooleanField('pago del 30%')
-    cies = models.DecimalField('CIES', max_digits=5, decimal_places=2, default=0, validators=[positive_number_validator])
+    cies = models.DecimalField('CIES', max_digits=5, decimal_places=2, default=0,
+                               validators=[positive_number_validator])
 
     def __str__(self):
         return 'Escala: {}, CIES {}'.format(self.escala, self.cies)
@@ -164,5 +167,6 @@ class Especialidad(BaseUrls, models.Model):
         ordering = ['codigo']
         verbose_name_plural = 'especialidades'
         default_permissions = ['read', 'add', 'delete', 'change', 'export', 'report']
+
 
 registry.auditlog.register(Cargo)
