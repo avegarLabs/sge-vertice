@@ -1,40 +1,45 @@
-from . import views
 from rechum.urls import *
-
+from . import views
 
 urlpatterns = [
     path('capacitacion/', include([
         path('', views.home, name='capacitacion_home'),
         path('actividad/', include([
             path('', views.ActividadCapacitacionListView.as_view(), name="actividadcapacitacion_list"),
-            path('<int:pk>/', views.ActividadCapacitacionDetailView.as_view(), name="actividadcapacitacion_detail"),
-            path('<int:pk>/actualizar/', views.ActividadCapacitacionUpdateView.as_view(), name="actividadcapacitacion_update"),
+            path('<str:pk>/', views.ActividadCapacitacionDetailView.as_view(), name="actividadcapacitacion_detail"),
+            path('<str:pk>/actualizar/', views.ActividadCapacitacionUpdateView.as_view(),
+                 name="actividadcapacitacion_update"),
             path('agregar/', views.ActividadCapacitacionCreateView.as_view(), name="actividadcapacitacion_create"),
-            path('<int:pk>/eliminar/', views.ActividadCapacitacionDeleteView.as_view(), name="actividadcapacitacion_delete")
+            path('<str:pk>/eliminar/', views.ActividadCapacitacionDeleteView.as_view(),
+                 name="actividadcapacitacion_delete")
         ])),
         path('modo_formacion/', include([
             path('', views.ModoFormacionListView.as_view(), name='modoformacion_list'),
             path('agregar/', views.ModoFormacionCreateView.as_view(), name='modoformacion_create'),
-            path('<int:pk>/', views.ModoFormacionDetailView.as_view(), name='modoformacion_detail'),
-            path('<int:pk>/actualizar/', views.ModoFormacionUpdateView.as_view(), name='modoformacion_update'),
-            path('<int:pk>/eliminar/', views.ModoFormacionDeleteView.as_view(), name='modoformacion_delete')
+            path('<str:pk>/', views.ModoFormacionDetailView.as_view(), name='modoformacion_detail'),
+            path('<str:pk>/actualizar/', views.ModoFormacionUpdateView.as_view(), name='modoformacion_update'),
+            path('<str:pk>/eliminar/', views.ModoFormacionDeleteView.as_view(), name='modoformacion_delete')
         ])),
         path('tipo_actividad/', include([
             path('', views.TipoActividadCapacitacionListView.as_view(), name='tipoactividadcapacitacion_list'),
-            path('agregar/', views.TipoActividadCapacitacionCreateView.as_view(), name='tipoactividadcapacitacion_create'),
-            path('<int:pk>/', views.TipoActividadCapacitacionDetailView.as_view(), name='tipoactividadcapacitacion_detail'),
-            path('<int:pk>/actualizar/', views.TipoActividadCapacitacionUpdateView.as_view(), name='tipoactividadcapacitacion_update'),
-            path('<int:pk>/eliminar/', views.TipoActividadCapacitacionDeleteView.as_view(), name='tipoactividadcapacitacion_delete')
+            path('agregar/', views.TipoActividadCapacitacionCreateView.as_view(),
+                 name='tipoactividadcapacitacion_create'),
+            path('<str:pk>/', views.TipoActividadCapacitacionDetailView.as_view(),
+                 name='tipoactividadcapacitacion_detail'),
+            path('<str:pk>/actualizar/', views.TipoActividadCapacitacionUpdateView.as_view(),
+                 name='tipoactividadcapacitacion_update'),
+            path('<str:pk>/eliminar/', views.TipoActividadCapacitacionDeleteView.as_view(),
+                 name='tipoactividadcapacitacion_delete')
         ])),
         path('tematica/', include([
             path('', views.TematicaListView.as_view(), name='tematica_list'),
             path('agregar/', views.TematicaCreateView.as_view(),
                  name='tematica_create'),
-            path('<int:pk>/', views.TematicaDetailView.as_view(),
+            path('<str:pk>/', views.TematicaDetailView.as_view(),
                  name='tematica_detail'),
-            path('<int:pk>/actualizar/', views.TematicaUpdateView.as_view(),
+            path('<str:pk>/actualizar/', views.TematicaUpdateView.as_view(),
                  name='tematica_update'),
-            path('<int:pk>/eliminar/', views.TematicaDeleteView.as_view(),
+            path('<str:pk>/eliminar/', views.TematicaDeleteView.as_view(),
                  name='tematica_delete')
         ]))
     ]))
