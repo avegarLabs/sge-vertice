@@ -2203,10 +2203,11 @@ def request_report_pren(fecha_inic, fecha_fin, obra, request):
                     per.sal_res15 += plano.valor
 
                 per.total_horas += plano.horas_creadas
-                per.total_retenido += plano.retenido
                 per.pagar += plano.pagar
                 if plano.caso == 1:
                     per.retenido_ant += plano.reten_ant
+                if plano.caso == 2:
+                    per.total_retenido += plano.retenido
                 per.incumplimiento_plano = plano.incumplimiento_plano
                 per.incumplimiento_cpl = plano.incumplimiento_cpl
                 per.incumplimiento_calidad = plano.incumplimiento_calidad
@@ -2222,10 +2223,10 @@ def request_report_pren(fecha_inic, fecha_fin, obra, request):
                             per.pagar += c.valor
                             per.sal_res15 += c.valor
                         if plano.caso == 1:
-                            per.total_retenido += c.valor_retenido
+                            # per.total_retenido += c.valor_retenido
                             per.retenido_ant += c.valor_retenido
                             per.pagar += plano.pagar
-                            per.total_horas += plano.horas_creadas
+                            # per.total_horas += plano.horas_creadas
                         if plano.caso == 2:
                             per.total_valor += c.valor_real
                             per.total_horas += c.horas_creadas

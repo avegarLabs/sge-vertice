@@ -264,17 +264,17 @@
                                                 <td>{{ plano.formato }}({{ plano.porciento }}%)</td>
                                             {% endif %}
                                             <td>{{ plano.sigla }}</td>
-                                            {% if plano.caso == 2 or plano.caso == 0 %}
+                                            {% if plano.caso != 1 %}
                                                 <td style="text-align: center"> 1</td>
                                             {% else %}
                                                 <td>&nbsp;</td>
                                             {% endif %}
-                                            {% if plano.horas_creadas != 0 %}
+                                            {% if plano.caso != 1 %}
                                                 <td style="text-align: center">{{ plano.horas_creadas|replace }}</td>
                                             {% else %}
                                                 <td>&nbsp;</td>
                                             {% endif %}
-                                            {% if plano.horas_creadas != 0 %}
+                                            {% if plano.caso != 1 %}
                                                 <td style="text-align: center">{{ plano.valor_real|replace }}</td>
                                             {% else %}
                                                 <td>&nbsp;</td>
@@ -343,13 +343,21 @@
                                             {% endif %}
                                             <td>{{ plano.sigla }}</td>
                                             </td>
-                                            {% if plano.caso == 2 or plano.caso == 0 %}
+                                            {% if  plano.caso != 1 %}
                                                 <td style="text-align: center"> 1</td>
                                             {% else %}
                                                 <td>&nbsp;</td>
                                             {% endif %}
-                                            <td style="text-align: center">{{ plano.horas_creadas_real|replace }}</td>
-                                            <td style="text-align: center">{{ plano.valor_real|replace }}</td>
+                                            {% if  plano.caso != 1 %}
+                                                <td style="text-align: center">{{ plano.horas_creadas_real|replace }}</td>
+                                            {% else %}
+                                                <td>&nbsp;</td>
+                                            {% endif %}
+                                            {% if  plano.caso != 1 %}
+                                                <td style="text-align: center">{{ plano.valor_real|replace }}</td>
+                                            {% else %}
+                                                <td>&nbsp;</td>
+                                            {% endif %}
                                             <td>{{ plano.incumplimiento_plano |replace}} %</td>
                                             <td>{{ plano.incumplimiento_cpl |replace}} %</td>
                                             <td>{{ plano.incumplimiento_calidad |replace}} %</td>
@@ -408,12 +416,16 @@
                                                 </td>
                                                 <td>{{ cat.sigla }}</td>
                                                 <td style="text-align: center">C</td>
-                                                {% if cat.horas_creadas != 0 %}
+                                                {% if plano.caso != 1 %}
                                                     <td style="text-align: center">{{ cat.horas_creadas_real|replace }}</td>
                                                 {% else %}
                                                     <td>&nbsp;</td>
                                                 {% endif %}
-                                                <td style="text-align: center">{{ cat.valor_real|replace }}</td>
+                                                {% if plano.caso != 1 %}
+                                                    <td style="text-align: center">{{ cat.valor_real|replace }}</td>
+                                                {% else %}
+                                                    <td>&nbsp;</td>
+                                                {% endif %}
                                                 <td>{{ cat.incumplimiento_plano |replace}} %</td>
                                                 <td>{{ cat.incumplimiento_cpl |replace}} %</td>
                                                 <td>{{ cat.incumplimiento_calidad |replace}} %</td>
