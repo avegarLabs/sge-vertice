@@ -74,19 +74,19 @@ class TipoActividadCapacitacionCreateView(SgeCreateView):
 
 
 # Editar
-class TipoActividadCapacitacionDetailView(SgeUpdateView):
-    permission_required = 'capacitacion.read_tipoactividadcapacitacion'
+class TipoActividadCapacitacionUpdateView(SgeUpdateView):
+    permission_required = 'capacitacion.change_tipoactividadcapacitacion'
     model = TipoActividadCapacitacion
     fields = '__all__'
-    template_name = 'tipo-act-cap/detail.html'
+    template_name = 'tipo-act-cap/create.html'
     success_url = reverse_lazy('tipoactividadcapacitacion_list')
 
 
 # Detalle
-class TipoActividadCapacitacionUpdateView(SgeDetailView):
-    permission_required = 'capacitacion.change_tipoactividadcapacitacion'
+class TipoActividadCapacitacionDetailView(SgeDetailView):
+    permission_required = 'capacitacion.read_tipoactividadcapacitacion'
     model = TipoActividadCapacitacion
-    template_name = 'tipo-act-cap/create.html'
+    template_name = 'tipo-act-cap/detail.html'
 
 
 # Delete
