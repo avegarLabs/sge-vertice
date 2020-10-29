@@ -41,6 +41,19 @@ urlpatterns = [
                  name='tematica_update'),
             path('<str:pk>/eliminar/', views.TematicaDeleteView.as_view(),
                  name='tematica_delete')
+        ])),
+        path('list_trab/', include([
+            path('<str:pk>/list_trab/', views.ActividadCapacitacionTrabajadoresListView.as_view(),
+                 name="actividadcapacitaciontrab_list"),
+            path('agregar/', views.ActividadCapacitacionTrabajadoresCreateView.as_view(),
+                 name='actividadcapacitaciontrab_create'),
+            path('<str:pk>/', views.ActividadCapacitacionTrabajadoresDetailView.as_view(),
+                 name='actividadcapacitaciontrab_detail'),
+            path('<str:pk>/actualizar/', views.ActividadCapacitacionTrabajadoresUpdateView.as_view(),
+                 name='actividadcapacitaciontrab_update'),
+            path('<str:pk>/eliminar/', views.ActividadCapacitacionTrabajadoresDeleteView.as_view(),
+                 name='actividadcapacitaciontrab_delete')
         ]))
+
     ]))
 ]

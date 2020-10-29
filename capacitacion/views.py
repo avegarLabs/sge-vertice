@@ -139,6 +139,58 @@ class ActividadCapacitacionDeleteView(SgeDeleteView):
     model = ActividadCapacitacion
     success_url = reverse_lazy('actividadcapacitacion_list')
 
+
+# //////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////
+
+# Actividad Capacitación
+# Listar
+class ActividadCapacitacionTrabajadoresListView(SgeListView):
+    permission_required = 'capacitacion.read_actividadcapacitaciontrab'
+    model = ActividadCapacitacionTrabajadores
+    template_name = 'act-cap-trab/list.html'
+    raise_exception = True
+    queryset = ActividadCapacitacionTrabajadores.objects.all()
+
+    def get_context_data(self, *, pk=None, object_list=None, **kwargs):
+        queryset = self.get_queryset()
+        object_list = queryset.filter(pk=pk).order_by()
+        print(object_list)
+        return super().get_context_data(object_list=object_list, **kwargs)
+
+
+# Crear
+class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
+    permission_required = 'capacitacion.add_actividadcapacitaciontrab'
+    model = ActividadCapacitacionTrabajadores
+    fields = '__all__'
+    template_name = 'act-cap-trab/create.html'
+    success_url = reverse_lazy('actividadcapacitaciontrab_create')
+
+
+# Editar
+class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
+    permission_required = 'capacitacion.change_actividadcapacitaciontrab'
+    model = ActividadCapacitacionTrabajadores
+    fields = '__all__'
+    template_name = 'act-cap-trab/create.html'
+    success_url = reverse_lazy('actividadcapacitaciontrab_list')
+
+
+# Detalle
+class ActividadCapacitacionTrabajadoresDetailView(SgeDetailView):
+    permission_required = 'capacitacion.read_actividadcapacitaciontrab'
+    model = ActividadCapacitacionTrabajadores
+    template_name = 'act-cap-trab/detail.html'
+
+
+# Delete
+class ActividadCapacitacionTrabajadoresDeleteView(SgeDeleteView):
+    permission_required = 'capacitacion.delete_actividadcapacitaciontrab'
+    model = ActividadCapacitacionTrabajadores
+    success_url = reverse_lazy('actividadcapacitaciontrab_list')
+
 # //////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////
