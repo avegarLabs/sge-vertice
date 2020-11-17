@@ -1,4 +1,4 @@
-{% extends 'layouts/_base_list_datatable.html' %}
+{% extends 'layouts/_base_list_datatable_capacitacion.html' %}
 {% load sge_url sge_inclusion %}
 
 {% block delete_error_message %}
@@ -6,29 +6,45 @@
 {% endblock %}
 
 {% block table_header %}
-    <th>Código</th>
-    <th>Nombre</th>
-    <th>Tipo Actividad</th>
-    <th>Temática</th>
-    <th>Fecha Inicio</th>
-    <th>Fecha Fin</th>
+    <th>Actividad</th>
+    <th>Trabajador</th>
+    <th>Evaluación</th>
+    <th>Tomo</th>
+    <th>Folio</th>
+    <th scope="col" class="text-center" width="10%">Acciones</th>
 {% endblock table_header %}
 
 {% block table_body %}
-    <td>{{ item.codigo }}</td>
-    <td>{{ item.nombre }}</td>
-    <td>{% if item.tipo_actividad != None %}{{ item.tipo_actividad }}{% endif %}</td>
-    <td>{% if item.tematica != None %}{{ item.tematica }}{% endif %}</td>
-    <td data-sort="{{item.fecha_inicio|date:'Ymd'}}">{{ item.fecha_inicio|date:"d/m/Y" }}</td>
-    <td data-sort="{{item.fecha_term|date:'Ymd'}}">{{ item.fecha_term|date:"d/m/Y" }}</td>
-    {% submit_row %}
+    <td>{{ item.actividad }}</td>
+    <td>{{ item.trabajador }}</td>
+    <td>{{ item.evaluacion }}</td>
+    <td>{{ item.tomo }}</td>
+    <td>{{ item.folio }}</td>
+    <td>
+        <div class="icon-acciones text-center">
+            {% if change %}
+                <a href="{% url 'actividadcapacitaciontrab_update' pk %}" onclick="event.stopPropagation()"
+                   class="badge badge-pill badge-primary">
+                    <i class="fa fa-edit fa-submit-buttons-round" title="Editar {{ verbose_name|title }}"
+                       style="color: white;"></i>
+                </a>
+            {% endif %}
+            {% if delete %}
+                <a onclick="event.stopPropagation(); open_re_useful_modal('{% url 'actividadcapacitaciontrab_delete' pk %}')"
+                   class="badge badge-pill badge-danger">
+                    <i class="fa fa-trash fa-submit-buttons-round" title="Eliminar {{ verbose_name|title }}"
+                       style="color: white;"></i>
+                </a>
+            {% endif %}
+        </div>
+    </td>
 {% endblock table_body %}
 
 {% block table_foot %}
-    <th>Código</th>
-    <th>Nombre</th>
-    <th>Tipo Actividad</th>
-    <th>Temática</th>
-    <th>Fecha Inicio</th>
-    <th>Fecha Fin</th>
+    <th>Actividad</th>
+    <th>Trabajador</th>
+    <th>Evaluación</th>
+    <th>Tomo</th>
+    <th>Folio</th>
+    <th></th>
 {% endblock table_foot %}

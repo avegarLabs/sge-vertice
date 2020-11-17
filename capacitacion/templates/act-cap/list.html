@@ -21,7 +21,7 @@
     <td>{% if item.tematica != None %}{{ item.tematica }}{% endif %}</td>
     <td data-sort="{{item.fecha_inicio|date:'Ymd'}}">{{ item.fecha_inicio|date:"d/m/Y" }}</td>
     <td data-sort="{{item.fecha_term|date:'Ymd'}}">{{ item.fecha_term|date:"d/m/Y" }}</td>
-    {% submit_row %}
+    {% submit_row_extra_buttons_actividadcapacitaciontrab %}
 {% endblock table_body %}
 
 {% block table_foot %}

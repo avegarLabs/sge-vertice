@@ -12,6 +12,7 @@ urlpatterns = [
             path('agregar/', views.ActividadCapacitacionCreateView.as_view(), name="actividadcapacitacion_create"),
             path('<str:pk>/eliminar/', views.ActividadCapacitacionDeleteView.as_view(),
                  name="actividadcapacitacion_delete")
+
         ])),
         path('modo_formacion/', include([
             path('', views.ModoFormacionListView.as_view(), name='modoformacion_list'),
@@ -43,9 +44,9 @@ urlpatterns = [
                  name='tematica_delete')
         ])),
         path('list_trab/', include([
-            path('<str:pk>/list_trab/', views.ActividadCapacitacionTrabajadoresListView.as_view(),
+            path('<str:codigo_actividad>/list_trab/', views.ActividadCapacitacionTrabajadoresListView.as_view(),
                  name="actividadcapacitaciontrab_list"),
-            path('agregar/', views.ActividadCapacitacionTrabajadoresCreateView.as_view(),
+            path('<str:codigo_actividad>/agregar/', views.ActividadCapacitacionTrabajadoresCreateView.as_view(),
                  name='actividadcapacitaciontrab_create'),
             path('<str:pk>/', views.ActividadCapacitacionTrabajadoresDetailView.as_view(),
                  name='actividadcapacitaciontrab_detail'),

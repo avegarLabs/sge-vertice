@@ -251,18 +251,18 @@ class Movimiento(BaseUrls):
     TIPO_OPT = (('1', 'Promoción'), ('2', 'Cambio de área'), ('3', 'Ambos'))
     tipo = models.CharField(max_length=100, verbose_name="Tipo de movimiento", blank=True, null=True,
                             default='No definido')
-    cargo_ant = models.CharField(max_length=60, verbose_name="Cargo anterior", blank=True, null=True)
-    cargo_act = models.CharField(max_length=60, verbose_name="Cargo actual", blank=True, null=True)
-    area_ant = models.CharField(max_length=60, verbose_name="Departamento anterior", blank=True, null=True)
-    area_act = models.CharField(max_length=60, verbose_name="Departamento actual", blank=True, null=True)
+    cargo_ant = models.CharField(max_length=100, verbose_name="Cargo anterior", blank=True, null=True)
+    cargo_act = models.CharField(max_length=100, verbose_name="Cargo actual", blank=True, null=True)
+    area_ant = models.CharField(max_length=100, verbose_name="Departamento anterior", blank=True, null=True)
+    area_act = models.CharField(max_length=100, verbose_name="Departamento actual", blank=True, null=True)
     cies_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='CIES')
     cies_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='CIES')
     incre_res_ant = models.DecimalField(max_digits=5, decimal_places=2,
                                         verbose_name='Pago por perfeccionamiento anterior')
     incre_res_act = models.DecimalField(max_digits=5, decimal_places=2,
                                         verbose_name='Pago por perfeccionamiento actual')
-    categoria_ant = models.CharField(max_length=15, verbose_name='Categoría ocupacional anterior')
-    categoria_act = models.CharField(max_length=15, verbose_name='Categoría ocupacional actual')
+    categoria_ant = models.CharField(max_length=30, verbose_name='Categoría ocupacional anterior')
+    categoria_act = models.CharField(max_length=30, verbose_name='Categoría ocupacional actual')
     antiguedad_ant = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     antiguedad_act = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     salario_escala_ant = models.DecimalField(verbose_name='Salario escala anterior', max_digits=5, decimal_places=2,

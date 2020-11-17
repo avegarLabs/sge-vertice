@@ -51,6 +51,7 @@ class ModoFormacionDeleteView(SgeDeleteView):
     model = ModoFormacion
     success_url = reverse_lazy('modoformacion_list')
 
+
 # //////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////
@@ -94,6 +95,7 @@ class TipoActividadCapacitacionDeleteView(SgeDeleteView):
     permission_required = 'capacitacion.delete_actividadcapacitacion'
     model = TipoActividadCapacitacion
     success_url = reverse_lazy('tipoactividadcapacitacion_list')
+
 
 # //////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////
@@ -153,11 +155,13 @@ class ActividadCapacitacionTrabajadoresListView(SgeListView):
     raise_exception = True
     queryset = ActividadCapacitacionTrabajadores.objects.all()
 
-    def get_context_data(self, *, pk=None, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, codigo_actividad=None, **kwargs):
         queryset = self.get_queryset()
-        object_list = queryset.filter(pk=pk).order_by()
-        print(object_list)
-        return super().get_context_data(object_list=object_list, **kwargs)
+        print(self.kwargs)
+        codigo_actividad = self.kwargs['codigo_actividad']
+        object_list = queryset.filter(actividad=codigo_actividad).order_by()
+        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
+
 
 
 # Crear
@@ -168,6 +172,12 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
     template_name = 'act-cap-trab/create.html'
     success_url = reverse_lazy('actividadcapacitaciontrab_create')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        queryset = self.get_queryset()
+        print(self.kwargs)
+        codigo_actividad = self.kwargs['codigo_actividad']
+        object_list = queryset.filter(actividad=codigo_actividad).order_by()
+        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
 
 # Editar
 class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
@@ -190,6 +200,7 @@ class ActividadCapacitacionTrabajadoresDeleteView(SgeDeleteView):
     permission_required = 'capacitacion.delete_actividadcapacitaciontrab'
     model = ActividadCapacitacionTrabajadores
     success_url = reverse_lazy('actividadcapacitaciontrab_list')
+
 
 # //////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////
