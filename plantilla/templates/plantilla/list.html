@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block table_header %}
+    <th>Departamento</th>
     <th>Cargo</th>
     <th>Escala Salarial</th>
     <th>Plazas</th>
@@ -19,6 +20,7 @@
 {% endblock table_header %}
 
 {% block table_body %}
+    <td>{{ item.departamento }}</td>
     <td>{{ item.cargo }}</td>
     <td>{{ item.escala_salarial.grupo }}</td>
     <td>{{ item.cant_plazas }}</td>
@@ -27,6 +29,7 @@
 {% endblock table_body %}
 
 {% block table_foot %}
+    <th>Departamento</th>
     <th>Cargo</th>
     <th>Escala Salarial</th>
     <th>Plazas</th>
