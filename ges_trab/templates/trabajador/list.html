@@ -146,11 +146,11 @@
                    class="badge badge-pill badge-danger">
                     <i class="fa fa-arrow-down" title="Baja al Trabajador" style="color: white;"></i>
                 </a>
-{#                <a class="badge badge-pill badge-light dropdown-toggle dropdown-toggle-split" role="button"#}
-{#                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"#}
-{#                   onclick="open_re_useful_modal(`{% url 'trabajador_dropdown_menu' item.pk %}`, `{{ item.pk }}`)">#}
-{#                    <i class="fa fa-list-ul"></i>#}
-{#                </a>#}
+                <a class="badge badge-pill badge-light dropdown-toggle dropdown-toggle-split" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   onclick="open_re_useful_modal(`{% url 'trabajador_dropdown_menu' item.pk %}`, `{{ item.pk }}`)">
+                    <i class="fa fa-list-ul"></i>
+                </a>
                 <div class="dropdown-menu" style="min-width: 270px" id="dropdown_{{ item.pk }}"></div>
             </div>
         </td>

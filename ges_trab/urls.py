@@ -18,7 +18,8 @@ urlpatterns = [
             path('agregar/', views.TrabCreateView.as_view(), name='trabajador_create'),
             path('<int:pk>/', views.TrabDetailView.as_view(), name='trabajador_detail'),
             path('<int:pk>/actualizar/', views.TrabUpdateView.as_view(), name='trabajador_update'),
-            path('<int:pk>/eliminar/', views.TrabDeleteView.as_view(), name='trabajador_delete')
+            path('<int:pk>/eliminar/', views.TrabDeleteView.as_view(), name='trabajador_delete'),
+            path('<int:pk>', views.TrabMenu.as_view(), name='trabajador_dropdown_menu')
         ])),
         path('bajas_list/', include([
             path('', views.BajaListView.as_view(), name='bajaother_list'),
