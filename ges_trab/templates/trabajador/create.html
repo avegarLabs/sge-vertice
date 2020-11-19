@@ -272,14 +272,9 @@
                         {{ form.t_pago.errors }}
                     </div>
                     <div class="col-lg-3 col-6">
-                        <input list="browsers">
-                        <datalist id="browsers">
-                            <option value="Internet Explorer">
-                            <option value="Firefox">
-                            <option value="Chrome">
-                            <option value="Opera">
-                            <option value="Safari">
-                        </datalist>
+                        {{ form.cargo.label_tag }}
+                        {{ form.cargo }}
+                        {{ form.cargo.errors }}
                     </div>
                     <div class="col-lg-3 col-6">
                         {{ form.escala_salarial.label_tag }}
