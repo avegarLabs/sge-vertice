@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block table_header %}
+    <th>Unidad Organizacional</th>
     <th>Departamento</th>
     <th>Cargo</th>
     <th>Escala Salarial</th>
@@ -20,6 +21,7 @@
 {% endblock table_header %}
 
 {% block table_body %}
+    <td>{{ item.unidad }}</td>
     <td>{{ item.departamento }}</td>
     <td>{{ item.cargo }}</td>
     <td>{{ item.escala_salarial.grupo }}</td>
@@ -29,6 +31,7 @@
 {% endblock table_body %}
 
 {% block table_foot %}
+    <th>Unidad Organizacional</th>
     <th>Departamento</th>
     <th>Cargo</th>
     <th>Escala Salarial</th>

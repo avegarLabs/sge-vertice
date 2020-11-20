@@ -1,7 +1,7 @@
 import json
 import os
 
-from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
@@ -14,8 +14,8 @@ from rechum.utils import generate_pisa_report
 from rechum.views import SgeListView, SgeCreateView, SgeDetailView, SgeDeleteView, SgeUpdateView
 from .form import *
 from .models import Plantilla, Dpto, Unidad, Registro
-from ges_trab.models import Trabajador, Alta
-from adm.models import Departamento, UnidadOrg, Cargo, EscalaSalarial
+from ges_trab.models import Alta
+from adm.models import Departamento
 from prenomina15.models import PlantillaServicio, Obra
 
 
@@ -26,7 +26,7 @@ class PlantillaListView(SgeListView):
     template_name = 'plantilla/list.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        object_list = self.model.objects.all()
+        object_list = self.model.objects.all().order_by('departamento__unidad')
         if self.kwargs.get('departamento_id'):
             dep_id = self.kwargs.get('departamento_id')
             dep = Departamento.objects.filter(pk=dep_id).annotate(
@@ -339,6 +339,7 @@ def request_report_otro():
             GROUP BY
                 adm_unidadorg.id,
                 adm_departamento.nombre,
+                adm_departamento.codigo,
                 ges_trab_trabajador.primer_nombre,
                 ges_trab_trabajador.segundo_nombre,
                 ges_trab_trabajador.apellidos,
@@ -501,8 +502,8 @@ def request_report_graduados():
                 AND adm_cargo.id = ges_trab_trabajador.cargo_id
                 AND adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id
                 AND ges_trab_trabajador.t_contrato='4'
-            GROUP BY adm_unidadorg.id, adm_departamento.nombre,
-            ges_trab_trabajador.primer_nombre,
+            GROUP BY adm_unidadorg.id, adm_departamento.nombre, adm_departamento.codigo,
+                ges_trab_trabajador.primer_nombre,
                 ges_trab_trabajador.segundo_nombre, ges_trab_trabajador.apellidos,
                 ges_trab_trabajador.categoria,
                 adm_cargo.nombre, adm_departamento.id, ges_trab_trabajador.sexo,
@@ -624,7 +625,7 @@ def request_report_contratos():
                 AND adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id
                 AND (ges_trab_trabajador.t_contrato='3' OR ges_trab_trabajador.t_contrato='6')
             GROUP BY
-                adm_unidadorg.id, adm_departamento.nombre,
+                adm_unidadorg.id, adm_departamento.nombre, adm_departamento.codigo,
                 ges_trab_trabajador.primer_nombre,
                 ges_trab_trabajador.segundo_nombre, ges_trab_trabajador.apellidos,
                 ges_trab_trabajador.categoria,
