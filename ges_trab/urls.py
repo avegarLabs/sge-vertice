@@ -26,6 +26,13 @@ urlpatterns = [
             path('agregar/', views.BajaCreateView.as_view(), name='bajaother_create'),
             path('<int:pk>/', views.BajaDetailView.as_view(), name='bajaother_detail')
         ])),
+        path('movimiento/', include([
+            path('', views.MovimientoListView.as_view(), name='movimiento_list'),
+            path('agregar/', views.MovimientoCreateView.as_view(), name='movimiento_create'),
+            path('<int:pk>/', views.MovimientoDetailView.as_view(), name='movimiento_detail'),
+            path('<int:pk>/', views.MovimientoUpdateView.as_view(), name='movimiento_update'),
+            path('<int:pk>/', views.MovimientoDeleteView.as_view(), name='movimiento_delete')
+        ])),
         path('movimiento_nomina/<int:pk>/', views.exportar_movimiento_nomina, name='MovimientoNomina'),
         path('movimiento_nomina_alta/<int:pk>/', views.exportar_movimiento_nomina_alta, name='MovimientoNominaAlta'),
         path('movimiento_nomina_baja/<int:pk>/', views.exportar_movimiento_nomina_baja, name='MovimientoNominaBaja'),
