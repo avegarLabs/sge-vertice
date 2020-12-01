@@ -807,12 +807,28 @@ def export_plantilla_rf(request):
         'queryset': request_plantilla_all(),
         'title': 'Plantilla Reforma Salarial'
     }
-    return export_factory(context, 'export_plantilla_reforma.html')
+    return export_factory_rf(context, 'export_plantilla_reforma.html')
 
 
 def export_factory(context, template_path=None):
     if template_path is None:
         template_path = 'export_plantilla.html'
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{context["title"]}.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisastatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback, encoding='utf8')
+    if pisastatus.err:
+        return HttpResponse(
+            'We had some errors with code %s <pre>%s</pre>' % (pisastatus.err, html)
+        )
+    return response
+
+def export_factory_rf(context, template_path=None):
+    if template_path is None:
+        template_path = 'export_plantilla_ref.html'
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{context["title"]}.pdf"'
 
