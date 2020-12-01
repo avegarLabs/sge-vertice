@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block styles %}
@@ -49,8 +50,11 @@
                     <th>Exped. Laboral</th>
                     <th>Niv Educ.</th>
                     <th>Grupo Esc.</th>
+                    <th>Grupo Esc. R</th>
                     <th>Total Salario</th>
+                    <th>Total Salario R.</th>
                     <th>Sal. Escala</th>
+                    <th>Sal. Escala R.</th>
                     {% block plantilla_anterior_header %}
                     <th>Sal. Jor 208</th>
                     <th>Incr Res30</th>
@@ -99,9 +103,9 @@
                         <td>{{ trab.sexo }}</td>
                         <td>{{ trab.ci }}</td>
                         <td>{{ trab.escolaridad }}</td>
-                        <td>{{ trab.grupo_escala }}</td>
                         {% language 'en' %}
                             {% block plantilla_reforma_body %}
+                            <td>{{ trab.grupo_escala }}</td>
                             <td>{{ trab.salario_total }}</td>
                             <td>{{ trab.salario_escala }}</td>
                             <td>{{ trab.salario_jornada_laboral }}</td>

@@ -1,11 +1,16 @@
-{% extends "preview_plantilla.html" %}
+{% extends "preview_plantilla_ref.html" %}
 
 {% block plantilla_anterior_header %}{% endblock %}
 {% block hide_5_columns_1 %}{% endblock %}
 {% block hide_5_columns_2 %}{% endblock %}
 
+
 {% block plantilla_reforma_body %}
-    <td>{{ trab.calcular_salario_total_reforma }}</td>
-    <td>{{ trab.salario_escala_reforma }}</td>
+    <td>{{ trab.grupo_escala}}</td>
+    <td>{{ trab.grupo_escala_reforma}}</td>
+    <td>{{ trab.salario_total}}</td>
+    <td>{{ trab.grupo_escala_reforma_salario_Total }}</td>
+    <td>{{ trab.salario_escala }}</td>
+    <td>{{ trab.grupo_escala_reforma_salario_escala }}</td>
     <td>{{ trab.salario_cat_cient }}</td>
 {% endblock %}
