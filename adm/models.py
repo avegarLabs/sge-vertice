@@ -75,9 +75,7 @@ class EscalaSalarial(BaseUrls, models.Model):
     salario_escala = models.DecimalField(max_digits=5, decimal_places=2, validators=[positive_number_validator])
     tarifa_horaria = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True,
                                          validators=[MinValueValidator(1)])
-    # escala_salarial_reforma = models.IntegerField(max_length=2, validators=[positive_number_validator])
-    escala_reforma = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, verbose_name='escala salarial reforma')
-
+    escala_salarial_reforma = models.IntegerField(max_length=2, unique=True, validators=[positive_number_validator])
     def __str__(self):
         return self.grupo
 
