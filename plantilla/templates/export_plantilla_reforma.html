@@ -1,15 +1,14 @@
 {% extends 'export_plantilla_ref.html' %}
 
 {% block plantilla_anterior_header %}{% endblock %}
-{% block unidad_cols %}13{% endblock %}
-{% block dep_cols %}13{% endblock %}
+{% block unidad_cols %}16{% endblock %}
+{% block dep_cols %}16{% endblock %}
 
 {% block plantilla_reforma_body %}
-    <td>{{ trab.grupo_escala}}</td>
-    <td>{{ trab.grupo_escala_reforma}}</td>
-    <td>{{ trab.salario_total}}</td>
-    <td>{{ trab.grupo_escala_reforma_salario_Total }}</td>
     <td>{{ trab.salario_escala }}</td>
+    <td>{{ trab.salario_total}}</td>
+    <td>{{ trab.grupo_escala_reforma}}</td>
     <td>{{ trab.grupo_escala_reforma_salario_escala }}</td>
     <td>{{ trab.salario_cat_cient }}</td>
+    <td>{{ trab.grupo_escala_reforma_salario_Total }}</td>
 {% endblock %}

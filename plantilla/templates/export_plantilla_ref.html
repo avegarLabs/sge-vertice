@@ -48,29 +48,29 @@
         <table class="display table table-striped" cellspacing="0" width="100%" id="tabla" repeat="1">
             <thead>
             <tr>
-                <th style="width: 10px; margin-right: 0;">Area</th>
-                <th style="width: auto;">Cargo</th>
-                <th style="width: 20px;">Cat. Oc.</th>
-                <th style="width: 10px;">&nbsp;</th>
-                <th style="width: auto;">Nombre y Apellidos</th>
-                <th style="width: 25px;">Sexo</th>
-                <th style="width: 200px;">Exped. Laboral</th>
-                <th style="width: 150px;">Niv Educ.</th>
-                <th style="width: 200px;">Grupo Esc.</th>
-                <th style="width: 200px;">Grupo Esc. R</th>
-                <th style="width: 100px;">Total Salario</th>
-                <th style="width: 100px;">Total Salario R.</th>
-                <th style="width: 100px;">Sal. Escala</th>
-                <th style="width: 100px;">Sal. Escala R.</th>
-                {% block plantilla_anterior_header %}
-                <th style="width: 100px;">Sal. Jor 240/260</th>
-                <th style="width: 100px;">Incr Res30</th>
-                <th style="width: 100px;">Coef CIES</th>
-                <th style="width: 100px;">Plus</th>
-                <th style="width: 100px;">Antig</th>
-                {% endblock %}
-                <th style="width: 100px;">Sal Maest.</th>
-                <th style="width: 100px;">Fecha Alta</th>
+                    <th>Area</th>
+                    <th>Cargo</th>
+                    <th>Cat. Oc.</th>
+                    <th></th>
+                    <th>Nombre y Apellidos</th>
+                    <th>Sexo</th>
+                    <th>Exped. Laboral</th>
+                    <th>Niv Educ.</th>
+                    <th>Grupo Esc.</th>
+                    <th>Sal. Escala</th>
+                    <th>Total Salario</th>
+                    {% block plantilla_anterior_header %}
+                    <th>Sal. Jor 208</th>
+                    <th>Incr Res30</th>
+                    <th>Coef CIES</th>
+                    <th>Plus</th>
+                    <th>Antig</th>
+                    {% endblock %}
+                    <th>Grupo Esc. R.</th>
+                    <th>Sal. Escala R.</th>
+                    <th>Sal Maest.</th>
+                    <th>Total Salario R.</th>
+                    <th>Fecha Alta</th>
             </tr>
             </thead>
             <tbody>
@@ -93,16 +93,16 @@
                     <td>{{ trab.sexo }}</td>
                     <td>{{ trab.ci }}</td>
                     <td>{{ trab.escolaridad }}</td>
-                    {% block plantilla_reforma_body %}
                     <td>{{ trab.grupo_escala }}</td>
-                    <td>{{ trab.salario_total }}</td>
-                    <td>{{ trab.salario_escala }}</td>
-                    <td>{{ trab.salario_jornada_laboral }}</td>
-                    <td>{{ trab.incre_res }}</td>
-                    <td>{{ trab.cies }}</td>
-                    <td>{{ trab.sal_plus }}</td>
-                    <td>{{ trab.antiguedad }}</td>
-                    <td>{{ trab.sal_cat_cient }}</td>
+                    {% block plantilla_reforma_body %}
+                            <td>{{ trab.salario_escala }}</td>
+                            <td>{{ trab.salario_jornada_laboral }}</td>
+                            <td>{{ trab.incre_res }}</td>
+                            <td>{{ trab.cies }}</td>
+                            <td>{{ trab.sal_plus }}</td>
+                            <td>{{ trab.antiguedad }}</td>
+                            <td>{{ trab.sal_cat_cient }}</td>
+                            <td>{{ trab.salario_total }}</td>
                     {% endblock %}
                     <td>{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
                 </tr>
@@ -119,7 +119,7 @@
 <!-- Contenido del pie de página 'footer_frame' -->
 <div id="footer_content">
     <div style="float: right">Sistema Gestión Recursos Humanos &copy; Empresa de Servicios de Ingeniería y Diseño de
-        Holguín - VERTICE 2018
+        Holguín - VERTICE 2020
     </div>
     página <pdf:pagenumber/> de <pdf:pagecount/>
 </div>

@@ -74,6 +74,14 @@ class ServicioListView(SgeListView):
     model = Obra
     template_name = 'obra-servicio/list.html'
 
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     object_list = self.model.objects.all()
+    #     # object_list_new = object_list
+    #     # for item in object_list:
+    #     #     object_list_new = {'servicio_id': item.pk}
+    #     # object_list = object_list_new
+    #     # print(object_list)
+    #     return super().get_context_data(object_list=object_list, **kwargs)
 
 class PlantillaServicioListView(SgeListView):
     permission_required = 'prenomina15.read_plantillaservicio'

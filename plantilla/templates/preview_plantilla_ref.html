@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-
 {% block title %}{{ title }}{% endblock %}
 
 {% block styles %}
@@ -50,11 +49,8 @@
                     <th>Exped. Laboral</th>
                     <th>Niv Educ.</th>
                     <th>Grupo Esc.</th>
-                    <th>Grupo Esc. R</th>
-                    <th>Total Salario</th>
-                    <th>Total Salario R.</th>
                     <th>Sal. Escala</th>
-                    <th>Sal. Escala R.</th>
+                    <th>Total Salario</th>
                     {% block plantilla_anterior_header %}
                     <th>Sal. Jor 208</th>
                     <th>Incr Res30</th>
@@ -62,7 +58,10 @@
                     <th>Plus</th>
                     <th>Antig</th>
                     {% endblock %}
+                    <th>Grupo Esc. R.</th>
+                    <th>Sal. Escala R.</th>
                     <th>Sal Maest.</th>
+                    <th>Total Salario R.</th>
                     <th>Fecha Alta</th>
                 </tr>
                 </thead>
@@ -75,15 +74,20 @@
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            {% block hide_5_columns_1 %}
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            <td style="display: none"></td><td style="display: none"></td>
+                            {% block hide_5_columns_1 %}
+                            <td style="display: none"></td>
+                            <td style="display: none"></td>
+                            <td style="display: none"></td>
+                            <td style="display: none"></td>
+                            <td style="display: none"></td>
                             {% endblock %}
                         </tr>
                     {% endifchanged %}
                     {% ifchanged trab.dpto_codigo %}
                         <tr>
                             <td colspan="18" style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
@@ -103,10 +107,9 @@
                         <td>{{ trab.sexo }}</td>
                         <td>{{ trab.ci }}</td>
                         <td>{{ trab.escolaridad }}</td>
+                        <td>{{ trab.grupo_escala }}</td>
                         {% language 'en' %}
                             {% block plantilla_reforma_body %}
-                            <td>{{ trab.grupo_escala }}</td>
-                            <td>{{ trab.salario_total }}</td>
                             <td>{{ trab.salario_escala }}</td>
                             <td>{{ trab.salario_jornada_laboral }}</td>
                             <td>{{ trab.incre_res }}</td>
@@ -114,6 +117,7 @@
                             <td>{{ trab.sal_plus }}</td>
                             <td>{{ trab.antiguedad }}</td>
                             <td>{{ trab.sal_cat_cient }}</td>
+                            <td>{{ trab.salario_total }}</td>
                             {% endblock %}
                         {% endlanguage %}
                         <td>{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
