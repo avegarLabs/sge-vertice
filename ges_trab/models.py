@@ -3,7 +3,7 @@ from django.core.validators import validate_image_file_extension
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from decimal import Decimal
 from adm import models as adm
 from plantilla.models import Plantilla
 from rechum.models import BaseUrls
@@ -205,10 +205,11 @@ class Trabajador(BaseUrls):
     def calcular_salario_total_reforma(self):
         sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
         if self.cat_cient == '2':
-            sal_total += 400        # valore referente no real todo verificar valores reales
+            sal_total += Decimal(400)        # valore referente no real todo verificar valores reales
         elif self.cat_cient == '3':
-            sal_total += 800        # valore referente no real todo verificar valores reales
-        return sal_total
+            sal_total += Decimal(800)        # valore referente no real todo verificar valores reales
+        total = Decimal(sal_total)
+        return total
 
     @property
     def salario_escala_reforma(self):
@@ -293,6 +294,7 @@ class Movimiento(BaseUrls):
     class Meta:
         default_permissions = ['read', 'add', 'delete', 'change', 'export', 'report']
 
+
 class MovimientoReforma(BaseUrls):
     fecha = models.DateField(max_length=20, verbose_name="Fecha del movimiento", blank=True, null=True)
     trabajador = models.ForeignKey(Trabajador, on_delete=models.CASCADE)
@@ -304,10 +306,10 @@ class MovimientoReforma(BaseUrls):
     area_ant = models.CharField(max_length=100, verbose_name="Departamento anterior", blank=True, null=True)
     area_act = models.CharField(max_length=100, verbose_name="Departamento actual", blank=True, null=True)
     cies_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='CIES')
-    cies_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='CIES')
+    cies_act = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, verbose_name='CIES')
     incre_res_ant = models.DecimalField(max_digits=5, decimal_places=2,
                                         verbose_name='Pago por perfeccionamiento anterior')
-    incre_res_act = models.DecimalField(max_digits=5, decimal_places=2,
+    incre_res_act = models.DecimalField(max_digits=5, decimal_places=2, default=0.00,
                                         verbose_name='Pago por perfeccionamiento actual')
     categoria_ant = models.CharField(max_length=30, verbose_name='Categoría ocupacional anterior')
     categoria_act = models.CharField(max_length=30, verbose_name='Categoría ocupacional actual')
@@ -321,7 +323,7 @@ class MovimientoReforma(BaseUrls):
     escala_salarial_act = models.CharField(max_length=5)
     salario_total_ant = models.DecimalField(max_digits=7, verbose_name='Salario Total anterior', blank=True, null=True,
                                             decimal_places=2)
-    salario_total_act = models.DecimalField(max_digits=7, verbose_name='Salario Total actual', blank=True, null=True,
+    salario_total_act = models.DecimalField(max_digits=11, verbose_name='Salario Total actual', blank=True, null=True,
                                             decimal_places=2)
     sal_plus_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Salario plus anterior',
                                        default=0.00)
