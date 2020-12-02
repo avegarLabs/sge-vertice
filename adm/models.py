@@ -69,20 +69,6 @@ class Departamento(BaseUrls, models.Model):
         default_permissions = ['read', 'add', 'delete', 'change']
 
 
-class EscalaSalarial(BaseUrls, models.Model):
-    grupo = models.CharField(max_length=8, unique=True)
-    coeficientes = models.DecimalField(max_digits=3, decimal_places=2, validators=[positive_number_validator])
-    salario_escala = models.DecimalField(max_digits=5, decimal_places=2, validators=[positive_number_validator])
-    tarifa_horaria = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True,
-                                         validators=[MinValueValidator(1)])
-    escala_salarial_reforma = models.IntegerField(max_length=2, default=1, null=True, validators=[positive_number_validator])
-    def __str__(self):
-        return self.grupo
-
-    class Meta:
-        verbose_name_plural = 'escalas salariales'
-
-
 class EscalaSalarialReforma(BaseUrls, models.Model):
     grupo = models.CharField(max_length=8, unique=True)
     coeficiente = models.DecimalField(max_digits=16, decimal_places=15, validators=[positive_number_validator])
@@ -94,6 +80,24 @@ class EscalaSalarialReforma(BaseUrls, models.Model):
     class Meta:
         verbose_name = 'escala salarial reforma'
         verbose_name_plural = 'escalas salariales reforma'
+
+class EscalaSalarial(BaseUrls, models.Model):
+    grupo = models.CharField(max_length=8, unique=True)
+    coeficientes = models.DecimalField(max_digits=3, decimal_places=2, validators=[positive_number_validator])
+    salario_escala = models.DecimalField(max_digits=5, decimal_places=2, validators=[positive_number_validator])
+    tarifa_horaria = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True,
+                                         validators=[MinValueValidator(1)])
+    escala_salarial_reforma = models.IntegerField(max_length=2, default=1, null=True, validators=[positive_number_validator])
+    escala_reforma_id = models.ForeignKey(EscalaSalarialReforma, on_delete=None, verbose_name='escala salarial reforma')
+
+    def __str__(self):
+        return self.grupo
+
+    class Meta:
+        verbose_name_plural = 'escalas salariales'
+
+
+
 
 
 class CIES(BaseUrls, models.Model):
