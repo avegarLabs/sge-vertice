@@ -293,6 +293,50 @@ class Movimiento(BaseUrls):
     class Meta:
         default_permissions = ['read', 'add', 'delete', 'change', 'export', 'report']
 
+class MovimientoReforma(BaseUrls):
+    fecha = models.DateField(max_length=20, verbose_name="Fecha del movimiento", blank=True, null=True)
+    trabajador = models.ForeignKey(Trabajador, on_delete=models.CASCADE)
+    TIPO_OPT = (('1', 'Promoción'), ('2', 'Cambio de área'), ('3', 'Ambos'), ('4', 'Reforma Salarial'))
+    tipo = models.CharField(max_length=100, verbose_name="Tipo de movimiento", blank=True, null=True,
+                            choices=TIPO_OPT, default='4')
+    cargo_ant = models.CharField(max_length=100, verbose_name="Cargo anterior", blank=True, null=True)
+    cargo_act = models.CharField(max_length=100, verbose_name="Cargo actual", blank=True, null=True)
+    area_ant = models.CharField(max_length=100, verbose_name="Departamento anterior", blank=True, null=True)
+    area_act = models.CharField(max_length=100, verbose_name="Departamento actual", blank=True, null=True)
+    cies_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='CIES')
+    cies_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='CIES')
+    incre_res_ant = models.DecimalField(max_digits=5, decimal_places=2,
+                                        verbose_name='Pago por perfeccionamiento anterior')
+    incre_res_act = models.DecimalField(max_digits=5, decimal_places=2,
+                                        verbose_name='Pago por perfeccionamiento actual')
+    categoria_ant = models.CharField(max_length=30, verbose_name='Categoría ocupacional anterior')
+    categoria_act = models.CharField(max_length=30, verbose_name='Categoría ocupacional actual')
+    antiguedad_ant = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    antiguedad_act = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    salario_escala_ant = models.DecimalField(verbose_name='Salario escala anterior', max_digits=5, decimal_places=2,
+                                             default=0.00)
+    salario_escala_act = models.DecimalField(verbose_name='Salario escala actual', max_digits=5, decimal_places=2,
+                                             default=0.00)
+    escala_salarial_ant = models.CharField(max_length=5)
+    escala_salarial_act = models.CharField(max_length=5)
+    salario_total_ant = models.DecimalField(max_digits=7, verbose_name='Salario Total anterior', blank=True, null=True,
+                                            decimal_places=2)
+    salario_total_act = models.DecimalField(max_digits=7, verbose_name='Salario Total actual', blank=True, null=True,
+                                            decimal_places=2)
+    sal_plus_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Salario plus anterior',
+                                       default=0.00)
+    sal_plus_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Salario plus actual', default=0.00)
+    sal_cat_cient_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Salario x cat. científica",
+                                            blank=True, null=True, default=0.00)
+    sal_cat_cient_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Salario x cat. científica",
+                                            blank=True, null=True, default=0.00)
+
+    def __str__(self):
+        return 'Trabajador: {0} Movimiento: {1}'.format(self.trabajador, self.tipo)
+
+    class Meta:
+        default_permissions = ['read', 'add', 'delete', 'change', 'export', 'report']
+
 
 class Cpl(models.Model):
     fecha = models.DateField()
