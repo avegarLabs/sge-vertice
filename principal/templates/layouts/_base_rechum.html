@@ -284,7 +284,7 @@
                 id="submenuPrenom15">
                 <li>
                     <a class="{% if model_name == 'plantilla_servicio' %}active{% endif %}"
-                       href="#">
+                       href="{% url 'obra-servicio_list' %}">
                         Plantilla Servicio
                     </a>
                 </li>
@@ -307,6 +307,71 @@
             </a>
             <ul class="collapse list-unstyled {% if request.current_app == 'subsidio' %}show{% endif %}"
                 id="submenuReportes">
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}" target="_blank"
+                       href="{% url 'informaciones_trabajador' %}">
+                        Generar Informaciones (Altas)
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}" target="_blank"
+                       href="{% url 'GestionarBaja' %}">
+                        Bajas
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'trabajador_reports' %}">
+                        Informaciones Gráficas
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'trabajadores-contrato_report' %}">
+                        Altas por Contrato
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'calzado_export' %}">
+                        Reporte Calzado
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'asignado-a-defensa_report' %}">
+                        Listado Defensa
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'resumen-defensa_report' %}">
+                        Situación en la Defensa
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'registro-militar_report' %}">
+                        Registro Militar
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'choferes-defensa_report' %}">
+                        Choferes en la Defensa
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#submenuReforma" class="dropdown-toggle"
+               data-toggle="collapse"
+               aria-expanded="{% if request.current_app == 'ges_trab' %}true{% else %}false{% endif %}">
+                <i class="fa fa-bar-chart"></i>
+                Reforma Salarial
+            </a>
+            <ul class="collapse list-unstyled {% if request.current_app == 'ges_trab' %}show{% endif %}"
+                id="submenuReforma">
                 <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}" target="_blank"
                        href="{% url 'informaciones_trabajador' %}">

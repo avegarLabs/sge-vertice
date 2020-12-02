@@ -1,1 +1,45 @@
-{% extends 'layouts/_base_rechum.html' %}
+{% extends 'layouts/_base_list_datatable_not_edit.html' %}
+{% load static widget_tweaks %}
+
+{% block delete_error_message %}
+    Imposible eliminar Obra porque tiene Objetos Asociados
+{% endblock %}
+
+{% block table_header %}
+    <th>Orden de Trabajo</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Hrs A2</th>
+    <th>Gpo. Esc.</th>
+{% endblock %}
+
+{% block table_body %}
+    <td>{{ item.orden_trab.descripcion_ot }}</td>
+    <td>{{ item.nombre }}</td>
+    {% if item.tipo == 'OT' %}
+     <td>Obra de Turismo</td>
+    {% elif item.tipo == 'VT' %}
+        <td>Vivienda para Turismo</td>
+    {% else %}
+        <td>Resolucion 6</td>
+    {% endif %}
+    <td>{{ item.horas_a2 }}</td>
+    <td>{{ item.gesc.grupo }}</td>
+    <td width="60">
+        <div class="icon-acciones" align="center">
+{#            <a href="{% url 'plantillaservicio_list' item.pk %}"#}
+{#               class="badge badge-pill badge-primary">#}
+{#                <i class="fa fa-list-ul" title="Plantilla del Servicio"#}
+{#                   style="color: white;"></i>#}
+{#            </a>#}
+        </div>
+    </td>
+{% endblock %}
+
+{% block table_foot %}
+    <th>Orden de Trabajo</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Hrs A2</th>
+    <th>Gpo. Esc.</th>
+{% endblock %}
