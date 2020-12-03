@@ -177,7 +177,7 @@
              <td colspan="3"><div>Categoría: <strong>{{movimiento.categoria_act}}</strong></div></td>
            </tr>
            <tr>
-               <td colspan="12">Motivo del Movimiento: {{ movimiento.tipo}}</td>
+               <td colspan="12">Motivo del Movimiento: Reforma Salarial</td>
            </tr>
         </table>
         <table border=0 cellpadding=2 cellspacing=0 width="600">
@@ -226,9 +226,9 @@
                <td width="35"><p align="center"><strong>Año</strong></p></td>
            </tr>
            <tr>
-               <td align="center">19</td>
-               <td align="center">09</td>
-               <td align="center">16</td>
+               <td align="center">{{movimiento.fecha.day }}</td>
+               <td align="center">{{movimiento.fecha.month }}</td>
+               <td align="center">{{movimiento.fecha.year }}</td>
            </tr>
             </tbody>
         </table>
@@ -310,7 +310,7 @@
              <td colspan="3"><div>Categoría: <strong>{{movimiento.categoria_act}}</strong></div></td>
            </tr>
            <tr>
-               <td colspan="12">Motivo del Movimiento: {{ movimiento.tipo}}</td>
+               <td colspan="12">Motivo del Movimiento: Reforma Salarial</td>
            </tr>
         </table>
         <table border=0 cellpadding=2 cellspacing=0 width="600">
