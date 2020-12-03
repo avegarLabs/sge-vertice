@@ -380,8 +380,15 @@
                 </li>
                 <li>
                     <a class="{% if model_name == 'movimiento' %}active{% endif %}"
-                       href="{% url 'MovimientoNominaReforma' %}">
-                        Movimiento Reforma Salarial
+                       href="{% url 'MovimientoNominaReforma' %}" target="_blank">
+                        Movimientos Reforma Salarial
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'movimiento' %}active{% endif %}"
+{#                       href="{% url 'MovimientoNominaReforma' %}">#}
+                       href="#">
+                        Suplementos Reforma Salarial
                     </a>
                 </li>
             </ul>

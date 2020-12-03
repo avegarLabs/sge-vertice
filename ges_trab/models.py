@@ -202,14 +202,14 @@ class Trabajador(BaseUrls):
             return '%s %s %s' % (self.primer_nombre, self.segundo_nombre, self.apellidos)
         return '%s %s' % (self.primer_nombre, self.apellidos)
 
+    @property
     def calcular_salario_total_reforma(self):
         sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
         if self.cat_cient == '2':
-            sal_total += Decimal(400)        # valore referente no real todo verificar valores reales
+            sal_total += 400       # valore referente no real todo verificar valores reales
         elif self.cat_cient == '3':
-            sal_total += Decimal(800)        # valore referente no real todo verificar valores reales
-        total = Decimal(sal_total)
-        return total
+            sal_total += 800       # valore referente no real todo verificar valores reales
+        return sal_total
 
     @property
     def salario_escala_reforma(self):
@@ -236,11 +236,11 @@ class Trabajador(BaseUrls):
 
 
 class Alta(Trabajador):
-    objects = Trabajador.objects.filter(fecha_baja__isnull=True)
+    objects = Trabajador.objects.filter(fecha_baja__isnull=True).order_by('unidad_org_id', 'departamento_id', 'org_plantilla')
 
     class Meta:
         proxy = True
-        ordering = ['departamento__codigo', 'org_plantilla']
+        # ordering = ['unidad_org_id', 'departamento_id', 'org_plantilla']
 
 
 class BajaOther(Trabajador):
@@ -317,7 +317,7 @@ class MovimientoReforma(BaseUrls):
     antiguedad_act = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     salario_escala_ant = models.DecimalField(verbose_name='Salario escala anterior', max_digits=5, decimal_places=2,
                                              default=0.00)
-    salario_escala_act = models.DecimalField(verbose_name='Salario escala actual', max_digits=5, decimal_places=2,
+    salario_escala_act = models.DecimalField(verbose_name='Salario escala actual', max_digits=11, decimal_places=2,
                                              default=0.00)
     escala_salarial_ant = models.CharField(max_length=5)
     escala_salarial_act = models.CharField(max_length=5)

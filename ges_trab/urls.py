@@ -34,7 +34,9 @@ urlpatterns = [
             path('<int:pk>/', views.MovimientoDeleteView.as_view(), name='movimiento_delete')
         ])),
         path('movimiento_nomina_reforma/', views.movimiento_nomina_reforma_create, name='MovimientoNominaReforma'),
+        # path('movimiento_nomina_reforma/', views.movimiento_nomina_reforma_update, name='MovimientoNominaReformaUpdate'),
         path('movimiento_nomina/<int:pk>/', views.exportar_movimiento_nomina, name='MovimientoNomina'),
+        path('movimiento_nomina/', views.exportar_movimiento_nomina_reforma, name='MovimientoNominaReformaExport'),
         path('movimiento_nomina_alta/<int:pk>/', views.exportar_movimiento_nomina_alta, name='MovimientoNominaAlta'),
         path('movimiento_nomina_baja/<int:pk>/', views.exportar_movimiento_nomina_baja, name='MovimientoNominaBaja'),
         path('acuerdo_conf/<int:pk>/', views.exportar_acuerdo, name='AcuerdoConfidencialidad'),
