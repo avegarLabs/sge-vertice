@@ -94,4 +94,5 @@ urlpatterns = [
     path('detalle_especialidad/<int:pk>/', login_required(views.DetalleEspecialidad.as_view()),
          name='detalleEspecialidad'),
     path('eliminar_especialidad/<int:pk>/', login_required(views.eliminar_especialidad), name='eliminarEspecialidad'),
+    # path('departamentos/<int:pk>/', views.dep_unidad, name='dep-unidad'),
 ]

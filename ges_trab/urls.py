@@ -33,10 +33,11 @@ urlpatterns = [
             path('<int:pk>/', views.MovimientoUpdateView.as_view(), name='movimiento_update'),
             path('<int:pk>/', views.MovimientoDeleteView.as_view(), name='movimiento_delete')
         ])),
-        path('movimiento_nomina_reforma/', views.movimiento_nomina_reforma_create, name='MovimientoNominaReforma'),
+        path('documentacion_reforma/', views.documentacion_reforma, name='DocumentacionReforma'),
         # path('movimiento_nomina_reforma/', views.movimiento_nomina_reforma_update, name='MovimientoNominaReformaUpdate'),
         path('movimiento_nomina/<int:pk>/', views.exportar_movimiento_nomina, name='MovimientoNomina'),
         path('movimiento_nomina_reforma_exportar/', views.exportar_movimiento_nomina_reforma, name='MovimientoNominaReformaExport'),
+        path('exportar_suplemento_contrato_reforma/', views.exportar_suplemento_contrato_reforma, name='ExportarSuplementoContratoReforma'),
         path('movimiento_nomina_alta/<int:pk>/', views.exportar_movimiento_nomina_alta, name='MovimientoNominaAlta'),
         path('movimiento_nomina_baja/<int:pk>/', views.exportar_movimiento_nomina_baja, name='MovimientoNominaBaja'),
         path('acuerdo_conf/<int:pk>/', views.exportar_acuerdo, name='AcuerdoConfidencialidad'),
@@ -128,6 +129,8 @@ urlpatterns = [
         path('choferes-en-la-defensa/', views.choferes_en_defensa, name='choferes-defensa_report'),
         path('trabajadores-x-contrato/', views.trabajadores_x_contrato, name='trabajadores-contrato_report')
     ])),
+    path('departament/<int:pk>/', views.dep_unidad, name='dep-unidad'),
+
     re_path('^dist-bar-drilldown/$', graphs.BarDrilldownDept.as_view(), name='dist-bar-drilldown'),
     re_path('^gender-pie/alta/$', graphs.PieGenderChart.as_view(model=models.Alta), name='gender-pie-alta'),
     re_path('^gender-pie/baja/$', graphs.PieGenderChart.as_view(model=models.BajaOther), name='gender-pie-baja'),

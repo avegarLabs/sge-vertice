@@ -649,3 +649,12 @@ def trab_unidad(request, pk):
             ).order_by('departamento__codigo', 'org_plantilla')
         )
         return HttpResponse(json.dumps(trabajadores), content_type='application/json')
+
+# def dep_unidad(request, pk):
+#     if request.method == 'GET':
+#         departamentos = list(
+#             UnidadOrg.objects.get(pk=pk).departamentos.values(
+#                 'id', 'nombre'
+#             ).order_by('departamento__codigo')
+#         )
+#         return HttpResponse(json.dumps(departamentos), content_type='application/json')

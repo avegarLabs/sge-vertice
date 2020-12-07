@@ -380,25 +380,16 @@
                 </li>
                 <li>
                     <a class="{% if model_name == 'movimiento' %}active{% endif %}"
-                       href="{% url 'MovimientoNominaReforma' %}" target="_blank">
-                        Movimientos Reforma Salarial
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'movimiento' %}active{% endif %}"
-{#                       href="{% url 'MovimientoNominaReforma' %}">#}
-                       href="{% url 'MovimientoNominaReformaExport' %}" target="_blank">
-                        Exportar Movimientos Reforma Salarial
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'movimiento' %}active{% endif %}"
-{#                       href="{% url 'MovimientoNominaReforma' %}">#}
-                       href="#">
-                        Suplementos Reforma Salarial
+                       onclick="open_re_useful_modal(`{% url 'DocumentacionReforma' %}`)">
+                        Documentacion Reforma Salarial
                     </a>
                 </li>
             </ul>
         </li>
     {% endif %}
 {% endblock sidebar_list %}
+
+{% block modals %}
+    <div id="re-useful" class="modal fade" role="dialog"></div>
+    {% block filter_modal %}{% endblock %}
+{% endblock %}

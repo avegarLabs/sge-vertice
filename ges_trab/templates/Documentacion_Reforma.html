@@ -1,0 +1,74 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form role="form" action="{% url 'DocumentacionReforma'  %}" method="post">{% csrf_token %}
+                <div class="modal-header">
+            <h6><strong>Documentacion Reforma Salarial</strong></h6>
+            <button type="button" class="close" data-dismiss="modal">x</button>
+        </div>
+        <div class="modal-body">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <label for="unidad_org" class="font-weight-bold">Unidades Organisativas:</label>
+                    <select name="unidad" class="form-control" required id="unidad">
+                        {% for unidad in unidad_org %}
+                            <option value="{{ unidad.id }}">{{ unidad.nombre }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="departamento" class="font-weight-bold">Departamentos:</label>
+                    <select name="departamento" class="form-control" required id="departamento">
+
+                    </select>
+
+                    <label for="tipo_documento" class="font-weight-bold">Tipo de Documento:</label>
+                    <select name="tipo_documento" class="form-control" required id="tipo_documento">
+                            <option value='1' >Movimiento de Nomina</option>
+                            <option value='2'>Suplemento al Contrato</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-lg-12 text-right">
+                <input type="submit" class="btn btn-danger" name="submit" value="Generar Documento" formtarget="_blank">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+<script>
+        function automatic_load_departamentos() {
+            var unidad_id = $('#unidad')[0].value;
+            $("#departamento, [name='departamento']").html('<option>Cargando ...</option>'); //esta linea lo que hace es limpiar el segundo select para volverlo a llenar luego con los valores que se obtendran en la peticion ajax
+            $.get("departament/" + unidad_id,
+                function (data) {
+                    var datos = data[0].result;
+                    if (datos.length !== 0) {
+                        $("#departamento, [name='departamento']").html('');
+                        for (var dep in datos) {
+                            $("#departamento, [name='departamento']").append('<option value="' + datos[dep].id + '">' + '-' + datos[dep].nombre + '</option>');
+                        }
+                    } else {
+                        $("#departamento, [name='departamento']").append('No hay tareas para mostrar.');
+                    }
+
+                });
+        }
+
+        function automatic_load() {
+            automatic_load_departamentos();
+        }
+
+        $(document).ready(function () {
+                automatic_load();
+                $('#unidad').on('change', function () {
+                    automatic_load();
+                });
+        });
+</script>
+
