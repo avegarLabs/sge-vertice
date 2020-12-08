@@ -15,12 +15,11 @@
                             <option value="{{ unidad.id }}">{{ unidad.nombre }}</option>
                         {% endfor %}
                     </select>
-
+                    <br>
                     <label for="departamento" class="font-weight-bold">Departamentos:</label>
                     <select name="departamento" class="form-control" required id="departamento">
-
                     </select>
-
+                    <br>
                     <label for="tipo_documento" class="font-weight-bold">Tipo de Documento:</label>
                     <select name="tipo_documento" class="form-control" required id="tipo_documento">
                             <option value='1' >Movimiento de Nomina</option>
@@ -50,6 +49,7 @@
                     var datos = data[0].result;
                     if (datos.length !== 0) {
                         $("#departamento, [name='departamento']").html('');
+                        $("#departamento, [name='departamento']").html('<option value="' + 0 + '">' + 'All ...' + '</option>');
                         for (var dep in datos) {
                             $("#departamento, [name='departamento']").append('<option value="' + datos[dep].id + '">' + '-' + datos[dep].nombre + '</option>');
                         }

@@ -27,11 +27,11 @@
     <td>{{ item.gesc.grupo }}</td>
     <td width="60">
         <div class="icon-acciones" align="center">
-{#            <a href="{% url 'plantillaservicio_list' item.pk %}"#}
-{#               class="badge badge-pill badge-primary">#}
-{#                <i class="fa fa-list-ul" title="Plantilla del Servicio"#}
-{#                   style="color: white;"></i>#}
-{#            </a>#}
+            <a href="{% url 'plantillaservicio_list' item.servicio%}"
+               class="badge badge-pill badge-primary">
+                <i class="fa fa-list-ul" title="Plantilla del Servicio"
+                   style="color: white;"></i>
+            </a>
         </div>
     </td>
 {% endblock %}
