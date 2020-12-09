@@ -1,4 +1,4 @@
-{% extends 'layouts/_base_list_datatable.html' %}
+{% extends 'layouts/_base_list_datatable_plantilla_servicio.html' %}
 {% load sge_url sge_inclusion %}
 
 {% block extra_title %}
@@ -41,7 +41,7 @@
             </a>
         {% endif %}
         {% if request.app_name|add:'.delete_'|add:model_name in perms %}
-            <a onclick="event.stopPropagation(); open_re_useful_modal('{% url model_name|add:'_delete' item.servicio_id item.pk %}')"
+            <a onclick="event.stopPropagation(); open_re_useful_modal('{% url model_name|add:'_delete' servicio_id item.pk %}')"
                class="badge badge-pill badge-danger">
                 <i class="fa fa-trash fa-submit-buttons-round" title="Eliminar {{ verbose_name|title }}"
                    style="color: white;"></i>

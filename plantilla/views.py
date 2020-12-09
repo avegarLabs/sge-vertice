@@ -71,16 +71,21 @@ class PlantillaDeleteView(SgeDeleteView):
 
 class ServicioListView(SgeListView):
     permission_required = 'prenomina15.read_obra'
-    model = Obra
+    model = PlantillaServicio
     template_name = 'obra-servicio/list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        object_list = Obra.objects.all()
+        return super().get_context_data(object_list=object_list, **kwargs)
 
     # def get_context_data(self, *, object_list=None, **kwargs):
     #     object_list = self.model.objects.all()
-    #     # object_list_new = object_list
-    #     # for item in object_list:
-    #     #     object_list_new = {'servicio_id': item.pk}
-    #     # object_list = object_list_new
-    #     # print(object_list)
+    #     object_list_new = object_list
+    #     for item in object_list:
+    #         object_list_new = self.model.objects.all().get_or_create('servicio_id': item.pk)
+    #         # object_list_new = {'servicio_id': item.pk, 'servicio': servicio}
+    #         print(object_list_new)
+    #     object_list = object_list_new
     #     return super().get_context_data(object_list=object_list, **kwargs)
 
 class PlantillaServicioListView(SgeListView):
@@ -92,10 +97,15 @@ class PlantillaServicioListView(SgeListView):
         object_list = self.model.objects.all()
         if self.kwargs.get('servicio_id'):
             srv_id = self.kwargs.get('servicio_id')
+            print(srv_id)
             srv = Obra.objects.filter(pk=srv_id).values('nombre')[0]
+            print(srv)
             self.extra_context = {'servicio': srv['nombre'], 'servicio_id': srv_id}
+            print(self.extra_context)
             object_list = object_list.filter(servicio_id=srv_id)
-            kwargs["create_url"] = reverse_lazy(self.model._meta.model_name + '_create', kwargs={"servicio_id": srv_id})
+            print(object_list)
+            kwargs['create_url'] = reverse_lazy(self.model._meta.model_name + '_create', kwargs={'servicio_id': srv_id})
+            print(kwargs['create_url'])
         return super().get_context_data(object_list=object_list, **kwargs)
 
 
@@ -130,6 +140,21 @@ class PlantillaServicioUpdateView(SgeUpdateView):
         kwargs.update(update_create_kwargs(self.kwargs.get('servicio_id')))
         return super().get_context_data(**kwargs)
 
+class PlantillaServicioDetailView(SgeListView):
+    permission_required = 'prenomina15.read_plantillaservicio'
+    model = PlantillaServicio
+    template_name = 'plantilla-servicio/detail.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        object_list = self.model.objects.all()
+        if self.kwargs.get('servicio_id'):
+            srv_id = self.kwargs.get('servicio_id')
+            srv = Obra.objects.filter(pk=srv_id).values('nombre')[0]
+            self.extra_context = {'servicio': srv['nombre'], 'servicio_id': srv_id}
+            object_list = object_list.filter(servicio_id=srv_id)
+            kwargs['create_url'] = reverse_lazy(self.model._meta.model_name + '_create', kwargs={'servicio_id': srv_id})
+            print(object_list)
+        return super().get_context_data(object_list=object_list, **kwargs)
 
 class PlantillaServicioDeleteView(SgeDeleteView):
     permission_required = 'prenomina15.read_plantillaservicio'

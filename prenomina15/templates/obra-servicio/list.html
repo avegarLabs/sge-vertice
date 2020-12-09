@@ -1,4 +1,4 @@
-{% extends 'layouts/_base_list_datatable_not_edit.html' %}
+{% extends 'layouts/_base_list_datatable_plantilla_servicio.html' %}
 {% load static widget_tweaks %}
 
 {% block delete_error_message %}
@@ -27,7 +27,8 @@
     <td>{{ item.gesc.grupo }}</td>
     <td width="60">
         <div class="icon-acciones" align="center">
-            <a href="{% url 'plantillaservicio_list' item.servicio%}"
+            <a href="{% url 'plantillaservicio_list' item.pk %}"
+{#            <a href="#"#}
                class="badge badge-pill badge-primary">
                 <i class="fa fa-list-ul" title="Plantilla del Servicio"
                    style="color: white;"></i>
