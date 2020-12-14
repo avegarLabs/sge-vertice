@@ -140,25 +140,29 @@ class PlantillaServicioUpdateView(SgeUpdateView):
         kwargs.update(update_create_kwargs(self.kwargs.get('servicio_id')))
         return super().get_context_data(**kwargs)
 
-class PlantillaServicioDetailView(SgeListView):
+class PlantillaServicioDetailView(SgeDetailView):
     permission_required = 'prenomina15.read_plantillaservicio'
     model = PlantillaServicio
     template_name = 'plantilla-servicio/detail.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        object_list = self.model.objects.all()
-        if self.kwargs.get('servicio_id'):
-            srv_id = self.kwargs.get('servicio_id')
-            srv = Obra.objects.filter(pk=srv_id).values('nombre')[0]
-            self.extra_context = {'servicio': srv['nombre'], 'servicio_id': srv_id}
-            object_list = object_list.filter(servicio_id=srv_id)
-            kwargs['create_url'] = reverse_lazy(self.model._meta.model_name + '_create', kwargs={'servicio_id': srv_id})
-            print(object_list)
-        return super().get_context_data(object_list=object_list, **kwargs)
+    def get_context_data(self, **kwargs):
+        update_create_kwargs(self.kwargs.get('servicio_id'))
+        kwargs.update(update_create_kwargs(self.kwargs.get('servicio_id')))
+        return super().get_context_data(**kwargs)
+
+    def get_success_url(self):
+        success_url = reverse_lazy('plantillaservicio_list', kwargs={'servicio_id': self.kwargs.get('servicio_id')})
+        return success_url.format(**self.object.__dict__)
 
 class PlantillaServicioDeleteView(SgeDeleteView):
     permission_required = 'prenomina15.read_plantillaservicio'
     model = PlantillaServicio
+    template_name = 'layouts/crud/delete_plantilla_servicio.html'
+
+    def get_context_data(self, **kwargs):
+        update_create_kwargs(self.kwargs.get('servicio_id'))
+        kwargs.update(update_create_kwargs(self.kwargs.get('servicio_id')))
+        return super().get_context_data(**kwargs)
 
     def get_success_url(self):
         success_url = reverse_lazy('plantillaservicio_list', kwargs={'servicio_id': self.kwargs.get('servicio_id')})

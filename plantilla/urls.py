@@ -25,7 +25,7 @@ urlpatterns = [
         path('servicios/<int:servicio_id>/plantilla/', include([
             path('', views.PlantillaServicioListView.as_view(), name='plantillaservicio_list'),
             path('agregar/', views.PlantillaServicioCreateView.as_view(), name='plantillaservicio_create'),
-            path('detail/', views.PlantillaServicioDetailView.as_view(), name='plantillaservicio_detail'),
+            path('<int:pk>/', views.PlantillaServicioDetailView.as_view(), name='plantillaservicio_detail'),
             path('<int:pk>/actualizar/', views.PlantillaServicioUpdateView.as_view(), name='plantillaservicio_update'),
             path('<int:pk>/eliminar/', views.PlantillaServicioDeleteView.as_view(), name='plantillaservicio_delete')
         ])),
