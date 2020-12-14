@@ -74,7 +74,7 @@ class EscalaSalarialReforma(BaseUrls, models.Model):
     coeficiente = models.DecimalField(max_digits=16, decimal_places=15, validators=[positive_number_validator])
     salario_escala = models.DecimalField(max_digits=7, decimal_places=2, validators=[positive_number_validator])
     tarifa_horaria = models.DecimalField(max_digits=16, decimal_places=15, null=True, blank=True,
-                                         validators=[MinValueValidator(1)])
+                                         validators=[positive_number_validator])
 
     def __str__(self):
         return self.grupo
