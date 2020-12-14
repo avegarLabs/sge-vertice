@@ -108,7 +108,7 @@ class Trabajador(BaseUrls):
     escala_salarial = models.ForeignKey(adm.EscalaSalarial, on_delete=models.DO_NOTHING)
     salario_escala = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     escala_salarial_reforna = models.ForeignKey(adm.EscalaSalarialReforma, blank=True, null=True, on_delete=models.DO_NOTHING)
-    salario_escala_ref = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    salario_escala_reforma = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     incre_res = models.DecimalField('pago por perfeccionamiento', max_digits=5, decimal_places=2)
     sal_bas = models.DecimalField('salario básico', max_digits=5, decimal_places=2)
     POR_CIES_OPT = (('0', '0%'), ('1', '30%'), ('2', '50%'))
