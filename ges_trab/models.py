@@ -107,8 +107,6 @@ class Trabajador(BaseUrls):
     j_laboral = models.BooleanField('jornada laboral de 208 horas', default=False)
     escala_salarial = models.ForeignKey(adm.EscalaSalarial, on_delete=models.DO_NOTHING)
     salario_escala = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
-    escala_salarial_ref = models.ForeignKey(adm.EscalaSalarialReforma, blank=True, null=True, on_delete=models.DO_NOTHING)
-    salario_escala_ref = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     incre_res = models.DecimalField('pago por perfeccionamiento', max_digits=5, decimal_places=2)
     sal_bas = models.DecimalField('salario básico', max_digits=5, decimal_places=2)
     POR_CIES_OPT = (('0', '0%'), ('1', '30%'), ('2', '50%'))
@@ -130,7 +128,6 @@ class Trabajador(BaseUrls):
     sal_cat_cient = models.DecimalField(
         'salario por cat. científica', max_digits=5, decimal_places=2, blank=True, null=True, default=0.0)
     salario_total = models.DecimalField('salario total', max_digits=7, blank=True, null=True, decimal_places=2)
-    salario_total_reforma = models.DecimalField('salario total reforma', max_digits=7, blank=True, null=True, decimal_places=2)
     salario_jornada_laboral = models.DecimalField('salario por jornada laboral', max_digits=5, blank=True,
                                                   null=True, default=0.0, decimal_places=2)
     # Datos docentes
@@ -209,9 +206,9 @@ class Trabajador(BaseUrls):
     def calcular_salario_total_reforma(self):
         sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
         if self.cat_cient == '2':
-            sal_total += 440      # valore referente no real todo verificar valores reales
+            sal_total += 400       # valore referente no real todo verificar valores reales
         elif self.cat_cient == '3':
-            sal_total += 825      # valore referente no real todo verificar valores reales
+            sal_total += 800       # valore referente no real todo verificar valores reales
         return sal_total
 
     @property
@@ -225,9 +222,9 @@ class Trabajador(BaseUrls):
     @property
     def salario_cat_cient(self):
         if self.cat_cient == '2':
-            return 440
+            return 400
         if self.cat_cient == '3':
-            return 825
+            return 800
         return 0
 
     def __str__(self):
