@@ -204,7 +204,10 @@ class Trabajador(BaseUrls):
 
     @property
     def calcular_salario_total_reforma(self):
-        sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
+        sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.grupo).salario_escala
+        if self.categoria is 'T' or self.categoria is 'C':
+            sal_total = adm.EscalaSalarialReforma.objects.get(
+                grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
@@ -216,8 +219,10 @@ class Trabajador(BaseUrls):
 
     @property
     def salario_escala_reforma(self):
-        sal_total = adm.EscalaSalarialReforma.objects.get(
-            grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
+        sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.grupo).salario_escala
+        if self.categoria is 'T' or self.categoria is 'C':
+            sal_total = adm.EscalaSalarialReforma.objects.get(
+                grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
@@ -225,7 +230,10 @@ class Trabajador(BaseUrls):
 
     @property
     def grupo_escala_reforma(self):
-        return adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).grupo
+        grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.grupo).grupo
+        if self.categoria is 'T' or self.categoria is 'C':
+            grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).grupo
+        return grupo_escala
 
     @property
     def salario_cat_cient(self):
