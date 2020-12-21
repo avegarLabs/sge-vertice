@@ -208,6 +208,10 @@ class Trabajador(BaseUrls):
         if self.categoria is 'T' or self.categoria is 'C':
             sal_total = adm.EscalaSalarialReforma.objects.get(
                 grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
+            if self.cargo_id is '217' and self.escala_salarial_id is '5':
+                sal_total = adm.EscalaSalarialReforma.objects.get(grupo_id=7).salario_escala
+            if self.cargo_id is '217' and self.escala_salarial_id is '7':
+                sal_total = adm.EscalaSalarialReforma.objects.get(grupo_id=13).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
@@ -223,6 +227,10 @@ class Trabajador(BaseUrls):
         if self.categoria is 'T' or self.categoria is 'C':
             sal_total = adm.EscalaSalarialReforma.objects.get(
                 grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
+            if self.cargo_id is '217' and self.escala_salarial_id is '5':
+                sal_total = adm.EscalaSalarialReforma.objects.get(grupo_id=7).salario_escala
+            if self.cargo_id is '217' and self.escala_salarial_id is '7':
+                sal_total = adm.EscalaSalarialReforma.objects.get(grupo_id=13).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
@@ -233,6 +241,11 @@ class Trabajador(BaseUrls):
         grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.grupo).grupo
         if self.categoria is 'T' or self.categoria is 'C':
             grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).grupo
+            if self.cargo_id is '217' and self.escala_salarial_id is '5':
+                grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo_id=7).grupo
+            if self.cargo_id is '217' and self.escala_salarial_id is '7':
+                grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo_id=13).grupo
+
         return grupo_escala
 
     @property
