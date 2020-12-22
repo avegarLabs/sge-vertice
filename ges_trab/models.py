@@ -217,9 +217,9 @@ class Trabajador(BaseUrls):
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
         if self.cat_cient == '2':
-            sal_total += 440.00       # valore referente no real todo verificar valores reales
+            sal_total += 440       # valore referente no real todo verificar valores reales
         elif self.cat_cient == '3':
-            sal_total += 825.00       # valore referente no real todo verificar valores reales
+            sal_total += 825       # valore referente no real todo verificar valores reales
         return sal_total
 
     @property
