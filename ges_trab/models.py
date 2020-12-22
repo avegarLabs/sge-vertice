@@ -209,17 +209,17 @@ class Trabajador(BaseUrls):
             sal_total = adm.EscalaSalarialReforma.objects.get(
                 grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
             if self.cargo_id == 217:
-                if self.escala_salarial_id == 5:
+                if self.escolaridad is 'TM':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=7).salario_escala
-                if self.escala_salarial_id == 7:
+                if self.escolaridad is 'Univ':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=13).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
         if self.cat_cient == '2':
-            sal_total += 440       # valore referente no real todo verificar valores reales
+            sal_total += 440.00       # valore referente no real todo verificar valores reales
         elif self.cat_cient == '3':
-            sal_total += 825       # valore referente no real todo verificar valores reales
+            sal_total += 825.00       # valore referente no real todo verificar valores reales
         return sal_total
 
     @property
@@ -229,9 +229,9 @@ class Trabajador(BaseUrls):
             sal_total = adm.EscalaSalarialReforma.objects.get(
                 grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
             if self.cargo_id == 217:
-                if self.escala_salarial_id == 5:
+                if self.escolaridad is 'TM':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=7).salario_escala
-                if self.escala_salarial_id == 7:
+                if self.escolaridad is 'Univ':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=13).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
@@ -244,9 +244,9 @@ class Trabajador(BaseUrls):
         if self.categoria is 'T' or self.categoria is 'C':
             grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).grupo
             if self.cargo_id == 217:
-                if self.escala_salarial_id == 5:
+                if self.escolaridad is 'TM':
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=7).grupo
-                if self.escala_salarial_id == 7:
+                if self.escolaridad is 'Univ':
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=13).grupo
 
 
@@ -255,9 +255,9 @@ class Trabajador(BaseUrls):
     @property
     def salario_cat_cient(self):
         if self.cat_cient == '2':
-            return 440
+            return 440.00
         if self.cat_cient == '3':
-            return 825
+            return 825.00
         return 0
 
     def __str__(self):
