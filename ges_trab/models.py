@@ -209,9 +209,10 @@ class Trabajador(BaseUrls):
             sal_total = adm.EscalaSalarialReforma.objects.get(
                 grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
             if self.cargo_id == 217:
-                if self.escolaridad is 'TM':
+                print(self.escolaridad)
+                if self.escolaridad == 'TM':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=7).salario_escala
-                if self.escolaridad is 'Univ':
+                if self.escolaridad == 'Univ':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=13).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
@@ -229,9 +230,9 @@ class Trabajador(BaseUrls):
             sal_total = adm.EscalaSalarialReforma.objects.get(
                 grupo=self.escala_salarial.escala_reforma.grupo).salario_escala
             if self.cargo_id == 217:
-                if self.escolaridad is 'TM':
+                if self.escolaridad == 'TM':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=7).salario_escala
-                if self.escolaridad is 'Univ':
+                if self.escolaridad == 'Univ':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=13).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
@@ -244,9 +245,9 @@ class Trabajador(BaseUrls):
         if self.categoria is 'T' or self.categoria is 'C':
             grupo_escala = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.escala_reforma.grupo).grupo
             if self.cargo_id == 217:
-                if self.escolaridad is 'TM':
+                if self.escolaridad == 'TM':
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=7).grupo
-                if self.escolaridad is 'Univ':
+                if self.escolaridad == 'Univ':
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=13).grupo
 
 
