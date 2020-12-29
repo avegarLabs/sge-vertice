@@ -240,7 +240,6 @@ class Trabajador(BaseUrls):
                 if self.escolaridad == 'Univ':
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=13).grupo
         if self.cargo_id == 195:
-                    print(self.nombre_completo)
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=5).grupo
 
         return grupo_escala
