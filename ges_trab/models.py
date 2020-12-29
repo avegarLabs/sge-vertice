@@ -222,8 +222,8 @@ class Trabajador(BaseUrls):
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=7).salario_escala
                 if self.escolaridad == 'Univ':
                     sal_total = adm.EscalaSalarialReforma.objects.get(id=13).salario_escala
-            if self.cargo_id == 195:
-                    sal_total = adm.EscalaSalarialReforma.objects.get(id=5).salario_escala
+        if self.cargo_id == 195:
+                sal_total = adm.EscalaSalarialReforma.objects.get(id=5).salario_escala
         if self.j_laboral is True:
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
@@ -239,7 +239,8 @@ class Trabajador(BaseUrls):
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=7).grupo
                 if self.escolaridad == 'Univ':
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=13).grupo
-            if self.cargo_id == 195:
+        if self.cargo_id == 195:
+                    print(self.nombre_completo)
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=5).grupo
 
         return grupo_escala
