@@ -801,6 +801,24 @@ def preview_plantilla_rf(request):
     }
     return render(request, 'preview_plantilla_reforma.html', context)
 
+@permission_required('plantilla.read_plantilla', raise_exception=True)
+def preview_plantilla_rf_new(request):
+    context = {
+        'queryset': request_plantilla_all(),
+        'title': 'PLANTILLA REFORMA SALARIAL',
+        'export_pdf': 'plantilla-rf_export'
+    }
+    return render(request, 'preview_plantilla_reforma_new.html', context)
+
+@permission_required('plantilla.read_plantilla', raise_exception=True)
+def preview_plantilla_rf_new(request):
+    context = {
+        'queryset': request_plantilla_all(),
+        'title': 'PLANTILLA REFORMA SALARIAL',
+        'export_pdf': 'plantilla-rf_export'
+    }
+    return render(request, 'preview_plantilla_reforma_new.html', context)
+
 
 @permission_required('plantilla.export_plantilla', login_url='home_principal')
 def export_plantilla_general(request):
