@@ -225,7 +225,7 @@ class Trabajador(BaseUrls):
         if self.cargo_id == 195:
                 sal_total = adm.EscalaSalarialReforma.objects.get(id=5).salario_escala
         if self.codigo_interno == '021':
-            sal_total = adm.EscalaSalarialReforma.objects.get(id=23).salario_escala
+            sal_total = adm.EscalaSalarialReforma.objects.get(id=24).salario_escala
         if self.codigo_interno == '163':
             sal_total = adm.EscalaSalarialReforma.objects.get(id=18).salario_escala
         if self.codigo_interno == '206':
@@ -248,7 +248,7 @@ class Trabajador(BaseUrls):
         if self.cargo_id == 195:
                     grupo_escala = adm.EscalaSalarialReforma.objects.get(id=5).grupo
         if self.codigo_interno == '021':
-            grupo_escala = adm.EscalaSalarialReforma.objects.get(id=23).grupo
+            grupo_escala = adm.EscalaSalarialReforma.objects.get(id=24).grupo
         if self.codigo_interno == '163':
             grupo_escala = adm.EscalaSalarialReforma.objects.get(id=18).grupo
         if self.codigo_interno == '206':
