@@ -45,7 +45,7 @@ class PersonasManager(models.Manager):
 class Trabajador(BaseUrls):
     # Datos personales del trabajador
     primer_nombre = models.CharField(max_length=20, validators=[person_name_validator])
-    segundo_nombre = models.CharField(max_length=20, blank=True, null=True, validators=[person_name_validator])
+    segundo_nombre = models.CharField(max_length=20, blank=True, null=True, default="''", validators=[person_name_validator])
     apellidos = models.CharField(max_length=60, validators=[person_name_validator])
     ci = models.CharField('carnet de identidad', max_length=11, unique=True)
     foto = models.ImageField(upload_to='fotos', blank=True, validators=[validate_image_file_extension])
