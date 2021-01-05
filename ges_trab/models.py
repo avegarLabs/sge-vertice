@@ -212,6 +212,13 @@ class Trabajador(BaseUrls):
         return sal_total
 
     @property
+    def calcular_sal_j_laboral_ref(self):
+        sal_ge = adm.EscalaSalarialReforma.objects.get(grupo=self.grupo_escala_reforma).salario_escala
+        sal_total_208 = self.salario_escala_reforma
+        sal_total = sal_total_208 - sal_ge
+        return sal_total
+
+    @property
     def salario_escala_reforma(self):
         sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial.grupo).salario_escala
         if self.categoria is 'T' or self.categoria is 'C':
