@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        th {
+            padding: 10px 5px !important;
+        }
+        .btn-green{background-color:#388e3c!important;color:#fff!important}
+        .btn-green:hover{background-color:#3fa044}
+    </style>
+{% endblock %}
+
+{% block migas %}
+{#    <ol class="breadcrumb" style="margin-top: 56px; opacity: 0.9; position: fixed;#}
+{#    top: 0; right: 0; left: 0; z-index: 1000;">#}
+{#        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>#}
+{#        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>#}
+{#    </ol>#}
+{% endblock %}
+
+{% block content %}
+    <div class=content align="center" style="font-size: smaller; width: 1000px;">
+        <h5><strong>{{ title }}</strong></h5>
+    </div>
+    <div class="text-right" style="color: white;">
+        <a href="{% url export_pdf %}" class="btn btn-sm btn-success" style="font-size: small">
+            <i class="fa fa-download"></i> Exportar a PDF
+        </a>
+        <a class="btn btn-sm btn-green waves-effect px-3 export" id="excel_btn" target="_blank" type="text/csv">
+            EXCEL
+        </a>
+    </div>
+    <p></p>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="display table table-striped" cellspacing="0" id="tabla_report"
+                   style="width: 100%;">
+                <thead>
+                <tr>
+                    <th>Area/Cargo</th>
+                    <th>Categoria Ocupacional</th>
+                    <th>Nombre y Apellidos</th>
+                    <th>Sexo</th>
+                    <th>Expediente Laboral</th>
+                    <th>Nivel Educacional</th>
+                    <th>Grupo Escala</th>
+                    <th>Total Salario</th>
+                    <th>Salario Escala</th>
+                    <th>Sal. Jor 208</th>
+                    <th>Salario Maest/Doct.</th>
+                    <th>Fecha Alta</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for trab in queryset %}
+                    {% ifchanged trab.unidad_nombre %}
+                        <tr>
+                            <td colspan="12" style="font-weight: bold; text-align: left">{{ trab.unidad_nombre }}</td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td>
+                        </tr>
+                    {% endifchanged %}
+                    {% ifchanged trab.dpto_codigo %}
+                        <tr>
+                            <td colspan="12" style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td>
+                        </tr>
+                    {% endifchanged %}
+                    <tr>
+                        <td>{{ trab.cargo_nombre }}</td>
+                        <td class="text-center">{{ trab.categoria }}</td>
+                        <td>{{ trab.nombre_completo }}</td>
+                        <td class="text-center">{{ trab.sexo }}</td>
+                        <td class="text-center">{{ trab.ci }}</td>
+                        <td class="text-center">{{ trab.escolaridad }}</td>
+                        <td class="text-center">{{ trab.grupo_escala_reforma}}</td>
+                        {% language 'en' %}
+                            <td class="text-center">{{ trab.calcular_salario_total_reforma }} </td>
+                            <td class="text-center">{{ trab.salario_escala_reforma }}</td>
+                            <td class="text-center">{{ trab.calcular_sal_j_laboral_ref}}</td>
+                            <td class="text-center">{{ trab.salario_cat_cient }}</td>
+                        {% endlanguage %}
+                        <td class="text-center">{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <h5 style="text-align: right">Existen en total {{ queryset|length }} registros en la Base de Datos</h5>
+        </div>
+    </div>
+
+    <div id="popup" class="modal fade" role="dialog"></div>
+{% endblock %}
+
+{% block javascript %}{% endblock %}
+
+
+

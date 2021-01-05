@@ -761,6 +761,15 @@ def preview_plantilla_general(request):
     }
     return render(request, 'preview_plantilla.html', context)
 
+@permission_required('plantilla.read_plantilla', login_url='home_principal')
+def preview_plantilla_general_new(request):
+    context = {
+        'queryset': request_plantilla_all(),
+        'title': 'Plantilla General',
+        'export_pdf': 'plantilla-general_new_export'
+    }
+    return render(request, 'preview_plantilla_new.html', context)
+
 
 @permission_required('plantilla.read_plantilla', login_url='home_principal')
 def preview_plantilla_cd(request):
@@ -801,24 +810,6 @@ def preview_plantilla_rf(request):
     }
     return render(request, 'preview_plantilla_reforma.html', context)
 
-@permission_required('plantilla.read_plantilla', raise_exception=True)
-def preview_plantilla_rf_new(request):
-    context = {
-        'queryset': request_plantilla_all(),
-        'title': 'PLANTILLA REFORMA SALARIAL',
-        'export_pdf': 'plantilla-rf_export'
-    }
-    return render(request, 'preview_plantilla_reforma_new.html', context)
-
-@permission_required('plantilla.read_plantilla', raise_exception=True)
-def preview_plantilla_rf_new(request):
-    context = {
-        'queryset': request_plantilla_all(),
-        'title': 'PLANTILLA REFORMA SALARIAL',
-        'export_pdf': 'plantilla-rf_export'
-    }
-    return render(request, 'preview_plantilla_reforma_new.html', context)
-
 
 @permission_required('plantilla.export_plantilla', login_url='home_principal')
 def export_plantilla_general(request):
@@ -827,6 +818,14 @@ def export_plantilla_general(request):
         'title': 'Plantilla General'
     }
     return export_factory(context)
+
+@permission_required('plantilla.export_plantilla', login_url='home_principal')
+def export_plantilla_general_new(request):
+    context = {
+        'queryset': request_plantilla_all(),
+        'title': 'Plantilla General'
+    }
+    return export_factory_new(context)
 
 
 @permission_required('plantilla.export_plantilla', login_url='home_principal')
@@ -868,6 +867,22 @@ def export_plantilla_rf(request):
 def export_factory(context, template_path=None):
     if template_path is None:
         template_path = 'export_plantilla.html'
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{context["title"]}.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisastatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback, encoding='utf8')
+    if pisastatus.err:
+        return HttpResponse(
+            'We had some errors with code %s <pre>%s</pre>' % (pisastatus.err, html)
+        )
+    return response
+
+def export_factory_new(context, template_path=None):
+    if template_path is None:
+        template_path = 'export_plantilla_new.html'
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{context["title"]}.pdf"'
 

@@ -33,6 +33,8 @@ urlpatterns = [
     path('reportes/plantillas/', include([
         path('plantilla-general/', views.preview_plantilla_general, name='plantilla-general'),
         path('plantilla-general/exportar/', views.export_plantilla_general, name='plantilla-general_export'),
+        path('plantilla-general_new/', views.preview_plantilla_general_new, name='plantilla-general_new'),
+        path('plantilla-general_new/exportar/', views.export_plantilla_general_new, name='plantilla-general_new_export'),
         path('plantilla-contratos-indeterminados/', views.preview_plantilla_ci, name='plantilla-ci'),
         path('plantilla-contratos-indeterminados/exportar/', views.export_plantilla_ci, name='plantilla-ci_export'),
         path('plantilla-recien-graduados/', views.preview_plantilla_rg,
@@ -42,7 +44,6 @@ urlpatterns = [
         path('plantilla-contratos-determinados/', views.preview_plantilla_cd, name='plantilla-cd'),
         path('plantilla-contratos-determinados/exportar/', views.export_plantilla_cd, name='plantilla-cd_export'),
         path('plantilla-reforma/', views.preview_plantilla_rf, name='plantilla-rf'),
-        path('plantilla-reforma-new/', views.preview_plantilla_rf_new, name='plantilla-rf-new'),
         path('plantilla-reforma/exportar/', views.export_plantilla_rf, name='plantilla-rf_export'),
         path('calzado/', views.calzado_medios_de_proteccion, name='calzado_export')
     ]))

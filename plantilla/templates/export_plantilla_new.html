@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <style>
+        @page {
+            size: letter landscape;
+            @frame col1_frame {  /* Content frame 1 */
+                left: 1cm; width: 25.7cm; top: 1cm; height: 19cm;
+            }
+            @frame footer_frame {  /* Static frame */
+                -pdf-frame-content:footer_content;
+                left: 1cm; width: 25.7cm; top: 20cm; height: 2cm;
+            }
+        }
+    </style>
+    <style type="text/css">
+        .container {
+            width: 600px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 20px;
+            text-align: left;
+        }
+
+        td {
+            padding: 4px;
+            border-top: 1px solid #dddddd;
+            vertical-align: middle;
+        }
+
+        th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dddddd;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p class="title"><strong>{{ title }}</strong></p>
+    <div></div>
+    {% regroup queryset by unidad_nombre as unidad_list %}
+    {% for unidad in unidad_list %}
+        <table class="display table table-striped" cellspacing="0" width="100%" id="tabla" repeat="1">
+            <thead>
+            <tr>
+                    <th>Area/Cargo</th>
+                    <th>Categoria Ocupacional</th>
+                    <th>Nombre y Apellidos</th>
+                    <th>Sexo</th>
+                    <th>Expediente Laboral</th>
+                    <th>Nivel Educacional</th>
+                    <th>Grupo Escala</th>
+                    <th>Total Salario</th>
+                    <th>Salario Escala</th>
+                    <th>Sal. Jor 208</th>
+                    <th>Salario Maest/Doct.</th>
+                    <th>Fecha Alta</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="{% block unidad_cols %}12{% endblock %}" style="font-weight: bold; text-align: left">{{ unidad.grouper }}</td>
+            </tr>
+            {% for trab in unidad.list %}
+                {% ifchanged trab.dpto_nombre %}
+                    <tr>
+                        <td colspan="{% block dep_cols %}12{% endblock %}"
+                            style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
+                    </tr>
+                {% endifchanged %}
+                <tr>
+                    <td>{{ trab.cargo_nombre }}</td>
+                    <td class="text-center">{{ trab.categoria }}</td>
+                    <td>{{ trab.nombre_completo }}</td>
+                    <td class="text-center">{{ trab.sexo }}</td>
+                    <td class="text-center">{{ trab.ci }}</td>
+                    <td class="text-center">{{ trab.escolaridad }}</td>
+                    <td class="text-center">{{ trab.grupo_escala_reforma}}</td>
+                    <td class="text-center">{{ trab.calcular_salario_total_reforma }} </td>
+                    <td class="text-center">{{ trab.salario_escala_reforma }}</td>
+                    <td class="text-center">{{ trab.calcular_sal_j_laboral_ref}}</td>
+                    <td class="text-center">{{ trab.salario_cat_cient }}</td>
+                    <td class="text-center">{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h5 style="text-align: right">Total de Trabajadores de {{ unidad.grouper }} &nbsp;&nbsp;&nbsp;&nbsp; {{ unidad.list|length }}</h5>
+        {% if not forloop.last %}
+            <pdf:nextpage/>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Contenido del pie de página 'footer_frame' -->
+<div id="footer_content">
+    <div style="float: right">Sistema Gestión Recursos Humanos &copy; Empresa de Servicios de Ingeniería y Diseño de
+        Holguín - VERTICE 2020
+    </div>
+    página <pdf:pagenumber/> de <pdf:pagecount/>
+</div>
+</body>
+</html>
+
