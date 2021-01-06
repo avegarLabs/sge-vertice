@@ -303,6 +303,18 @@ class Trabajador(BaseUrls):
             sal_total = round(sal_total, 2)
         return sal_total
 
+    @property
+    def salario_cat_cient_old(self):
+        sal_total = 0
+        if self.cat_cient == '2':
+            sal_total = 80
+        if self.cat_cient == '3':
+            sal_total = 150
+        if self.j_laboral is True:
+            sal_total = (sal_total / Decimal(190.6)) * 208
+            sal_total = round(sal_total, 2)
+        return sal_total
+
     def __str__(self):
         return self.nombre_completo
 
