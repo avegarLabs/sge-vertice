@@ -34,7 +34,7 @@ class Cargo(BaseUrls, models.Model):
 
 class UnidadOrg(BaseUrls, models.Model):
     nombre = models.CharField(max_length=60, unique=True, validators=[general_name_validator])
-    siglas = models.CharField(max_length=10, blank=True, validators=[general_name_validator])
+    siglas = models.CharField(max_length=10, blank=True, null=True)
 
 
     def __str__(self):
