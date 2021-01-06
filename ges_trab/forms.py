@@ -64,6 +64,7 @@ class TrabajadorForm(forms.ModelForm):
             'actividad': Select2Widget,
             'orga_defensa': Select2Widget
         }
+        exclude = ('salario_escala_ref', 'escala_salarial_ref', 'salario_total_reforma')
 
 
 class NucleoFamiliarForm(forms.ModelForm):
