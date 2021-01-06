@@ -35,6 +35,24 @@ class Cargo(BaseUrls, models.Model):
 class UnidadOrg(BaseUrls, models.Model):
     nombre = models.CharField(max_length=60, unique=True, validators=[general_name_validator])
 
+    @property
+    def siglas(self):
+        siglas = ''
+        if self.id == 1:
+            siglas = 'OC'
+        if self.id == 2:
+            siglas = 'UGDD'
+        if self.id == 3:
+            siglas = 'USTI'
+        if self.id == 4:
+            siglas = 'UGDC1'
+        if self.id == 6:
+            siglas = 'UGDC3'
+        if self.id == 8:
+            siglas = 'UGDC5'
+        if self.id == 10:
+            siglas = 'UEB'
+        return siglas
 
     def __str__(self):
         return self.nombre
