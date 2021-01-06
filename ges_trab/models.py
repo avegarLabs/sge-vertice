@@ -133,8 +133,8 @@ class Trabajador(BaseUrls):
     salario_jornada_laboral = models.DecimalField('salario por jornada laboral', max_digits=5, blank=True,
                                                   null=True, default=0.0, decimal_places=2)
     salario_total_reforma = models.DecimalField('salario total reforma', max_digits=10, blank=True, null=True, decimal_places=2)
-    salario_jornada_laboral_reforma = models.DecimalField('salario por jornada laboral', max_digits=5, blank=True,
-                                                  null=True, default=0.0, decimal_places=2)
+    # salario_jornada_laboral_reforma = models.DecimalField('salario por jornada laboral', max_digits=5, blank=True,
+    #                                               null=True, default=0.0, decimal_places=2)
     # Datos docentes
     actividad = models.ForeignKey(Actividad, on_delete=models.DO_NOTHING, blank=True, null=True)
     calificacion = models.ForeignKey(
