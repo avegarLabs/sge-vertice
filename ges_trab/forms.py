@@ -54,6 +54,8 @@ class TrabajadorForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({'min': 0})
         for field in ['fecha_contrato']:
             self.fields[field].widget.attrs.update({'class': 'inline-date form-control'})
+        for field in ['segundo_nombre']:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Trabajador
