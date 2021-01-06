@@ -110,11 +110,12 @@
 {% endblock filters %}
 
 {% block table_header %}
-    <th class="text-center">Cód</th>
-    <th>Nombre</th>
-    {#    <th class="text-center">CI</th>#}
-    <th class="text-center">Cat</th>
-    <th class="text-center">Grupo</th>
+    <th class="text-center">Cód.</th>
+    <th>Nombre y Apellidos</th>
+    <th class="text-center">CI</th>
+    <th class="text-center">Cat.</th>
+    <th class="text-center">Grp</th>
+    <th>Unidad</th>
     <th>Departamento</th>
     <th>Especialidad</th>
     <th>Sexo</th>
@@ -127,9 +128,10 @@
             {{ item.codigo_interno }}
         </td>
         <td>{{ item.primer_nombre }} {{ item.segundo_nombre }} {{ item.apellidos }}</td>
-        {#<td class="text-center">{{ item.ci }}</td>#}
+        <td class="text-center">{{ item.ci }}</td>
         <td class="text-center">{{ item.categoria }}</td>
         <td class="text-center">{{ item.grupo_escala }}</td>
+        <td>{{ item.unidad_org.siglas }}</td>
         <td>{{ item.departamento_nombre }}</td>
         <td>{{ item.especialidad_nombre|default_if_none:item.escolaridad }}</td>
         <td class="text-center">{{ item.sexo }}</td>
@@ -158,15 +160,16 @@
 {% endblock table_body_outside %}
 
 {% block table_foot %}
-    <th style="padding: 6px 6px !important;">Código</th>
-    <th style="padding: 6px 6px !important;">Nombre</th>
-    {#<th style="padding: 6px 6px !important;">CI</th>#}
-    <th style="padding: 6px 6px !important;">Categoría</th>
-    <th style="padding: 6px 6px !important;">Grupo</th>
-    <th style="padding: 6px 6px !important;">Departamento</th>
-    <th style="padding: 6px 6px !important;">Especialidad</th>
-    <th style="">Sexo</th>
-    <th style="padding: 6px 6px !important;">Alta</th>
+    <th class="text-center">Cód.</th>
+    <th>Nombre y Apellidos</th>
+    <th class="text-center">CI</th>
+    <th class="text-center">Cat.</th>
+    <th class="text-center">Grp</th>
+    <th>Unidad</th>
+    <th>Departamento</th>
+    <th>Especialidad</th>
+    <th>Sexo</th>
+    <th class="text-center">Alta</th>
 {% endblock table_foot %}
 
 {% block styles %}
@@ -232,12 +235,23 @@
         table.columns().every(function () {
             var that = this;
 
-            $('input', this.footer()).on('keyup change', function () {
-                if (that.search() !== this.value) {
-                    that
-                        .search(this.value)
-                        .draw();
-                }
+            // Setup - add a text input to each footer cell
+            $('#table_list').find('tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input class="form-control" style="font-size: smaller" type="text" placeholder="Buscar ' + title + '" />');
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
             });
         });
     </script>

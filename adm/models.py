@@ -34,6 +34,8 @@ class Cargo(BaseUrls, models.Model):
 
 class UnidadOrg(BaseUrls, models.Model):
     nombre = models.CharField(max_length=60, unique=True, validators=[general_name_validator])
+    siglas = models.CharField(max_length=10, unique=True, validators=[general_name_validator])
+
 
     def __str__(self):
         return self.nombre
