@@ -110,31 +110,31 @@
 {% endblock filters %}
 
 {% block table_header %}
-    <th class="text-center">Cód.</th>
-    <th>Nombre y Apellidos</th>
-    <th class="text-center">CI</th>
-    <th class="text-center">Cat.</th>
-    <th class="text-center">Grp</th>
     <th>Unidad</th>
     <th>Departamento</th>
-    <th>Especialidad</th>
+    <th>Cargo</th>
+    <th>Categoría</th>
+    <th>Cód.</th>
+    <th>Nombre y Apellidos</th>
     <th>Sexo</th>
+    <th class="text-center">CI</th>
+    <th>Nivel Educ.</th>
+    <th class="text-center">Grp</th>
     <th class="text-center">Alta</th>
 {% endblock table_header %}
 
 {% block table_body_outside %}
-    <tr>
-        <td class="text-center" onclick="open_re_useful_modal(`{% url model_name|add:'_detail' item.id %}`)">
-            {{ item.codigo_interno }}
-        </td>
-        <td>{{ item.primer_nombre }} {{ item.segundo_nombre }} {{ item.apellidos }}</td>
-        <td class="text-center">{{ item.ci }}</td>
-        <td class="text-center">{{ item.categoria }}</td>
-        <td class="text-center">{{ item.grupo_escala }}</td>
+    <tr onclick="open_re_useful_modal(`{% url model_name|add:'_detail' item.id %}`)">
         <td>{{ item.unidad_org.siglas }}</td>
-        <td>{{ item.departamento_nombre }}</td>
-        <td>{{ item.especialidad_nombre|default_if_none:item.escolaridad }}</td>
+        <td>{{ item.dpto_nombre }}</td>
+        <td>{{ item.cargo }}</td>
+        <td class="text-center">{{ item.categoria }}</td>
+        <td class="text-center">{{ item.codigo_interno }}</td>
+        <td>{{ item.primer_nombre }} {{ item.segundo_nombre }} {{ item.apellidos }}</td>
         <td class="text-center">{{ item.sexo }}</td>
+        <td class="text-center">{{ item.ci }}</td>
+        <td class="text-center">{{ item.escolaridad }}</td>
+        <td class="text-center">{{ item.grupo_escala }}</td>
         <td class="text-center"><span
                 style="display: none">{{ item.fecha_alta|date:"Ymd" }}</span>{{ item.fecha_alta|date:"d/m/Y" }}</td>
         <td>
@@ -160,15 +160,16 @@
 {% endblock table_body_outside %}
 
 {% block table_foot %}
-    <th class="text-center">Cód.</th>
-    <th>Nombre y Apellidos</th>
-    <th class="text-center">CI</th>
-    <th class="text-center">Cat.</th>
-    <th class="text-center">Grp</th>
     <th>Unidad</th>
     <th>Departamento</th>
-    <th>Especialidad</th>
+    <th>Cargo</th>
+    <th>Categoría</th>
+    <th>Cód.</th>
+    <th>Nombre y Apellidos</th>
     <th>Sexo</th>
+    <th class="text-center">CI</th>
+    <th>Nivel Educ.</th>
+    <th class="text-center">Grp</th>
     <th class="text-center">Alta</th>
 {% endblock table_foot %}
 
