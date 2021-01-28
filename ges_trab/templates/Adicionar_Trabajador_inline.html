@@ -444,7 +444,7 @@
             </div>
             <div class="row">
                 <div class="col-auto mr-auto">
-                    <a href="{% url 'GestionarTrabajador' %}">
+                    <a href="{% url 'trabajador_list' %}">
                         <button type="button" class="btn btn-danger">Cancelar</button>
                     </a>
                 </div>
@@ -676,8 +676,8 @@
         $(document).ready(function() {
             var $especialidad = $("#id_especialidad :selected").val() | 0,
                 $calificacion = $("#id_calificacion :selected").val() | 0,
-                $unidad = $("#id_unidad_org :selected").val() | 0,
-                $departamento = $("#id_departamento :selected").val() | 0;
+                {#$unidad = $("#id_unidad_org :selected").val() | 0,#}
+                {#$departamento = $("#id_departamento :selected").val() | 0;#}
 
             $('#id_especialidad').html('');
 
