@@ -1,72 +1,101 @@
 import datetime
 
 from django import forms
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.forms.models import inlineformset_factory
 from django_select2.forms import Select2Widget, ModelSelect2Widget
 
+
 from .models import *
-from adm.models import UnidadOrg, Departamento, Calificacion
+from adm.models import UnidadOrg, Departamento, Calificacion, Especialidad, Cargo, EscalaSalarialReforma
 from rechum.utils import decorate_bound_field
 
 decorate_bound_field()
 
 
 class TrabajadorForm(forms.ModelForm):
-#    unidad_org = forms.ModelChoiceField(
-#        queryset=UnidadOrg.objects.all(),
-#        label=u"Unidad organizacional",
-#        widget=ModelSelect2Widget(
-#            model=UnidadOrg,
-#            search_fields=['nombre__icontains']
-#        )
-#    )
-#    departamento = forms.ModelChoiceField(
-#        queryset=Departamento.objects.all(),
-#        label=u"Departamento",
-#        widget=ModelSelect2Widget(
-#            model=Departamento,
-#            search_fields=['nombre__icontains'],
-#            dependent_fields={'unidad': 'unidad_org'}
-#        )
-#    )
-#    calificacion = forms.ModelChoiceField(
-#        queryset=Calificacion.objects.all(),
-#        label=u"Calificación",
-#        widget=ModelSelect2Widget(
-#            model=Calificacion,
-#            search_fields=['nombre__icontains']
-#        )
-#    )
-#    plantilla = forms.ModelChoiceField(
-#        queryset=Plantilla.objects.all(),
-#        label=u"Plantilla",
-#        widget=ModelSelect2Widget(
-#            model=Plantilla,
-#            search_fields=['cargo__nombre__icontains'],
-#            dependent_fields={'departamento': 'departamento'}
-#        )
-#    )
+
+    unidad_org = forms.ModelChoiceField(
+       queryset=UnidadOrg.objects.all(),
+       label=u"Unidad organizacional",
+       widget=ModelSelect2Widget(
+           model=UnidadOrg,
+           search_fields=['nombre__icontains']
+       )
+    )
+    departamento = forms.ModelChoiceField(
+       queryset=Departamento.objects.all(),
+       label=u"Departamento",
+       widget=ModelSelect2Widget(
+           model=Departamento,
+           search_fields=['nombre__icontains'],
+           dependent_fields={'unidad_org': 'unidad'}
+       )
+    )
+
+    # calificacion = forms.ModelChoiceField(
+    #    queryset=Calificacion.objects.all(),
+    #    label=u"Calificación",
+    #    widget=ModelSelect2Widget(
+    #        model=Calificacion,
+    #        search_fields=['nombre__icontains']
+    #    )
+    # )
+    especialidad = forms.ModelChoiceField(
+       queryset=Especialidad.objects.all(),
+       label=u"Especialidad",
+       widget=ModelSelect2Widget(
+           model=Especialidad,
+           search_fields=['nombre__icontains'],
+           dependent_fields={'calificacion': 'calificacion'}
+
+       )
+    )
+
+
+    cargo = forms.ModelChoiceField(
+       queryset=Cargo.objects.all(),
+       label=u"Cargo",
+       widget=ModelSelect2Widget(
+           model=Cargo,
+           search_fields=['cargo__nombre__icontains'],
+           dependent_fields={'departamento': 'departamento'}
+       )
+    )
+
+    escala_salarial_ref = forms.ModelChoiceField(
+       queryset=EscalaSalarialReforma.objects.all(),
+       label=u"Escala Salarial",
+       widget=ModelSelect2Widget(
+           model=EscalaSalarialReforma,
+           search_fields=['grupo__icontains']
+       )
+    )
+
 
     def __init__(self, *args, **kwargs):
         super(TrabajadorForm, self).__init__(*args, **kwargs)
-        for field in ['sal_plus', 'sal_cond_anor', 'peso', 'estatura', 'salario_escala']:
+        for field in ['sal_plus', 'peso', 'estatura', 'salario_escala_ref']:
             self.fields[field].widget.attrs.update({'min': 0})
         for field in ['fecha_contrato']:
             self.fields[field].widget.attrs.update({'class': 'inline-date form-control'})
         for field in ['segundo_nombre']:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
+
+
     class Meta:
         model = Trabajador
         fields = '__all__'
         widgets = {
             'escolaridad': Select2Widget,
-            'especialidad': Select2Widget,
             'actividad': Select2Widget,
-            'orga_defensa': Select2Widget
+            'orga_defensa': Select2Widget,
+            'plantilla': Select2Widget
+
+
         }
-        exclude = ('salario_escala_ref', 'escala_salarial_ref', 'salario_total_reforma')
+        exclude = ('escala_salarial', 'salario_escala', 'incre_res', 'por_cies', 'cies', 'por_anti', 'antiguedad', 'sal_bas', 'salario_total')
 
 
 class NucleoFamiliarForm(forms.ModelForm):
@@ -153,7 +182,7 @@ class TrabajadorAltaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TrabajadorAltaForm, self).__init__(*args, **kwargs)
-        for field in ['sal_plus', 'sal_cond_anor', 'peso', 'estatura']:
+        for field in ['peso', 'estatura']:
             self.fields[field].widget.attrs.update({'min': 0})
 
     class Meta:
@@ -204,9 +233,7 @@ class TrabajadorAltaBajaForm(forms.ModelForm):
             't_contrato',
             'fuerza_i',
             't_pago',
-            'escala_salarial',
-            'cies',
-            'antiguedad',
+            'escala_salarial_ref',
             'motivo_alta'
         ]
 

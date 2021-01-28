@@ -8,21 +8,25 @@
     <th width="50%"></th>
     <th width="25%"></th>
     <th width="25%"></th>
+
+<tr align="center">
+        <td width="50%">Total</td>
+        <td width="25%">{{ total }}</td>
+        <td width="25%">  %</td>
+    </tr>
 {% endblock %}
 
 {% block table_body %}
-    <tr>
-        <td width="50%">{{ item.orga_defensa }}</td>
-        <td width="25%">{{ item.count }}</td>
+
+    <tr align="center">
+        <td width="50%">{{ item.nombre }}</td>
+        <td width="25%">{{ item.cantidad }}</td>
         <td width="25%">{{ item.porciento }}%</td>
     </tr>
+
 {% endblock %}
 {% block table_body_outside %}
-    <tr>
-        <td width="50%">Total</td>
-        <td width="25%">{{ total }}</td>
-        <td width="25%"></td>
-    </tr>
+
 {% endblock %}
 
 {% block extra_content %}

@@ -60,8 +60,8 @@
 {% block migas %}
     <ol class="breadcrumb" style="margin-top: 56px; opacity: 0.9; position: fixed;
     top: 0; right: 0; left: 0; z-index: 1000;">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'GestionarTrabajador' %}">Trabajadores</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'rechum_home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'trabajador_list' %}">Trabajadores</a></li>
         <li class="breadcrumb-item active" aria-current="page">Adicionar Trabajador</li>
     </ol>
 {% endblock %}
@@ -821,8 +821,6 @@
 
             var id_seleccionado = this.value;
 
-            // Esta linea lo que hace es limpiar el segundo select para volverlo a llenar
-            // luego con los valores que se obtendran en la peticion ajax.
             $("#id_salario_escala_ref").html("");
 
             $.get(`{% url 'ges_trab_home' %}select_salarioescala/${id_seleccionado}/`,
@@ -908,13 +906,13 @@
 	                        digits: true,
         	                remote: `{% url 'ver_ci' %}${$id_worker}`
                 	    },
-	                    //codigo_interno: {
-        	            //    minlength: 3,
-                	    //    maxlength: 3,
-                            //    required: true,
-	                    //    digits: true,
-        	            //    remote: `{% url 'ver_codigo_interno' %}${$id_worker}`
-                	    //},
+	                    codigo_interno: {
+        	                minlength: 3,
+                	        maxlength: 3,
+                                required: true,
+	                        digits: true,
+        	                remote: `{% url 'ver_codigo_interno' %}${$id_worker}`
+                	    },
 	                    usuario: {
         	                required: true,
                 	        remote: `{% url 'ver_usuario' %}${$id_worker}`

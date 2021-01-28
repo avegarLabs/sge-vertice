@@ -20,7 +20,7 @@
 {% block migas %}
     <ol class="breadcrumb" style="margin-top: 56px; opacity: 0.9; position: fixed;
     top: 0; right: 0; left: 0; z-index: 1000;">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'rechum_home' %}">Inicio</a></li>
         <li class="breadcrumb-item active" aria-current="page">Altas</li>
     </ol>
 {% endblock %}
@@ -143,7 +143,7 @@
                     <th style="width: 100px">Nombre(s)</th>
                     <th style="width: 100px">Apellidos</th>
                     <th style="width: 20px" class="text-center">Grupo</th>
-                    <th style="width: 70px">Unidad Org.</th>
+                    <th style="width: 70px" class="text-center">Unidad</th>
                     <th style="width: 90px">Departamento</th>
                     <th style="width: 90px">Cargo</th>
                     <th style="width: 20px" class="text-center">Nivel</th>
@@ -162,8 +162,8 @@
                         <td align="center">{{ i.categoria }}</td>
                         <td>{{ i.primer_nombre }} {% if i.segundo_nombre %}{{ i.segundo_nombre }}{% endif %}</td>
                         <td>{{ i.apellidos }}</td>
-                        <td align="center">{{ i.escala_salarial.grupo }}</td>
-                        <td>{{ i.unidad_org }}</td>
+                        <td align="center">{{ i.escala_salarial_ref }}</td>
+                        <td align="center">{{ i.unidad_org.siglas }}</td>
                         <td>{{ i.departamento }}</td>
                         <td>{{ i.cargo }}</td>
                         <td align="center">{{ i.escolaridad }}</td>
@@ -181,23 +181,13 @@
                                    class="badge badge-pill badge-danger">
                                     <i class="fa fa-arrow-down" title="Baja al Trabajador" style="color: white;"></i>
                                 </a>
-                                <a href="{% url 'ReporteContrato' i.pk %}"
-                                   class="badge badge-pill badge-warning"
-                                   style="color: white; background-color: orangered">
-                                    <i class="fa fa-file-text" title="Contrato Trabajador"></i>
+
+                                <a class="badge badge-pill badge-light dropdown-toggle dropdown-toggle-split" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                   onclick="open_re_useful_modal(`{% url 'trabajador_dropdown_menu' item.pk %}`, `{{ item.pk }}`)">
+                                    <i class="fa fa-list-ul"></i>
                                 </a>
-                                <a href="{% url 'MovimientoNominaAlta' i.pk %}"
-                                   class="badge badge-pill badge-secondary" style="background-color: orangered">
-                                    <i class="fa fa-file-text" title="Movimiento de Nómina"></i>
-                                </a>
-                                <a href="{% url 'AcuerdoConfidencialidad' i.pk %}"
-                                   class="badge badge-pill badge-secondary" style="background-color: orangered">
-                                    <i class="fa fa-file-text" title="Acuerdo de Confidencialidad"></i>
-                                </a>
-                                <a href="{% url 'SolicCuentaUser' i.pk %}"
-                                   class="badge badge-pill badge-secondary" style="background-color: orangered">
-                                    <i class="fa fa-file-text" title="Solicitud de Cuenta de Usuario"></i>
-                                </a>
+                                <div class="dropdown-menu" style="min-width: 270px" id="dropdown_{{ item.pk }}"></div>
                             </div>
                         </td>
                     </tr>

@@ -107,7 +107,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'rechum',
-        # 'NAME': 'rechum_gemm',
+        # 'NAME': 'sge_gemm',
         'HOST': '192.168.1.155',
         'USER': 'sge.vertice',
         'PASSWORD': 'Ve2020*',

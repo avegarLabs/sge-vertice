@@ -99,6 +99,7 @@ class EscalaSalarialReforma(BaseUrls, models.Model):
     class Meta:
         verbose_name = 'escala salarial reforma'
         verbose_name_plural = 'escalas salariales reforma'
+        ordering = ['id']
 
 
 class EscalaSalarial(BaseUrls, models.Model):

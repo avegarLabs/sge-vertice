@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-
 {% load static %}
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -93,7 +92,8 @@
     {% for movimiento in movimientos_list %}
         <div class="row">
             <div class="col-sm-6 text-left" style="margin-top: 40px"><p>
-                _________________________________________________________________________<img alt="Logo VERTICE" src="{% static 'images/logoN_h.jpg' %}" class="logo">
+                _________________________________________________________________________<img
+                    src="{% static 'images/LogoN_h.jpg' %}" class="logo" style="margin-right: auto"></div>
             </p>
         </div>
         <br>
@@ -102,7 +102,7 @@
             procedemos de mutuo acuerdo:</p>
         <p><strong>DE UNA PARTE: El empleador
             Lic. {{ director.primer_nombre }} {{ director.segundo_nombre }} {{ director.apellidos }}</strong>, a nombre y en
-            representación de la <strong>Empresa de Servicios de Ingeniería y Diseño de Holguín. VERTICE</strong>, que en lo
+            representación de la <strong>Empresa de Servicios de Ingeniería y Diseño de Holguín. VÉRTICE</strong>, que en lo
             adelante será la Administración.</p>
         <p><strong>DE OTRA PARTE:</strong> El trabajador(a):
             <strong>{{ movimiento.trabajador.primer_nombre }} {{ movimiento.trabajador.segundo_nombre }} {{ movimiento.trabajador.apellidos }}</strong>

@@ -71,6 +71,12 @@
                         Trabajadores
                     </a>
                 </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"#}
+{#                       href="{% url 'GestionarTrabajador' %}">#}
+{#                        Altas#}
+{#                    </a>#}
+{#                </li>#}
                 <li>
                     <a class="{% if model_name == 'movimiento' %}active{% endif %}"
                        href="{% url 'movimiento_list' %}">
@@ -373,6 +379,12 @@
                         Choferes en la Defensa
                     </a>
                 </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'resumen-plantilla_report' %}">
+                        Resumen de Plantilla
+                    </a>
+                </li>
             </ul>
         </li>
         <li>
@@ -384,12 +396,12 @@
             </a>
             <ul class="collapse list-unstyled {% if request.current_app == 'ges_trab' %}show{% endif %}"
                 id="submenuReforma">
-                <li>
-                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
-                       href="{% url 'CargarDatos' %}">
-                        Cargar Datos
-                    </a>
-                </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"#}
+{#                       href="{% url 'CargarDatos' %}">#}
+{#                        Cargar Datos#}
+{#                    </a>#}
+{#                </li>#}
                 <li>
                     <a class="{% if model_name == 'plantilla' %}active{% endif %}"
                        href="{% url 'plantilla-rf' %}" target="_blank">
@@ -402,6 +414,12 @@
                         Documentacion Reforma Salarial
                     </a>
                 </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"#}
+{#                       href="{% url 'Cambiar' %}">#}
+{#                        Cambiar#}
+{#                    </a>#}
+{#                </li>#}
             </ul>
         </li>
     {% endif %}

@@ -204,19 +204,19 @@
     <tr>
         <td>
             {% if trabajador.j_laboral == False %}
-                <div align="center"><strong>${{ trabajador.salario_escala }}</strong></div>
+                <div align="center"><strong>${{ trabajador.salario_escala_ref }}</strong></div>
             {% else %}
                 <div align="center"><strong>${{ trabajador.salario_jornada_laboral }}</strong></div>
             {% endif %}
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.incre_res }}</strong></div>
+            <div align="center"><strong>$ 0.00</strong></div>
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.cies }}</strong></div>
+            <div align="center"><strong>$ 0.00</strong></div>
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.antiguedad }}</strong></div>
+            <div align="center"><strong>$ 0.00</strong></div>
         </td>
         <td>
             <div align="center"><strong>${{ trabajador.sal_cat_cient }}</strong></div>
@@ -251,7 +251,7 @@
     </tr>
     <tr>
         <td colspan="4">
-            <div>Grupo Escala: <strong>{{ trabajador.escala_salarial.grupo }}</strong></div>
+            <div>Grupo Escala: <strong>{{ trabajador.escala_salarial_ref }}</strong></div>
         </td>
         <td colspan="3">
             <div>Categoría: <strong>{{ trabajador.categoria }}</strong></div>
@@ -446,19 +446,19 @@
     <tr>
         <td>
             {% if trabajador.j_laboral == False %}
-                <div align="center"><strong>${{ trabajador.salario_escala }}</strong></div>
+                <div align="center"><strong>${{ trabajador.salario_escala_ref }}</strong></div>
             {% else %}
                 <div align="center"><strong>${{ trabajador.salario_jornada_laboral }}</strong></div>
             {% endif %}
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.incre_res }}</strong></div>
+            <div align="center"><strong> - </strong></div>
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.cies }}</strong></div>
+            <div align="center"><strong> - </strong></div>
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.antiguedad }}</strong></div>
+            <div align="center"><strong> - </strong></div>
         </td>
         <td>
             <div align="center"><strong>${{ trabajador.sal_cat_cient }}</strong></div>
@@ -493,7 +493,7 @@
     </tr>
     <tr>
         <td colspan="4">
-            <div>Grupo Escala: <strong>{{ trabajador.escala_salarial.grupo }}</strong></div>
+            <div>Grupo Escala: <strong>{{ trabajador.escala_salarial_ref }}</strong></div>
         </td>
         <td colspan="3">
             <div>Categoría: <strong>{{ trabajador.categoria }}</strong></div>

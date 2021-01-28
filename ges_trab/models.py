@@ -164,6 +164,7 @@ class Trabajador(BaseUrls):
     org_cult = models.CharField('organizaciones culturales', max_length=20, blank=True,
                                 validators=[general_name_validator])
 
+
     # Talla
     zapato = models.CharField(max_length=4)
     saya = models.CharField(max_length=5, blank=True)
@@ -207,6 +208,20 @@ class Trabajador(BaseUrls):
         if self.segundo_nombre:
             return '%s %s %s' % (self.primer_nombre, self.segundo_nombre, self.apellidos)
         return '%s %s' % (self.primer_nombre, self.apellidos)
+
+    @property
+    def tarifa_horaria(self):
+        sal_total = adm.EscalaSalarialReforma.objects.get(grupo=self.escala_salarial_ref).salario_escala
+        tarifa = 0
+        if self.j_laboral is True:
+            sal_total = (sal_total / Decimal(190.6)) * 208
+            sal_total = round(sal_total, 2)
+            tarifa = (sal_total / 208)
+            tarifa = round(tarifa, 2)
+        else:
+            tarifa = sal_total / Decimal(190.6)
+            tarifa = round(tarifa, 2)
+        return tarifa
 
     @property
     def calcular_salario_total_reforma(self):
@@ -523,6 +538,40 @@ class Disponible(models.Model):
     def __str__(self):
         return self.trabajador.primer_nombre, self.trabajador.apellidos, self.trabajador.codigo_interno
 
+
+class Cantidades:
+    nombre = ''
+    cant_masc = ''
+    cant_fem = ''
+    total = ''
+    cant_fem_c = ''
+    cant_fem_a = ''
+    cant_fem_s = ''
+    cant_fem_o = ''
+    cant_fem_t = ''
+    cant_masc_c = ''
+    cant_masc_a = ''
+    cant_masc_s = ''
+    cant_masc_o = ''
+    cant_masc_t = ''
+    id = ''
+
+    def __init__(self, nombre, cant_masc, cant_fem, cant_fem_c, cant_fem_a, cant_fem_s, cant_fem_o,
+                 cant_fem_t, cant_masc_c, cant_masc_a, cant_masc_s, cant_masc_o, cant_masc_t, id):
+        self.nombre = nombre
+        self.cant_masc = cant_masc
+        self.cant_fem = cant_fem
+        self.cant_fem_a = cant_fem_a
+        self.cant_fem_c = cant_fem_c
+        self.cant_fem_s = cant_fem_s
+        self.cant_fem_t = cant_fem_t
+        self.cant_fem_o = cant_fem_o
+        self.cant_masc_a = cant_masc_a
+        self.cant_masc_c = cant_masc_c
+        self.cant_masc_s = cant_masc_s
+        self.cant_masc_o = cant_masc_o
+        self.cant_masc_t = cant_masc_t
+        self.id = id
 
 registry.auditlog.register(Trabajador)
 registry.auditlog.register(Movimiento)

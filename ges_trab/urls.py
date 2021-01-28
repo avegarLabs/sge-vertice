@@ -129,6 +129,7 @@ urlpatterns = [
         path('registro-militar/', views.registro_defensa, name='registro-militar_report'),
         path('asignado-a-defensa/', views.asignado_a_defensa, name='asignado-a-defensa_report'),
         path('choferes-en-la-defensa/', views.choferes_en_defensa, name='choferes-defensa_report'),
+        path('resumen-plantilla/', views.resumen_plantilla, name='resumen-plantilla_report'),
         path('trabajadores-x-contrato/', views.trabajadores_x_contrato, name='trabajadores-contrato_report')
     ])),
     path('departament/<int:pk>/', views.dep_unidad, name='dep-unidad'),
