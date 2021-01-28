@@ -146,7 +146,7 @@ class TrabajadorAltaForm(forms.ModelForm):
         )
     )
     departamento = forms.ModelChoiceField(
-        queryset=Departamento.objects.all(),
+        queryset=Departamento.objects.all().order_by('dirige_id'),
         label=u"Departamento",
         widget=ModelSelect2Widget(
             model=Departamento,

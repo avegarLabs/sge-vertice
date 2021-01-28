@@ -59,6 +59,7 @@ urlpatterns = [
         path('select_especialidad/<int:calificacion_id>/', views.calificacion_especialidad,
              name='CalificacionEspecialidad'),
         path('select_cargos/<int:departamento_id>/', views.cargos_disponibles, name='CargosDisponibles'),
+        path('cargo_por_dpto/<int:pk>/', views.cargo_por_dpto, name='CargoPorDepartamento'),
         path('ed_trabajador/<int:trabajador_id>/', views.adicionar_trabajador_inline, name='EditarTrabajador'),
         path('ver_codigo_interno/', views.check_codigo, name='ver_codigo_interno'),
         path('ver_codigo_interno/<int:pk>', views.check_codigo, name='ver_codigo_interno'),

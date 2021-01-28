@@ -768,7 +768,7 @@
         {#    var id_seleccionado = this.value | 0;#}
         {#    $('#id_cargo').html('');#}
         {##}
-        {#    $.get(`{% url 'ges_trab_home' %}select_cargos/${id_seleccionado}/`, function (data) {#}
+        {#    $.get(`{% url 'ges_trab_home' %}cargo_por_dpto/${id_seleccionado}/`, function (data) {#}
         {#        var cargos = data[0].result;#}
         {#        if (cargos.length !== 0) {#}
         {#            $('#id_cargo').append(`<option>---------</option>`);#}
@@ -805,13 +805,15 @@
         {#        }#}
         {#    });#}
         {#}#}
-        {##}
-        {##}
+
+
         {#// Cargos Disponibles#}
         {#$('#id_departamento').on('change', select_cargos);#}
+        {#$('#id_departamento').on('ready', select_cargos);#}
         {##}
         {#// Datos Personales OnChange#}
         {#$('#id_unidad_org').on('change', select_departamentos);#}
+        {#$('#id_unidad_org').on('ready', select_departamentos);#}
 
         //Calificacion - Especialidad
         $('#id_calificacion').on('change', select_especialidad);
