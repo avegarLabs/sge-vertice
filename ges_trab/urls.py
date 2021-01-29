@@ -131,6 +131,10 @@ urlpatterns = [
         path('asignado-a-defensa/', views.asignado_a_defensa, name='asignado-a-defensa_report'),
         path('choferes-en-la-defensa/', views.choferes_en_defensa, name='choferes-defensa_report'),
         path('resumen-plantilla/', views.resumen_plantilla, name='resumen-plantilla_report'),
+        path('total_escolaridad_categoria/', views.total_escolaridad_categoria, name='total_escolaridad_categoria_report'),
+        path('total_etnia_categoria/', views.total_etnia_categoria, name='total_etnia_categoria_report'),
+        path('total_areas_sexo/', views.total_areas_sexo, name='total_areas_sexo_report'),
+        path('total_especialidad_sexo/', views.total_especialidad_sexo, name='total_especialidad_sexo_report'),
         path('trabajadores-x-contrato/', views.trabajadores_x_contrato, name='trabajadores-contrato_report')
     ])),
     path('departament/<int:pk>/', views.dep_unidad, name='dep-unidad'),

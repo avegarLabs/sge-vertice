@@ -40,79 +40,66 @@
                    style="width: 100%;">
                 <thead>
                 <tr>
-                    <th>Area</th>
-                    <th>Cargo</th>
-                    <th>Cat. Oc.</th>
-                    <th></th>
+                    <th>No.</th>
+                    <th>Descripción órganos y cargo</th>
+                    <th>Categoria Ocupacional</th>
                     <th>Nombre y Apellidos</th>
                     <th>Sexo</th>
-                    <th>Exped. Laboral</th>
-                    <th>Niv Educ.</th>
-                    <th>Grupo Esc.</th>
-                    <th>Total Salario</th>
-                    <th>Sal. Escala</th>
-                    {% block plantilla_anterior_header %}
-                    <th>Sal. Jor 208</th>
-                    <th>Incr Res30</th>
-                    <th>Coef CIES</th>
-                    <th>Plus</th>
-                    <th>Antig</th>
-                    {% endblock %}
-                    <th>Sal Maest.</th>
-                    <th>Fecha Alta</th>
+                    <th>Carné de Identidad</th>
+                    <th>Nivel de preparación</th>
+                    <th>Grupo Escala</th>
+                    <th>Salario Total</th>
+                    <th>Salario Escala</th>
+                    <th>CLA</th>
+                    <th>Turnos nocturnos y mixtos </th>
+                    <th>Maestría y Doctorado</th>
+                    <th>Años de Servicio</th>
+                    <th>Otros</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for trab in queryset %}
                     {% ifchanged trab.unidad_nombre %}
                         <tr>
-                            <td colspan="18" style="font-weight: bold; text-align: left">{{ trab.unidad_nombre }}</td>
+                            <td style="display: none"></td>
+                            <td colspan="15" style="font-weight: bold; text-align: left">{{ trab.unidad_nombre }}</td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            {% block hide_5_columns_1 %}
-                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            <td style="display: none"></td><td style="display: none"></td>
-                            {% endblock %}
+                            <td style="display: none"></td>
                         </tr>
                     {% endifchanged %}
                     {% ifchanged trab.dpto_codigo %}
                         <tr>
-                            <td colspan="18" style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
+                            <td style="display: none"></td>
+                            <td colspan="15" style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            {% block hide_5_columns_2 %}
-                            <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            <td style="display: none"></td><td style="display: none"></td>
-                            {% endblock %}
+                            <td style="display: none"></td>
                         </tr>
                     {% endifchanged %}
                     <tr>
-                        <td></td>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ trab.cargo_nombre }}</td>
-                        <td>{{ trab.categoria }}</td>
-                        <td>{{ trab.t_plantilla }}</td>
+                        <td class="text-center">{{ trab.categoria }}</td>
                         <td>{{ trab.nombre_completo }}</td>
-                        <td>{{ trab.sexo }}</td>
-                        <td>{{ trab.ci }}</td>
-                        <td>{{ trab.escolaridad }}</td>
-                        <td>{{ trab.grupo_escala }}</td>
+                        <td class="text-center">{{ trab.sexo }}</td>
+                        <td class="text-center">{{ trab.ci }}</td>
+                        <td class="text-center">{{ trab.escolaridad }}</td>
+                        <td class="text-center">{{ trab.escala_salarial_ref}}</td>
                         {% language 'en' %}
-                            {% block plantilla_reforma_body %}
-                            <td>{{ trab.salario_total }}</td>
-                            <td>{{ trab.salario_escala }}</td>
-                            <td>{{ trab.salario_jornada_laboral }}</td>
-                            <td>{{ trab.incre_res }}</td>
-                            <td>{{ trab.cies }}</td>
-                            <td>{{ trab.sal_plus }}</td>
-                            <td>{{ trab.antiguedad }}</td>
-                            <td>{{ trab.sal_cat_cient }}</td>
-                            {% endblock %}
+                            <td class="text-center">{{ trab.salario_total_reforma }} </td>
+                            <td class="text-center">{{ trab.salario_escala_ref }}</td>
+                            <td class="text-center">{{ trab.calcular_sal_j_laboral_ref}}</td>
+                            <td class="text-center">0.00</td>
+                            <td class="text-center">{{ trab.salario_cat_cient }}</td>
+                            <td class="text-center">0.00</td>
+                            <td class="text-center">0.00</td>
                         {% endlanguage %}
-                        <td>{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
+{#                        <td class="text-center">{{ trab.fecha_contrato|date:"d/m/Y" }}</td>#}
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -124,5 +111,8 @@
     <div id="popup" class="modal fade" role="dialog"></div>
 {% endblock %}
 
-{% block javascript %}{% endblock %}
+{% block javascript %}
+{% endblock %}
+
+
 

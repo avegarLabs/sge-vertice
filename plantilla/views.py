@@ -778,7 +778,7 @@ def preview_plantilla_cd(request):
         'title': 'Plantilla Contratos',
         'export_pdf': 'plantilla-cd_export'
     }
-    return render(request, 'preview_plantilla.html', context)
+    return render(request, 'preview_plantilla_new.html', context)
 
 
 @permission_required('plantilla.read_plantilla', login_url='home_principal')
@@ -788,7 +788,7 @@ def preview_plantilla_ci(request):
         'title': 'Plantilla Contratos Indeterminados',
         'export_pdf': 'plantilla-ci_export'
     }
-    return render(request, 'preview_plantilla.html', context)
+    return render(request, 'preview_plantilla_new.html', context)
 
 
 @permission_required('plantilla.read_plantilla', login_url='home_principal')
@@ -798,7 +798,7 @@ def preview_plantilla_rg(request):
         'title': 'PLANTILLA RECIEN GRADUADOS',
         'export_pdf': 'plantilla-rg_export'
     }
-    return render(request, 'preview_plantilla.html', context)
+    return render(request, 'preview_plantilla_new.html', context)
 
 
 @permission_required('plantilla.read_plantilla', raise_exception=True)
@@ -834,7 +834,7 @@ def export_plantilla_rg(request):
         'queryset': request_plantilla_all('rg'),
         'title': 'PLANTILLA RECIEN GRADUADOS'
     }
-    return export_factory(context)
+    return export_factory_new(context)
 
 
 @permission_required('plantilla.export_plantilla', login_url='home_principal')
@@ -843,7 +843,7 @@ def export_plantilla_cd(request):
         'queryset': request_plantilla_all('cd'),
         'title': 'Plantilla Contratos'
     }
-    return export_factory(context)
+    return export_factory_new(context)
 
 
 @permission_required('plantilla.export_plantilla', login_url='home_principal')
@@ -852,7 +852,7 @@ def export_plantilla_ci(request):
         'queryset': request_plantilla_all('ci'),
         'title': 'Plantilla Contratos Indeterminados'
     }
-    return export_factory(context)
+    return export_factory_new(context)
 
 
 @permission_required('plantilla.export_plantilla', raise_exception=True)

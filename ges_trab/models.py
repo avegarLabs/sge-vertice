@@ -573,5 +573,35 @@ class Cantidades:
         self.cant_masc_t = cant_masc_t
         self.id = id
 
+
+class ListPadre:
+    nombre = ''
+    elements = []
+    total = ''
+    cant_fem = ''
+    cant_masc = ''
+    iden = ''
+
+    def __init__(self, nombre, elements, total, cant_fem, cant_masc, iden):
+        self.nombre = nombre
+        self.elements = elements
+        self.total = total
+        self.cant_fem = cant_fem
+        self.cant_masc = cant_masc
+        self.iden = iden
+
+
+class Elements:
+    nombre = ''
+    total = ''
+    cant_fem = ''
+    cant_masc = ''
+
+    def __init__(self, nombre, total, cant_fem, cant_masc):
+        self.nombre = nombre
+        self.total = total
+        self.cant_fem = cant_fem
+        self.cant_masc = cant_masc
+
 registry.auditlog.register(Trabajador)
 registry.auditlog.register(Movimiento)
