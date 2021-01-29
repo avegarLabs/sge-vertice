@@ -1,0 +1,36 @@
+{% extends 'layouts/reports/_base_export_pdf.html' %}
+
+{% block table_title %}Totales por Especialidad y Sexo{% endblock %}
+
+{% block table_header %}
+{% endblock table_header %}
+
+{% block table_body %}
+{% endblock table_body %}
+
+{% block table_body_outside %}
+    <th style="width: 200px; padding-top: 3px">Especialidad</th>
+    <th style="width: 40px">Total</th>
+    <th style="width: 40px">Mujeres</th>
+    <th style="width: 40px">Hombres</th>
+    {% for item in object_list %}
+        <tr>
+            <td colspan="4" style="width: 100px; text-align: left; font-weight: bold">{{ item.nombre }}</td>
+        </tr>
+        {% for i in item.elements %}
+            <tr>
+                <td style="width: 350px; text-align: center; text-align: left; margin-left: 15px">{{ i.nombre }}</td>
+                <td style="width: 100px; text-align: center">{{ i.total }}</td>
+                <td style="width: 100px; text-align: center">{{ i.cant_fem }}</td>
+                <td style="width: 100px; text-align: center">{{ i.cant_masc }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td style="width: 350px; text-align: center; font-weight: bold; text-align: right">Total</td>
+            <td style="width: 100px; text-align: center; font-weight: bold">{{ item.total }}</td>
+            <td style="width: 100px; text-align: center; font-weight: bold">{{ item.cant_fem }}</td>
+            <td style="width: 100px; text-align: center; font-weight: bold">{{ item.cant_masc }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
