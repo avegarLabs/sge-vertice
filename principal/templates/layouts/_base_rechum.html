@@ -120,18 +120,24 @@
                         Plantilla
                     </a>
                 </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'plantilla' %}active{% endif %}"#}
+{#                       onclick="open_re_useful_modal(`{% url 'DocumentacionReforma' %}`)">#}
+{#                        Plantilla de Cargos#}
+{#                    </a>#}
+{#                </li>#}
                 <li>
                     <a class="{% if model_name == 'plantilla' %}active{% endif %}"
                        href="{% url 'plantilla-general_new' %}" target="_blank">
-                        Plantilla General New
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'plantilla' %}active{% endif %}"
-                       href="{% url 'plantilla-general' %}" target="_blank">
                         Plantilla General
                     </a>
                 </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'plantilla' %}active{% endif %}"#}
+{#                       href="{% url 'plantilla-general' %}" target="_blank">#}
+{#                        Plantilla General#}
+{#                    </a>#}
+{#                </li>#}
                 <li>
                     <a class="{% if model_name == 'plantilla' %}active{% endif %}"
                        href="{% url 'plantilla-ci' %}" target="_blank">
@@ -150,18 +156,18 @@
                         Plantilla Recién Graduados
                     </a>
                 </li>
-                <li>
-                    <a class="{% if model_name == 'plantilla_servicio' %}active{% endif %}"
-                       href="{% url 'obra-servicio_list' %}">
-                        Plantilla Servicio
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'trabajador_servicio' %}active{% endif %}"
-                       href="#">
-                        Trabajadores Servicio
-                    </a>
-                </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'plantilla_servicio' %}active{% endif %}"#}
+{#                       href="{% url 'obra-servicio_list' %}">#}
+{#                        Plantilla Servicio#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a class="{% if model_name == 'trabajador_servicio' %}active{% endif %}"#}
+{#                       href="#">#}
+{#                        Trabajadores Servicio#}
+{#                    </a>#}
+{#                </li>#}
             </ul>
         </li>
     {% endif %}
