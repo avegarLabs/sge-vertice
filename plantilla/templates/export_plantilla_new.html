@@ -48,32 +48,36 @@
         <table class="display table table-striped" cellspacing="0" width="100%" id="tabla" repeat="1">
             <thead>
             <tr>
-                    <th>Area/Cargo</th>
+                    <th>No.</th>
+                    <th>Descripción órganos y cargo</th>
                     <th>Categoria Ocupacional</th>
                     <th>Nombre y Apellidos</th>
                     <th>Sexo</th>
-                    <th>Expediente Laboral</th>
-                    <th>Nivel Educacional</th>
+                    <th>Carné de Identidad</th>
+                    <th>Nivel de preparación</th>
                     <th>Grupo Escala</th>
-                    <th>Total Salario</th>
+                    <th>Salario Total</th>
                     <th>Salario Escala</th>
-                    <th>Sal. Jor 208</th>
-                    <th>Salario Maest/Doct.</th>
-                    <th>Fecha Alta</th>
+                    <th>CLA</th>
+                    <th>Turnos nocturnos y mixtos </th>
+                    <th>Maestría y Doctorado</th>
+                    <th>Años de Servicio</th>
+                    <th>Otros</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td colspan="{% block unidad_cols %}12{% endblock %}" style="font-weight: bold; text-align: left">{{ unidad.grouper }}</td>
+                <td colspan="{% block unidad_cols %}15{% endblock %}" style="font-weight: bold; text-align: left">{{ unidad.grouper }}</td>
             </tr>
             {% for trab in unidad.list %}
                 {% ifchanged trab.dpto_nombre %}
                     <tr>
-                        <td colspan="{% block dep_cols %}12{% endblock %}"
+                        <td colspan="{% block dep_cols %}15{% endblock %}"
                             style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
                     </tr>
                 {% endifchanged %}
                 <tr>
+                    <td>{{ forloop.counter }}</td>
                     <td>{{ trab.cargo_nombre }}</td>
                     <td class="text-center">{{ trab.categoria }}</td>
                     <td>{{ trab.nombre_completo }}</td>
@@ -81,11 +85,13 @@
                     <td class="text-center">{{ trab.ci }}</td>
                     <td class="text-center">{{ trab.escolaridad }}</td>
                     <td class="text-center">{{ trab.grupo_escala_reforma}}</td>
-                    <td class="text-center">{{ trab.calcular_salario_total_reforma }} </td>
-                    <td class="text-center">{{ trab.salario_escala_reforma }}</td>
+                    <td class="text-center">{{ trab.salario_total_reforma }} </td>
+                    <td class="text-center">{{ trab.salario_escala_ref }}</td>
                     <td class="text-center">{{ trab.calcular_sal_j_laboral_ref}}</td>
+                    <td class="text-center">0.00</td>
                     <td class="text-center">{{ trab.salario_cat_cient }}</td>
-                    <td class="text-center">{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
+                    <td class="text-center">0.00</td>
+                    <td class="text-center">0.00</td>
                 </tr>
             {% endfor %}
             </tbody>

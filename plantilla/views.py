@@ -823,7 +823,7 @@ def export_plantilla_general(request):
 def export_plantilla_general_new(request):
     context = {
         'queryset': request_plantilla_all(),
-        'title': 'Plantilla General'
+        'title': 'Plantilla de Cargos y el Registro de Trabajadores'
     }
     return export_factory_new(context)
 
