@@ -225,7 +225,7 @@
             <div align="center"><strong>${{ trabajador.sal_plus }}</strong></div>
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.salario_total }}</strong></div>
+            <div align="center"><strong>${{ trabajador.salario_total_reforma }}</strong></div>
         </td>
         <td>
             <div align="center"></div>
@@ -264,7 +264,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="14">Motivo del Movimiento: {{ trabajador.motivo_alta }}</td>
+        <td colspan="14">Motivo del Movimiento: {{ trabajador.motivo_alta}}</td>
     </tr>
 </table>
 <table border=0 cellpadding=2 cellspacing=0 width="600">
@@ -283,15 +283,13 @@
         </td>
     </tr>
     <tr>
-        <td>Ing. {{ elaborado.first_name }} {{ elaborado.last_name }}<br>Esp. Recursos Humanos
+        <td>Modesto Sánchez Ortega<br>Esp. "B" Gestión del Capital Humano
         </td>
         <td><strong>Aprobado por:</strong>
-            <br>Lic. {{ director.primer_nombre }} {{ director.segundo_nombre }} {{ director.apellidos }} <br>Director
-            Capital Humanos
+            <br>Lic. {{ director.primer_nombre }} {{ director.segundo_nombre }} {{ director.apellidos }} <br>Directora de Gestión del Capital Humano
         </td>
         <td><strong>Registrado
-            por:</strong><br>Ing. {{ registrado_por.primer_nombre }} {{ registrado_por.segundo_nombre }} {{ registrado_por.apellidos }}<br>Esp.
-            Recursos Humanos
+            por:</strong><br>Lic. {{ registrado_por.primer_nombre }} {{ registrado_por.segundo_nombre }} {{ registrado_por.apellidos }}<br>Esp. "B" Gestión del Capital Humano
         </td>
         <td><strong>Registrado por:</strong><br><br><br></td>
     </tr>
@@ -467,7 +465,7 @@
             <div align="center"><strong>${{ trabajador.sal_plus }}</strong></div>
         </td>
         <td>
-            <div align="center"><strong>${{ trabajador.salario_total }}</strong></div>
+            <div align="center"><strong>${{ trabajador.salario_total_reforma }}</strong></div>
         </td>
         <td>
             <div align="center"><strong></strong></div>
@@ -525,16 +523,13 @@
         </td>
     </tr>
     <tr>
-        <td>Ing. {{ elaborado.first_name }} {{ elaborado.last_name }}<br>Esp. Recursos Humanos
+        <td>Modesto Sánchez Ortega<br>Esp. "B" Gestión del Capital Humano
         </td>
-        <td><strong>Aprobado
-            por:</strong><br>Lic. {{ director.primer_nombre }} {{ director.segundo_nombre }} {{ director.apellidos }}<br>
-            Director
-            Capital Humano
+        <td><strong>Aprobado por:</strong>
+            <br>Lic. {{ director.primer_nombre }} {{ director.segundo_nombre }} {{ director.apellidos }} <br>Directora de Gestión del Capital Humano
         </td>
         <td><strong>Registrado
-            por:</strong><br>Ing. {{ registrado_por.primer_nombre }} {{ registrado_por.segundo_nombre }} {{ registrado_por.apellidos }}<br>Esp.
-            Recursos Humanos
+            por:</strong><br>Lic. {{ registrado_por.primer_nombre }} {{ registrado_por.segundo_nombre }} {{ registrado_por.apellidos }}<br>Esp. "B" Gestión del Capital Humano
         </td>
         <td><strong>Registrado por:</strong><br><br><br></td>
     </tr>
