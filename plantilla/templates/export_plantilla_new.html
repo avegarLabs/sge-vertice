@@ -34,26 +34,26 @@
         th {
             vertical-align: bottom;
             border-bottom: 2px solid #dddddd;
-            text-align: center;
+            {#text-align: center;#}
             padding: 5px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <p class="title"><strong>{{ title }}</strong></p>
+    <p class="title"><strong>{{ title }}&nbsp;ANEXO No.14B</strong></p>
     <div></div>
     {% regroup queryset by unidad_nombre as unidad_list %}
     {% for unidad in unidad_list %}
-        <table class="display table table-striped" cellspacing="0" width="100%" id="tabla" repeat="1">
+        <table class="display table table-striped" cellspacing="0" width="125%" id="tabla" repeat="1">
             <thead>
             <tr>
                     <th>No.</th>
-                    <th>Descripción órganos y cargo</th>
-                    <th>Categoria Ocupacional</th>
-                    <th>Nombre y Apellidos</th>
+                    <th style="width: 200px">Descripción órganos y cargo</th>
+                    <th>Cat. Ocup.</th>
+                    <th style="width: 300px">Nombre y Apellidos</th>
                     <th>Sexo</th>
-                    <th>Carné de Identidad</th>
+                    <th>CI</th>
                     <th>Nivel de preparación</th>
                     <th>Grupo Escala</th>
                     <th>Salario Total</th>
