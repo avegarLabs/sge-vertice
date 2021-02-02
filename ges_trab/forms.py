@@ -41,16 +41,16 @@ class TrabajadorForm(forms.ModelForm):
     #        search_fields=['nombre__icontains']
     #    )
     # )
-    especialidad = forms.ModelChoiceField(
-       queryset=Especialidad.objects.all(),
-       label=u"Especialidad",
-       widget=ModelSelect2Widget(
-           model=Especialidad,
-           search_fields=['nombre__icontains'],
-           dependent_fields={'calificacion': 'calificacion'}
-
-       )
-    )
+    # especialidad = forms.ModelChoiceField(
+    #    queryset=Especialidad.objects.all(),
+    #    label=u"Especialidad",
+    #    widget=ModelSelect2Widget(
+    #        model=Especialidad,
+    #        search_fields=['nombre__icontains'],
+    #        dependent_fields={'calificacion': 'calificacion'}
+    #
+    #    )
+    # )
 
 
     cargo = forms.ModelChoiceField(
