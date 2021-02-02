@@ -356,20 +356,21 @@ class Trabajador(BaseUrls):
         else:
             return hoy.year - nacimiento.year
 
-        #
-        #
-        # fecha_nac = ci[:6]  # para que tome los 6 primeros números
-        # fecha = fecha_nac[:2] + fecha_nac[2:4] + fecha_nac[-2:]
-        # ordenar_fecha = datetime.datetime.strptime(fecha, '%y%m%d')
-        # if ordenar_fecha.year > 2005:
-        #     ordenar_fecha = ordenar_fecha.replace(year=ordenar_fecha.year - 100)
-        # fecha_nacimiento = datetime.datetime.strptime(fecha_ingreso, "%d/%m/%Y")
-        # edad = relativedelta(datetime.datetime.now(), fecha_ingreso)
+
+    @property
+    def age_by_ci(self):
+        ci = self.ci
+        fecha_nac = ci[:6]  # para que tome los 6 primeros números
+        fecha = fecha_nac[:2] + fecha_nac[2:4] + fecha_nac[-2:]
+        ordenar_fecha = datetime.datetime.strptime(fecha, '%y%m%d')
+        if ordenar_fecha.year > 2005:
+            ordenar_fecha = ordenar_fecha.replace(year=ordenar_fecha.year - 100)
+        # fecha_nacimiento = datetime.datetime.strptime(ordenar_fecha, "%d/%m/%Y")
+        edad = relativedelta(datetime.datetime.now(), ordenar_fecha)
         # print(f"{edad.years} años, {edad.months} meses y {edad.days} días")
         # print(ordenar_fecha.date())
-        # age = f"{edad.years} años"
-
-        # return age
+        age = f"{edad.years} años"
+        return age
 
     def __str__(self):
         return self.nombre_completo
