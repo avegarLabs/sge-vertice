@@ -29,7 +29,7 @@
 
 {% block content %}
     <div class=content align="center" style="font-size: smaller; width: 1000px;">
-        <h5><strong>{{ title }}&nbsp;ANEXO No.14B</strong></h5>
+        <h5><strong>Plantilla de Cargos y el Registro de Trabajadores - ANEXO No.14B &nbsp;( {{ title }} )</strong></h5>
     </div>
     <div class="text-right" style="color: white;">
         <a href="{% url export_pdf %}" class="btn btn-sm btn-success" style="font-size: small">
@@ -40,10 +40,9 @@
         </a>
     </div>
     <p></p>
-    <div class="row">
+    <div class="row" style="margin-left: -10%; width: 125%;">
         <div class="col-lg-12">
-            <table class="display table table-striped" cellspacing="0" id="tabla"
-                   style="margin-left: -15%; width: 125%;">
+            <table class="display table table-striped" cellspacing="0" id="tabla_report">
                 <thead>
                 <tr>
                     <th>No.</th>
@@ -57,9 +56,10 @@
                     <th>Salario Total</th>
                     <th>Salario Escala</th>
                     <th>CLA</th>
+                    <th>Sal. Jor 240</th>
                     <th>Turnos nocturnos y mixtos </th>
                     <th>Maestría y Doctorado</th>
-                    <th>Años de Servicio</th>
+                    <th>Años Servicio</th>
                     <th>Fecha Alta</th>
                 </tr>
                 </thead>
@@ -68,22 +68,22 @@
                     {% ifchanged trab.unidad_nombre %}
                         <tr>
                             <td style="display: none"></td>
-                            <td colspan="15" style="font-weight: bold; text-align: left">{{ trab.unidad_nombre }}</td>
+                            <td colspan="16" style="font-weight: bold; text-align: left">{{ trab.unidad_nombre }}</td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            <td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td>
                     {% endifchanged %}
                     {% ifchanged trab.dpto_codigo %}
                         <tr>
                             <td style="display: none"></td>
-                            <td colspan="15" style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
+                            <td colspan="16" style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
                             <td style="display: none"></td><td style="display: none"></td><td style="display: none"></td>
-                            <td style="display: none"></td>
+                            <td style="display: none"></td><td style="display: none"></td>
                         </tr>
                     {% endifchanged %}
                     <tr>
@@ -99,6 +99,7 @@
                             <td class="text-center">{{ trab.salario_total_reforma }} </td>
                             <td class="text-center">{{ trab.salario_escala_ref }}</td>
                             <td class="text-center">0.00</td>
+                            <td class="text-center">{{ trab.calcular_sal_j_laboral_ref }}</td>
                             <td class="text-center">0.00</td>
                             <td class="text-center">{{ trab.salario_cat_cient }}</td>
                             <td class="text-center">{{ trab.service_age }}</td>
@@ -108,7 +109,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-{#            <h5 style="text-align: right">Existen en total {{ queryset|length }} registros en la Base de Datos</h5>#}
+            <h5 style="text-align: right">Existen en total {{ queryset|length }} registros en la Base de Datos</h5>
         </div>
     </div>
 

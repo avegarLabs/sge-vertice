@@ -28,7 +28,8 @@
         td {
             padding: 4px;
             border-top: 1px solid #dddddd;
-            vertical-align: middle;
+            {#vertical-align: middle;#}
+            {#text-align: left;#}
         }
 
         th {
@@ -41,7 +42,7 @@
 </head>
 <body>
 <div class="container">
-    <p class="title"><strong>{{ title }}&nbsp;ANEXO No.14B</strong></p>
+    <p class="title"><strong>Plantilla de Cargos y el Registro de Trabajadores - ANEXO No.14B &nbsp;( {{ title }} )</strong></p>
     <div></div>
     {% regroup queryset by unidad_nombre as unidad_list %}
     {% for unidad in unidad_list %}
@@ -51,28 +52,29 @@
                     <th>No.</th>
                     <th style="width: 200px">Descripción órganos y cargo</th>
                     <th>Cat. Ocup.</th>
-                    <th style="width: 300px">Nombre y Apellidos</th>
+                    <th style="width: 280px">Nombre y Apellidos</th>
                     <th>Sexo</th>
                     <th>CI</th>
-                    <th>Nivel de preparación</th>
+                    <th>Niv. Prep.</th>
                     <th>Grupo Escala</th>
                     <th>Salario Total</th>
                     <th>Salario Escala</th>
                     <th>CLA</th>
-                    <th>Turnos nocturnos y mixtos </th>
-                    <th>Maestría y Doctorado</th>
+                    <th>Sal. Jor 240</th>
+                    <th>Turn. Noct. y Mixtos </th>
+                    <th>Maest. Doct.</th>
                     <th>Años de Servicio</th>
                     <th>Fecha Alta</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td colspan="{% block unidad_cols %}15{% endblock %}" style="font-weight: bold; text-align: left">{{ unidad.grouper }}</td>
+                <td colspan="{% block unidad_cols %}16{% endblock %}" style="font-weight: bold; text-align: left">{{ unidad.grouper }}</td>
             </tr>
             {% for trab in unidad.list %}
                 {% ifchanged trab.dpto_nombre %}
                     <tr>
-                        <td colspan="{% block dep_cols %}15{% endblock %}"
+                        <td colspan="{% block dep_cols %}16{% endblock %}"
                             style="font-weight: bold; text-align: left; padding-left: 30px !important;">{{ trab.dpto_nombre }}</td>
                     </tr>
                 {% endifchanged %}
@@ -80,7 +82,7 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{ trab.cargo_nombre }}</td>
                     <td class="text-center">{{ trab.categoria }}</td>
-                    <td>{{ trab.nombre_completo }}</td>
+                    <td style="text-align: left" >{{ trab.nombre_completo }}</td>
                     <td class="text-center">{{ trab.sexo }}</td>
                     <td class="text-center">{{ trab.ci }}</td>
                     <td class="text-center">{{ trab.escolaridad }}</td>
@@ -88,6 +90,7 @@
                     <td class="text-center">{{ trab.salario_total_reforma }} </td>
                     <td class="text-center">{{ trab.salario_escala_ref }}</td>
                     <td class="text-center">0.00</td>
+                    <td class="text-center">{{ trab.calcular_sal_j_laboral_ref }}</td>
                     <td class="text-center">0.00</td>
                     <td class="text-center">{{ trab.salario_cat_cient }}</td>
                     <td class="text-center">{{ trab.service_age }}</td>

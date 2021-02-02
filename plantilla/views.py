@@ -766,7 +766,7 @@ def preview_plantilla_general(request):
 def preview_plantilla_general_new(request):
     context = {
         'queryset': request_plantilla_all(),
-        'title': 'Plantilla de Cargos y el Registro de Trabajadores',
+        'title': 'Plantilla de General',
         'export_pdf': 'plantilla-general_new_export'
     }
     return render(request, 'preview_plantilla_new.html', context)
@@ -824,7 +824,7 @@ def export_plantilla_general(request):
 def export_plantilla_general_new(request):
     context = {
         'queryset': request_plantilla_all(),
-        'title': 'Plantilla de Cargos y el Registro de Trabajadores'
+        'title': 'Plantilla General'
     }
     return export_factory_new(context)
 
