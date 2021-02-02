@@ -1,4 +1,7 @@
+from datetime import date
+
 from auditlog import registry, models as auditlog_models
+from dateutil.relativedelta import relativedelta
 from django.core.validators import validate_image_file_extension
 from django.db import models
 from django.urls import reverse
@@ -335,6 +338,38 @@ class Trabajador(BaseUrls):
             sal_total = (sal_total / Decimal(190.6)) * 208
             sal_total = round(sal_total, 2)
         return sal_total
+
+    @property
+    def service_age(self):
+        # ci = self.ci
+        nacimiento = str(self.fecha_ingreso)
+        anio, mes, dia = [int(v) for v in nacimiento.split("-")]
+        nacimiento = date(anio, mes, dia)
+        hoy = date.today()
+        try:
+            cumpleanios = nacimiento.replace(year=hoy.year)
+        except ValueError:
+            cumpleanios = nacimiento.replace(year=hoy.year, day=nacimiento.day - 1)
+
+        if cumpleanios > hoy:
+            return hoy.year - nacimiento.year - 1
+        else:
+            return hoy.year - nacimiento.year
+
+        #
+        #
+        # fecha_nac = ci[:6]  # para que tome los 6 primeros números
+        # fecha = fecha_nac[:2] + fecha_nac[2:4] + fecha_nac[-2:]
+        # ordenar_fecha = datetime.datetime.strptime(fecha, '%y%m%d')
+        # if ordenar_fecha.year > 2005:
+        #     ordenar_fecha = ordenar_fecha.replace(year=ordenar_fecha.year - 100)
+        # fecha_nacimiento = datetime.datetime.strptime(fecha_ingreso, "%d/%m/%Y")
+        # edad = relativedelta(datetime.datetime.now(), fecha_ingreso)
+        # print(f"{edad.years} años, {edad.months} meses y {edad.days} días")
+        # print(ordenar_fecha.date())
+        # age = f"{edad.years} años"
+
+        # return age
 
     def __str__(self):
         return self.nombre_completo

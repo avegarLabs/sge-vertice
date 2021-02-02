@@ -62,7 +62,7 @@
                     <th>Turnos nocturnos y mixtos </th>
                     <th>Maestría y Doctorado</th>
                     <th>Años de Servicio</th>
-                    <th>Otros</th>
+                    <th>Fecha Alta</th>
             </tr>
             </thead>
             <tbody>
@@ -87,11 +87,11 @@
                     <td class="text-center">{{ trab.grupo_escala_reforma}}</td>
                     <td class="text-center">{{ trab.salario_total_reforma }} </td>
                     <td class="text-center">{{ trab.salario_escala_ref }}</td>
-                    <td class="text-center">{{ trab.calcular_sal_j_laboral_ref}}</td>
+                    <td class="text-center">0.00</td>
                     <td class="text-center">0.00</td>
                     <td class="text-center">{{ trab.salario_cat_cient }}</td>
-                    <td class="text-center">0.00</td>
-                    <td class="text-center">0.00</td>
+                    <td class="text-center">{{ trab.service_age }}</td>
+                    <td class="text-center">{{ trab.fecha_contrato|date:"d/m/Y" }}</td>
                 </tr>
             {% endfor %}
             </tbody>
