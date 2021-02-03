@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        th {
+            padding: 10px 5px !important;
+        }
+        .btn-green{background-color:#388e3c!important;color:#fff!important}
+        .btn-green:hover{background-color:#3fa044}
+
+        td {
+            font-size: 14px;
+            padding: 2px !important;
+
+        }
+    </style>
+{% endblock %}
+
+{% block migas %}
+    <ol class="breadcrumb" style="margin-top: 56px; opacity: 0.9; position: fixed;
+    top: 0; right: 0; left: 0; z-index: 1000;">
+        <li class="breadcrumb-item"><a href="{% url 'rechum_home' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class=content align="center" style="font-size: smaller; width: 1000px;">
+        <h5><strong>{{ title }} </strong></h5>
+    </div>
+    <div class="text-right" style="color: white;">
+        <a href="{% url export_pdf %}" class="btn btn-sm btn-success" style="font-size: small">
+            <i class="fa fa-download"></i> Exportar a PDF
+        </a>
+    </div>
+    <p></p>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="display table table-striped" cellspacing="0" id="tabla_report">
+                <thead>
+                {% block table_header %}{% endblock %}
+                </thead>
+                <tbody>
+                    {% for item in object_list %}
+                        {% block table_body %}{% endblock %}
+                    {% endfor %}
+                    {% block table_body_outside %}{% endblock %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="popup" class="modal fade" role="dialog"></div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+
+
