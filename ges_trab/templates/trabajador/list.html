@@ -439,10 +439,12 @@
                 dom: 'lBfrtip',
                 buttons: [
                     {
-                        extend: 'pdf',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'TABLOID', // TABLOID OR LEGAL
+                        footer: true,
+
+
                     }, {
                         extend: 'excelHtml5',
                         exportOptions: {
