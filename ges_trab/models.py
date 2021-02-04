@@ -369,7 +369,7 @@ class Trabajador(BaseUrls):
         edad = relativedelta(datetime.datetime.now(), ordenar_fecha)
         # print(f"{edad.years} años, {edad.months} meses y {edad.days} días")
         # print(ordenar_fecha.date())
-        age = f"{edad.years} años"
+        age = f"{edad.years}"
         return age
 
     def __str__(self):

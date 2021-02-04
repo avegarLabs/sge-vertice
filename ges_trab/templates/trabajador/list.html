@@ -131,7 +131,7 @@
         </div>
     </div>
     <br>
-    <div class="row">
+    <div class="row" style="margin-left: -10%; width: 120%;">
         <div class="col-lg-12" style="font-size: smaller">
             <table class="display" cellspacing="0" width="100%" id="tabla_trabajador">
                 <thead>
@@ -145,11 +145,13 @@
                     <th style="width: 20px" class="text-center">Grupo</th>
                     <th style="width: 70px" class="text-center">Unidad</th>
                     <th style="width: 90px">Departamento</th>
-                    <th style="width: 90px">Cargo</th>
+                    <th style="width: 100px">Cargo</th>
                     <th style="width: 20px" class="text-center">Nivel</th>
                     <th style="width: 60px">Especialidad</th>
-                    <th style="width: 20px">Sexo</th>
-                    <th style="width: 20px" class="text-center">Fecha Alta</th>
+                    <th align="center" style="width: 50px">Sexo</th>
+                    <th align="center" style="width: 50px">Edad</th>
+                    <th align="center" style="width: 50px">Año servicio</th>
+                    <th align="center" style="width: 50px">Fecha Alta</th>
                     <th style="width: 100px">Acciones</th>
                 </tr>
                 </thead>
@@ -168,7 +170,9 @@
                         <td>{{ i.cargo }}</td>
                         <td align="center">{{ i.escolaridad }}</td>
                         <td>{{ i.especialidad.nombre }}</td>
-                        <td>{{ i.sexo }}</td>
+                        <td align="center">{{ i.sexo }}</td>
+                        <td align="center">{{ i.age_by_ci }}</td>
+                        <td>{{ i.service_age }}</td>
                         <td align="center" data-sort="{{i.fecha_alta|date:'Ymd'}}">{{ i.fecha_alta|date:"d/m/Y" }}</td>
                         <td>
                             <div class="icon-acciones" align="center">
@@ -206,6 +210,8 @@
                 <th style="padding: 6px 6px !important;">Escolaridad</th>
                 <th style="padding: 6px 6px !important;">Especialidad</th>
                 <th style="">Sexo</th>
+                <th style="">Edad</th>
+                <th style="">Año servicio</th>
                 <th style="padding: 6px 6px !important;">Fecha Alta</th>
                 <td style="padding: 6px 6px !important;"></td>
                 </tfoot>
