@@ -15,23 +15,23 @@ decorate_bound_field()
 
 class TrabajadorForm(forms.ModelForm):
 
-    unidad_org = forms.ModelChoiceField(
-       queryset=UnidadOrg.objects.all(),
-       label=u"Unidad organizacional",
-       widget=ModelSelect2Widget(
-           model=UnidadOrg,
-           search_fields=['nombre__icontains']
-       )
-    )
-    departamento = forms.ModelChoiceField(
-       queryset=Departamento.objects.all(),
-       label=u"Departamento",
-       widget=ModelSelect2Widget(
-           model=Departamento,
-           search_fields=['nombre__icontains'],
-           dependent_fields={'unidad_org': 'unidad'}
-       )
-    )
+    # unidad_org = forms.ModelChoiceField(
+    #    queryset=UnidadOrg.objects.all(),
+    #    label=u"Unidad organizacional",
+    #    widget=ModelSelect2Widget(
+    #        model=UnidadOrg,
+    #        search_fields=['nombre__icontains']
+    #    )
+    # )
+    # departamento = forms.ModelChoiceField(
+    #    queryset=Departamento.objects.all(),
+    #    label=u"Departamento",
+    #    widget=ModelSelect2Widget(
+    #        model=Departamento,
+    #        search_fields=['nombre__icontains'],
+    #        dependent_fields={'unidad_org': 'unidad'}
+    #    )
+    # )
 
     # calificacion = forms.ModelChoiceField(
     #    queryset=Calificacion.objects.all(),
@@ -53,15 +53,15 @@ class TrabajadorForm(forms.ModelForm):
     # )
 
 
-    cargo = forms.ModelChoiceField(
-       queryset=Cargo.objects.all(),
-       label=u"Cargo",
-       widget=ModelSelect2Widget(
-           model=Cargo,
-           search_fields=['cargo__nombre__icontains'],
-           dependent_fields={'departamento': 'departamento'}
-       )
-    )
+    # cargo = forms.ModelChoiceField(
+    #    queryset=Cargo.objects.all(),
+    #    label=u"Cargo",
+    #    widget=ModelSelect2Widget(
+    #        model=Cargo,
+    #        search_fields=['cargo__nombre__icontains'],
+    #        dependent_fields={'departamento': 'departamento'}
+    #    )
+    # )
 
     # escala_salarial_ref = forms.ModelChoiceField(
     #    queryset=EscalaSalarialReforma.objects.all(),
@@ -116,9 +116,7 @@ NucleoFamiliarFormSet = inlineformset_factory(
 
 
 def get_available_codes():
-    num_list = [x[0] for x in list(Trabajador.objects.filter(
-        Q(fecha_baja__isnull=True) | Q(fecha_baja__gte=datetime.datetime(datetime.datetime.today().year, 1, 1))
-    ).values_list('codigo_interno'))]
+    num_list = [x[0] for x in list(Trabajador.objects.all().values_list('codigo_interno'))]
     gum_set_distinct = []
     for x in range(0, 1000):
         tmp = format(x, '3').replace(' ', '0')
@@ -137,32 +135,32 @@ class TrabajadorAltaForm(forms.ModelForm):
     ), initial='6')
 
 
-    unidad_org = forms.ModelChoiceField(
-        queryset=UnidadOrg.objects.all(),
-        label=u"Unidad organizacional",
-        widget=ModelSelect2Widget(
-            model=UnidadOrg,
-            search_fields=['nombre__icontains']
-        )
-    )
-    departamento = forms.ModelChoiceField(
-        queryset=Departamento.objects.all().order_by('dirige_id'),
-        label=u"Departamento",
-        widget=ModelSelect2Widget(
-            model=Departamento,
-            search_fields=['nombre__icontains'],
-            dependent_fields={'unidad_org': 'unidad'}
-        )
-    )
-    cargo = forms.ModelChoiceField(
-       queryset=adm.Cargo.objects.all(),
-       label=u"Cargo",
-       widget=ModelSelect2Widget(
-           model=adm.Cargo,
-           search_fields=['nombre__icontains'],
-           dependent_fields={'departamento': 'plantilla__departamento'}
-       )
-    )
+    # unidad_org = forms.ModelChoiceField(
+    #     queryset=UnidadOrg.objects.all(),
+    #     label=u"Unidad organizacional",
+    #     widget=ModelSelect2Widget(
+    #         model=UnidadOrg,
+    #         search_fields=['nombre__icontains']
+    #     )
+    # )
+    # departamento = forms.ModelChoiceField(
+    #     queryset=Departamento.objects.all().order_by('dirige_id'),
+    #     label=u"Departamento",
+    #     widget=ModelSelect2Widget(
+    #         model=Departamento,
+    #         search_fields=['nombre__icontains'],
+    #         dependent_fields={'unidad_org': 'unidad'}
+    #     )
+    # )
+    # cargo = forms.ModelChoiceField(
+    #    queryset=adm.Cargo.objects.all(),
+    #    label=u"Cargo",
+    #    widget=ModelSelect2Widget(
+    #        model=adm.Cargo,
+    #        search_fields=['nombre__icontains'],
+    #        dependent_fields={'departamento': 'plantilla__departamento'}
+    #    )
+    # )
 #    calificacion = forms.ModelChoiceField(
 #        queryset=adm.Calificacion.objects.all(),
 #        label=u"Calificación",
@@ -198,28 +196,28 @@ class TrabajadorAltaForm(forms.ModelForm):
 
 
 class TrabajadorAltaBajaForm(forms.ModelForm):
-    unidad_org = forms.ModelChoiceField(
-        queryset=adm.UnidadOrg.objects.all(),
-        widget=ModelSelect2Widget(
-            model=adm.UnidadOrg,
-            search_fields=['nombre__icontains']
-        )
-    )
-    departamento = forms.ModelChoiceField(
-        queryset=adm.Departamento.objects.all(),
-        widget=ModelSelect2Widget(
-            model=adm.Departamento,
-            search_fields=['nombre__icontains'],
-            dependent_fields={'unidad': 'unidad_org'}
-        )
-    )
-    cargo = forms.ModelChoiceField(
-        queryset=adm.Cargo.objects.all(),
-        widget=ModelSelect2Widget(
-            model=adm.Cargo,
-            search_fields=['nombre__icontains']
-        )
-    )
+    # unidad_org = forms.ModelChoiceField(
+    #     queryset=adm.UnidadOrg.objects.all(),
+    #     widget=ModelSelect2Widget(
+    #         model=adm.UnidadOrg,
+    #         search_fields=['nombre__icontains']
+    #     )
+    # )
+    # departamento = forms.ModelChoiceField(
+    #     queryset=adm.Departamento.objects.all(),
+    #     widget=ModelSelect2Widget(
+    #         model=adm.Departamento,
+    #         search_fields=['nombre__icontains'],
+    #         dependent_fields={'unidad': 'unidad_org'}
+    #     )
+    # )
+    # cargo = forms.ModelChoiceField(
+    #     queryset=adm.Cargo.objects.all(),
+    #     widget=ModelSelect2Widget(
+    #         model=adm.Cargo,
+    #         search_fields=['nombre__icontains']
+    #     )
+    # )
 
 
     class Meta:

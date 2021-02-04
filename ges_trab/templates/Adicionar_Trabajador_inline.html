@@ -705,33 +705,33 @@
                 }
             });
 
-            {#$('#id_departamento').html('');#}
-            {##}
-            {#$.get(`{% url 'gestionarPlantilla' %}Dpto_por_unidad/${$unidad}/`, function (data) {#}
-            {#    var departamentos = data[0].result;#}
-            {#    if (departamentos.length !== 0) {#}
-            {#        $('#id_departamento').append("<option value=''>---------</option>");#}
-            {#        for (var departamento in departamentos) {#}
-            {#            var index_tab = '';#}
-            {#            if(departamentos[departamento].dirige_nombre) {index_tab = ' - '}#}
-            {#            if($departamento == departamentos[departamento].id) {#}
-            {#                $('#id_departamento').append(#}
-            {#                    `<option value="${departamentos[departamento].id}" selected="selected">#}
-            {#                       ${index_tab} ${departamentos[departamento].nombre}#}
-            {#                    </option>`#}
-            {#                );#}
-            {#            } else {#}
-            {#                $('#id_departamento').append(#}
-            {#                    `<option value="${departamentos[departamento].id}">#}
-            {#                        ${index_tab} ${departamentos[departamento].nombre}#}
-            {#                     </option>`#}
-            {#                );#}
-            {#            }#}
-            {#        }#}
-            {#    } else {#}
-            {#        $('#id_departamento').append(`<option value="">No hay departamentos para mostrar.</option>`);#}
-            {#    }#}
-            {#});#}
+            $('#id_departamento').html('');
+
+            $.get(`{% url 'gestionarPlantilla' %}Dpto_por_unidad/${$unidad}/`, function (data) {
+                var departamentos = data[0].result;
+                if (departamentos.length !== 0) {
+                    $('#id_departamento').append("<option value=''>---------</option>");
+                    for (var departamento in departamentos) {
+                        var index_tab = '';
+                        if(departamentos[departamento].dirige_nombre) {index_tab = ' - '}
+                        if($departamento == departamentos[departamento].id) {
+                            $('#id_departamento').append(
+                                `<option value="${departamentos[departamento].id}" selected="selected">
+                                   ${index_tab} ${departamentos[departamento].nombre}
+                                </option>`
+                            );
+                        } else {
+                            $('#id_departamento').append(
+                                `<option value="${departamentos[departamento].id}">
+                                    ${index_tab} ${departamentos[departamento].nombre}
+                                 </option>`
+                            );
+                        }
+                    }
+                } else {
+                    $('#id_departamento').append(`<option value="">No hay departamentos para mostrar.</option>`);
+                }
+            });
             
         });
 
@@ -764,56 +764,56 @@
             });
         }
         
-        {#function select_cargos() {#}
-        {#    var id_seleccionado = this.value | 0;#}
-        {#    $('#id_cargo').html('');#}
-        {##}
-        {#    $.get(`{% url 'ges_trab_home' %}cargo_por_dpto/${id_seleccionado}/`, function (data) {#}
-        {#        var cargos = data[0].result;#}
-        {#        if (cargos.length !== 0) {#}
-        {#            $('#id_cargo').append(`<option>---------</option>`);#}
-        {#            for (var disponibles in cargos) {#}
-        {#                    $('#id_cargo').append(#}
-        {#                        `<option value="${cargos[disponibles].id}">${cargos[disponibles].nombre}</option>`#}
-        {#                    );#}
-        {#            }#}
-        {#        } else {#}
-        {#            $('#id_cargo').append(`<option>No hay cargos para mostrar.</option>`);#}
-        {#        }#}
-        {#    });#}
-        {#}#}
-        {##}
-        {#function select_departamentos() {#}
-        {#    var id_seleccionado = this.value | 0;#}
-        {#    $('#id_departamento').html('');#}
-        {##}
-        {#    $.get(`{% url 'gestionarPlantilla' %}Dpto_por_unidad/${id_seleccionado}/`, function (data) {#}
-        {#        var departamentos = data[0].result;#}
-        {#        if (departamentos.length !== 0) {#}
-        {#            $('#id_departamento').append(`<option>---------</option>`);#}
-        {#            for (var departamento in departamentos) {#}
-        {#                var index_tab = '';#}
-        {#                if (departamentos[departamento].dirige_nombre) {index_tab = ' - '}#}
-        {#                    $('#id_departamento').append(#}
-        {#                        `<option value="${departamentos[departamento].id}">#}
-        {#                            ${index_tab} ${departamentos[departamento].nombre}#}
-        {#                         </option>`#}
-        {#                    );#}
-        {#            }#}
-        {#        } else {#}
-        {#            $('#id_departamento').append(`<option>No hay departamentos para mostrar.</option>`);#}
-        {#        }#}
-        {#    });#}
-        {#}#}
+        function select_cargos() {
+            var id_seleccionado = this.value | 0;
+            $('#id_cargo').html('');
+
+            $.get(`{% url 'ges_trab_home' %}cargo_por_dpto/${id_seleccionado}/`, function (data) {
+                var cargos = data[0].result;
+                if (cargos.length !== 0) {
+                    $('#id_cargo').append(`<option>---------</option>`);
+                    for (var disponibles in cargos) {
+                            $('#id_cargo').append(
+                                `<option value="${cargos[disponibles].id}">${cargos[disponibles].nombre}</option>`
+                            );
+                    }
+                } else {
+                    $('#id_cargo').append(`<option>No hay cargos para mostrar.</option>`);
+                }
+            });
+        }
+
+        function select_departamentos() {
+            var id_seleccionado = this.value | 0;
+            $('#id_departamento').html('');
+
+            $.get(`{% url 'gestionarPlantilla' %}Dpto_por_unidad/${id_seleccionado}/`, function (data) {
+                var departamentos = data[0].result;
+                if (departamentos.length !== 0) {
+                    $('#id_departamento').append(`<option>---------</option>`);
+                    for (var departamento in departamentos) {
+                        var index_tab = '';
+                        if (departamentos[departamento].dirige_nombre) {index_tab = ' - '}
+                            $('#id_departamento').append(
+                                `<option value="${departamentos[departamento].id}">
+                                    ${index_tab} ${departamentos[departamento].nombre}
+                                 </option>`
+                            );
+                    }
+                } else {
+                    $('#id_departamento').append(`<option>No hay departamentos para mostrar.</option>`);
+                }
+            });
+        }
 
 
-        {#// Cargos Disponibles#}
-        {#$('#id_departamento').on('change', select_cargos);#}
-        {#$('#id_departamento').on('ready', select_cargos);#}
-        {##}
-        {#// Datos Personales OnChange#}
-        {#$('#id_unidad_org').on('change', select_departamentos);#}
-        {#$('#id_unidad_org').on('ready', select_departamentos);#}
+        // Cargos Disponibles
+        $('#id_departamento').on('change', select_cargos);
+        $('#id_departamento').on('ready', select_cargos);
+
+        // Datos Personales OnChange
+        $('#id_unidad_org').on('change', select_departamentos);
+        $('#id_unidad_org').on('ready', select_departamentos);
 
         //Calificacion - Especialidad
         $('#id_calificacion').on('change', select_especialidad);
@@ -844,18 +844,18 @@
     });
 
         //208 Horas
-        {#$('#id_j_laboral').change(function () {#}
-        {##}
-        {#    if (this.checked) {#}
-        {##}
-        {#        salarioe = parseFloat($('#id_salario_escala_ref').val());#}
-        {##}
-        {#        $('#id_sal_bas').val(Math.round((salarioe) * 100) / 100)#}
-        {##}
-        {#    } else {#}
-        {#        $('#id_sal_bas').val(parseFloat($('#id_salario_escala_ref').val()))#}
-        {#    }#}
-        {#});#}
+        $('#id_j_laboral').change(function () {
+
+            if (this.checked) {
+
+                salarioe = parseFloat($('#id_salario_escala_ref').val());
+
+                $('#id_sal_bas').val(Math.round((salarioe) * 100) / 100)
+
+            } else {
+                $('#id_sal_bas').val(parseFloat($('#id_salario_escala_ref').val()))
+            }
+        });
 
         // Validations
         $(document).ready(function () {
@@ -909,8 +909,8 @@
         	                remote: `{% url 'ver_ci' %}${$id_worker}`
                 	    },
 	                    codigo_interno: {
-        	                minlength: 3,
-                	        maxlength: 3,
+        	                {#minlength: 3,#}
+                	        {#maxlength: 3,#}
                                 required: true,
 	                        digits: true,
         	                remote: `{% url 'ver_codigo_interno' %}${$id_worker}`
