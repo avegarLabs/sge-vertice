@@ -574,6 +574,16 @@ class Disponible(models.Model):
     def __str__(self):
         return self.trabajador.primer_nombre, self.trabajador.apellidos, self.trabajador.codigo_interno
 
+class Defensa:
+    nombre = ''
+    cantidad = ''
+    porciento = ''
+
+    def __init__(self, nombre, cantidad, porciento):
+        self.nombre = nombre
+        self.cantidad = cantidad
+        self.porciento = porciento
+
 
 class Cantidades:
     nombre = ''
