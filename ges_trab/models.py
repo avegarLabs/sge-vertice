@@ -133,7 +133,7 @@ class Trabajador(BaseUrls):
     sal_cat_cient = models.DecimalField(
         'salario por cat. científica', max_digits=5, decimal_places=2, blank=True, null=True, default=0.0)
     salario_total = models.DecimalField('salario total', max_digits=7, blank=True, null=True, decimal_places=2)
-    salario_jornada_laboral = models.DecimalField('salario por jornada laboral', max_digits=5, blank=True,
+    salario_jornada_laboral = models.DecimalField('salario por jornada laboral', max_digits=10, blank=True,
                                                   null=True, default=0.0, decimal_places=2)
     salario_total_reforma = models.DecimalField('salario total reforma', max_digits=10, blank=True, null=True, decimal_places=2)
     # salario_jornada_laboral_reforma = models.DecimalField('salario por jornada laboral', max_digits=5, blank=True,
