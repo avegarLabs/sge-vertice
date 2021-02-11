@@ -415,19 +415,19 @@ class Movimiento(BaseUrls):
     categoria_act = models.CharField(max_length=30, verbose_name='Categoría ocupacional actual')
     antiguedad_ant = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     antiguedad_act = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    salario_escala_ant = models.DecimalField(verbose_name='Salario escala anterior', max_digits=5, decimal_places=2,
+    salario_escala_ant = models.DecimalField(verbose_name='Salario escala anterior', max_digits=10, decimal_places=2,
                                              default=0.00)
-    salario_escala_act = models.DecimalField(verbose_name='Salario escala actual', max_digits=5, decimal_places=2,
+    salario_escala_act = models.DecimalField(verbose_name='Salario escala actual', max_digits=10, decimal_places=2,
                                              default=0.00)
-    escala_salarial_ant = models.CharField(max_length=5)
-    escala_salarial_act = models.CharField(max_length=5)
-    salario_total_ant = models.DecimalField(max_digits=7, verbose_name='Salario Total anterior', blank=True, null=True,
+    escala_salarial_ant = models.CharField(max_length=10)
+    escala_salarial_act = models.CharField(max_length=10)
+    salario_total_ant = models.DecimalField(max_digits=10, verbose_name='Salario Total anterior', blank=True, null=True,
                                             decimal_places=2)
-    salario_total_act = models.DecimalField(max_digits=7, verbose_name='Salario Total actual', blank=True, null=True,
+    salario_total_act = models.DecimalField(max_digits=10, verbose_name='Salario Total actual', blank=True, null=True,
                                             decimal_places=2)
-    sal_plus_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Salario plus anterior',
+    sal_plus_ant = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Salario plus anterior',
                                        default=0.00)
-    sal_plus_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Salario plus actual', default=0.00)
+    sal_plus_act = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Salario plus actual', default=0.00)
     sal_cat_cient_ant = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Salario x cat. científica",
                                             blank=True, null=True, default=0.00)
     sal_cat_cient_act = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Salario x cat. científica",
