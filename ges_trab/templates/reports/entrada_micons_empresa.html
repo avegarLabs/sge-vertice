@@ -1,0 +1,26 @@
+{% extends 'layouts/reports/_base_export_pdf.html' %}
+
+{% block table_title %}Información de entrada al MICONS y VERTICE{% endblock %}
+
+{% block table_header %}
+    <th style="width: 35px">No</th>
+    <th style="width: 350px; text-align: left">Nombres y apellidos</th>
+    <th style="width: 200px">Fecha Contrato</th>
+    <th style="width: 170px; text-align: left">Alta al Cargo</th>
+    <th style="width: 260px; text-align: center">Fecha ingreso MICONS</th>
+{% endblock table_header %}
+
+{% block table_body %}
+   <tr>
+        <td style="width: 35px; text-align: left; padding-right: 3px; font-weight: bold ">{{forloop.counter}}</td>
+        <td style="width: 350px; text-align: left; padding-right: 3px; ">{{ item.primer_nombre }} {{ item.segundo_nombre }} {{ item.apellidos }}</td>
+        <td style="width: 200px; text-align: center">{{ item.fecha_contrato|date:"d/m/Y"}}</td>
+        <td style="width: 170px; text-align: center">{{ item.fecha_alta|date:"d/m/Y"}}</td>
+        <td style="width: 260px; text-align: center">{{ item.fecha_ingreso|date:"d/m/Y"}}</td>
+   </tr>
+
+{% endblock table_body %}
+{% block table_body_outside %}
+
+{% endblock %}
+

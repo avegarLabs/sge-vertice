@@ -602,6 +602,7 @@ class Cantidades:
     cant_masc_t = ''
     id = ''
 
+
     def __init__(self, nombre, cant_masc, cant_fem, cant_fem_c, cant_fem_a, cant_fem_s, cant_fem_o,
                  cant_fem_t, cant_masc_c, cant_masc_a, cant_masc_s, cant_masc_o, cant_masc_t, id):
         self.nombre = nombre
@@ -627,6 +628,11 @@ class ListPadre:
     cant_fem = ''
     cant_masc = ''
     iden = ''
+    cant_ad = 0
+    cant_cu = 0
+    cant_op = 0
+    cant_te = 0
+    cant_se = 0
 
     def __init__(self, nombre, elements, total, cant_fem, cant_masc, iden):
         self.nombre = nombre
@@ -648,6 +654,43 @@ class Elements:
         self.total = total
         self.cant_fem = cant_fem
         self.cant_masc = cant_masc
+
+
+class Contrato:
+    nombre = ''
+    no = ''
+    personal = []
+
+    def __init__(self, nombre, no, personal):
+        self.nombre = nombre
+        self.no = no
+        self.personal = personal
+
+class List_Edades:
+    nombres = ''
+    apellidos = ''
+    edad = ''
+    sexo = ''
+    unidad = ''
+    dpto = ''
+    escolaridad = ''
+    ci = ''
+    cargo = ''
+    salario =''
+    cat = ''
+
+    def __init__(self, nombre, edad, sexo, unidad, dpto, escolaridad, ci, cargo, salario, cat):
+        self.nombre = nombre
+        self.edad = edad
+        self.sexo = sexo
+        self.unidad = unidad
+        self.dpto = dpto
+        self.escolaridad = escolaridad
+        self.ci = ci
+        self.cargo = cargo
+        self.salario = salario
+        self.cat = cat
+
 
 registry.auditlog.register(Trabajador)
 registry.auditlog.register(Movimiento)

@@ -1,0 +1,70 @@
+{% extends 'layouts/reports/_base_export_pdf.html' %}
+
+{% block table_title %}Cantidad de Trabaj por Edades, Sexo y Categoría <br>
+    <span style="font-weight: normal; font-size: 11px">La edad promedio de los trabajadores de la empresa es {{ edad_promedio }}</span>
+{% endblock %}
+
+{% block table_header %}
+
+{% endblock table_header %}
+
+{% block table_body %}
+
+{% endblock table_body %}
+{% block table_body_outside %}
+    {% for item in object_list %}
+    <tr>
+        <tr>
+            <th colspan="3" style="width: 500px; text-align: left">{{ item.nombre }}</th>
+            <th colspan="5" style="padding-top: 5px">Categoría Ocupacional</th>
+        </tr>
+         <tr>
+        <th style="width: 150px; padding-top: 3px">Edad</th>
+        <th style="width: 80px">Sexo</th>
+        <th style="width: 80px">Total</th>
+        <th style="width: 80px">A</th>
+        <th style="width: 80px">C</th>
+        <th style="width: 80px">O</th>
+        <th style="width: 80px">S</th>
+        <th style="width: 80px">T</th>
+         </tr>
+    </tr>
+        {% for i in item.elements %}
+            <tr>
+                <td rowspan="2" style="width: 150px; text-align: center">{{ i.nombre }}</td>
+                <td style="width: 80px; text-align: center">&nbsp;M&nbsp;</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_masc }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_masc_a }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_masc_c }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_masc_o }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_masc_s }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_masc_t }}</td>
+            </tr>
+            <tr>
+                <td style="width: 80px; text-align: center">&nbsp;F&nbsp;</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_fem }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_fem_a }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_fem_c }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_fem_o }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_fem_s }}</td>
+                <td style="width: 80px; text-align: center">{{ i.cant_fem_t }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+    <td colspan="8" style="color: dimgrey; font-weight: bold">____________________________________________________________________________________________________</td>
+    </tr>
+        <tr>
+            <td style="width: 150px; text-align: right; font-weight: bold">Total</td>
+            <td style="width: 80px; text-align: center; font-weight: bold"></td>
+            <td style="width: 80px; text-align: center; font-weight: bold">{{item.total}}</td>
+            <td style="width: 80px; text-align: center; font-weight: bold">{{item.cant_ad}}</td>
+            <td style="width: 80px; text-align: center; font-weight: bold">{{item.cant_cu}}</td>
+            <td style="width: 80px; text-align: center; font-weight: bold">{{item.cant_op}}</td>
+            <td style="width: 80px; text-align: center; font-weight: bold">{{item.cant_se}}</td>
+            <td style="width: 80px; text-align: center; font-weight: bold">{{item.cant_te}}</td>
+        </tr>
+        <tr>
+            <td colspan="8"></td>
+        </tr>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        th {
+            padding: 10px 5px !important;
+        }
+        .btn-green{background-color:#388e3c!important;color:#fff!important}
+        .btn-green:hover{background-color:#3fa044}
+    </style>
+{% endblock %}
+
+{% block migas %}
+    {#    <ol class="breadcrumb" style="margin-top: 56px; opacity: 0.9; position: fixed;#}
+    {#    top: 0; right: 0; left: 0; z-index: 1000;">#}
+    {#        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>#}
+    {#        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>#}
+    {#    </ol>#}
+{% endblock %}
+
+{% block content %}
+    <div class=content align="center" style="font-size: smaller; width: 1000px;">
+        <h5><strong>{{ title }}</strong></h5>
+    </div>
+    <div class="text-right" style="color: white;">
+        <a href="{% url export_pdf %}" class="btn btn-sm btn-success" style="font-size: small">
+            <i class="fa fa-download"></i> Exportar a PDF
+        </a>
+        <a class="btn btn-sm btn-green waves-effect px-3 export" id="excel_btn" target="_blank" type="text/csv">
+            EXCEL
+        </a>
+    </div>
+    <p></p>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="display table table-striped" cellspacing="0" id="tabla_report"
+                   style="width: 100%;">
+                <thead>
+                <th style="width: 15px; padding-top: 3px; text-align: center">No</th>
+                <th style="width: 330px; text-align: left">Nombres y Apellidos</th>
+                <th style="width: 30px; text-align: center">Edad</th>
+                <th style="width: 30px; text-align: center">Escolaridad</th>
+                <th style="width: 90px; text-align: center">CI</th>
+                <th style="width: 440px; text-align: left">Cargo</th>
+                <th style="width: 100px; text-align: center">Salario</th>
+                </thead>
+                <tbody>
+                {% for item in object_list %}
+                    <tr>
+                        <td ></td>
+                        <td style="text-align: left; font-weight: bold; font-size: 16px">{{ item.nombre }}</td>
+                        <td ></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% for i in item.personal %}
+                        <tr>
+                            <td ></td>
+                            <td style="font-weight: bold; font-size: 14px">&nbsp;&nbsp;&nbsp;{{ i.nombre }}</td>
+                            <td ></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% for per in i.personal %}
+                            <tr>
+                                <td style="width: 15px; text-align: center;">{{forloop.counter}}</td>
+                                <td style="width: 330px; text-align: left; margin-left: 15px">{{ per.nombre}}</td>
+                                <td style="width: 30px; text-align: center">{{ per.edad }}</td>
+                                <td style="width: 30px; text-align: center; margin-left: 15px">{{ per.escolaridad }}</td>
+                                <td style="width: 90px; text-align: center">{{per.ci }}</td>
+                                <td style="width: 440px; text-align: left">{{ per.cargo }}</td>
+                                <td style="width: 100px; text-align: center">{{ per.salario }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="popup" class="modal fade" role="dialog"></div>
+{% endblock %}
+
+{% block javascript %}{% endblock %}

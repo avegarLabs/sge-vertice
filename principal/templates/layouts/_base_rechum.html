@@ -387,19 +387,19 @@
                 </li>
                 <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}"
-                       href="{% url 'resumen-plantilla' %}">
+                       href="{% url 'resumen-plantilla_report' %}">
                         Resumen de Plantilla
                     </a>
                 </li>
                 <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}"
-                       href="{% url 'escolaridad_categoria_preview' %}">
+                       href="{% url 'escolaridad_categoria_export' %}">
                         Totales Escolaridad por Categoría
                     </a>
                 </li>
                 <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}"
-                       href="{% url 'total_etnia_categoria' %}">
+                       href="{% url 'total_etnia_categoria_report' %}">
                         Totales por Etnia y Categoría
                     </a>
                 </li>
@@ -415,6 +415,37 @@
                         Totales por Especialidad y Sexo
                     </a>
                 </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'trab_area_contrato_cat' %}">
+                        Trabajadores por Contrato, Áreas y Categoría
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'cant_trab_edad_sexo_cat_report' %}">
+                        Cantidad Trabaj por Edades, Sexo y Categoría
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'cant_trab_35_report' %}">
+                        Total de Trabajadores hasta 35 años
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'entrada_micons_empresa_report' %}">
+                        Entrada al MICONS y a la Empresa
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'relacion_trabajadores' %}">
+                        Relación de Trabajadores
+                    </a>
+                </li>
+                <li>
             </ul>
         </li>
         <li>

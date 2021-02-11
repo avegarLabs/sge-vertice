@@ -1,0 +1,23 @@
+{% extends 'layouts/reports/_base_export_pdf.html' %}
+
+{% block table_title %}Relación de Trabajadores por Edades<br> <span>Empresa de Servicios de Ingeniería y Diseño VERTICE</span>{% endblock %}
+
+{% block table_header %}
+   <th style="width: 15px; padding-top: 3px; text-align: center">No</th>
+    <th style="width: 300px; text-align: left">Nombres y Apellidos</th>
+    <th style="width: 25px; text-align: center">Edad</th>
+    <th style="width: 320px; text-align: left">&nbsp;&nbsp;Área</th>
+{% endblock table_header %}
+
+{% block table_body %}
+     <tr>
+         <td style="width: 15px; text-align: center;">{{forloop.counter}}</td>
+         <td style="width: 300px; text-align: left; margin-left: 15px">{{ item.nombre}}</td>
+         <td style="width: 25px; text-align: center">{{ item.edad }}</td>
+         <td style="width: 320px; text-align: left; margin-left: 15px">{{ item.unidad }} - {{ item.dpto }}</td>
+     </tr>
+{% endblock table_body %}
+{% block table_body_outside %}
+
+{% endblock %}
+

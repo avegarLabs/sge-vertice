@@ -1,0 +1,30 @@
+{% extends 'layouts/reports/_base_export_landscape_pdf.html' %}
+
+{% block table_title %}Trabajadores por Contrato, Áreas y Categoría Ocupacional{% endblock %}
+
+{% block table_header %}
+    <th style="width: 15px;">Código</th>
+    <th style="width: 235px">Nombres y apellidos</th>
+    <th style="width: 320px">Área</th>
+    <th style="width: 360px">Cargo</th>
+    <th style="width: 20px; text-align: center">Categoría</th>
+{% endblock table_header %}
+
+{% block table_body %}
+   <tr>
+        <td colspan="5" style="width: 150px;"><strong>{{ item.nombre }}</strong></td>
+    </tr>
+    {% for i in item.personal %}
+    <tr>
+        <td style="width: 15px; text-align: center; font-weight: bold">{{ i.codigo_interno }}</td>
+        <td style="width: 235px">{{ i.primer_nombre }} {{ i.segundo_nombre }} {{ i.apellidos }}</td>
+        <td style="width: 320px">{{ i.unidad }} - {{ i.dpto }}</td>
+        <td style="width: 360px">{{ i.cargo }}</td>
+        <td style="width: 20px; text-align: center">{{ i.categoria }}</td>
+    </tr>
+    {% endfor %}
+{% endblock table_body %}
+{% block table_body_outside %}
+
+{% endblock %}
+
