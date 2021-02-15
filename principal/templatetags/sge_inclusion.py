@@ -33,5 +33,5 @@ def submit_row_extra_buttons_actividadcapacitaciontrab(context):
         "verbose_name": context['verbose_name'],
         "change": context['user'].has_perm(f"{context.request.current_app}.change_{context['model_name']}"),
         "delete": context['user'].has_perm(f"{context.request.current_app}.delete_{context['model_name']}"),
-        "actividadcapacitaciontrab": context['user'].has_perm(f"{context.request.current_app}.read_actividadcapacitaciontrabajadores")
+        "actividadcapacitaciontrab": context['user'].has_perm(f"{context.request.current_app}.read_actividadcapacitaciontrabajadores_new")
     }
