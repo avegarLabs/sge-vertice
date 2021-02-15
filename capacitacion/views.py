@@ -149,7 +149,7 @@ class ActividadCapacitacionDeleteView(SgeDeleteView):
 # Actividad Capacitación
 # Listar
 class ActividadCapacitacionTrabajadoresListView(SgeListView):
-    permission_required = 'capacitacion.read_actividadcapacitaciontrab'
+    permission_required = 'capacitacion.read_actividadcapacitaciontrabajadores'
     model = ActividadCapacitacionTrabajadores
     template_name = 'act-cap-trab/list.html'
     raise_exception = True
@@ -166,7 +166,7 @@ class ActividadCapacitacionTrabajadoresListView(SgeListView):
 
 # Crear
 class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
-    permission_required = 'capacitacion.add_actividadcapacitaciontrab'
+    permission_required = 'capacitacion.add_actividadcapacitaciontrabajadores'
     model = ActividadCapacitacionTrabajadores
     fields = '__all__'
     template_name = 'act-cap-trab/create.html'
@@ -181,7 +181,7 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
 
 # Editar
 class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
-    permission_required = 'capacitacion.change_actividadcapacitaciontrab'
+    permission_required = 'capacitacion.change_actividadcapacitaciontrabajadores'
     model = ActividadCapacitacionTrabajadores
     fields = '__all__'
     template_name = 'act-cap-trab/create.html'
@@ -190,14 +190,14 @@ class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
 
 # Detalle
 class ActividadCapacitacionTrabajadoresDetailView(SgeDetailView):
-    permission_required = 'capacitacion.read_actividadcapacitaciontrab'
+    permission_required = 'capacitacion.read_actividadcapacitaciontrabajadores'
     model = ActividadCapacitacionTrabajadores
     template_name = 'act-cap-trab/detail.html'
 
 
 # Delete
 class ActividadCapacitacionTrabajadoresDeleteView(SgeDeleteView):
-    permission_required = 'capacitacion.delete_actividadcapacitaciontrab'
+    permission_required = 'capacitacion.delete_actividadcapacitaciontrabajadores'
     model = ActividadCapacitacionTrabajadores
     success_url = reverse_lazy('actividadcapacitaciontrab_list')
 
