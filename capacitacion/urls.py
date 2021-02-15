@@ -6,10 +6,10 @@ urlpatterns = [
         path('', views.home, name='capacitacion_home'),
         path('actividad/', include([
             path('', views.ActividadCapacitacionListView.as_view(), name="actividadcapacitacion_list"),
-            path('<str:pk>/', views.ActividadCapacitacionDetailView.as_view(), name="actividadcapacitacion_detail"),
+            path('agregar/', views.ActividadCapacitacionCreateView.as_view(), name="actividadcapacitacion_create"),
             path('<str:pk>/actualizar/', views.ActividadCapacitacionUpdateView.as_view(),
                  name="actividadcapacitacion_update"),
-            path('agregar/', views.ActividadCapacitacionCreateView.as_view(), name="actividadcapacitacion_create"),
+            path('<str:pk>/', views.ActividadCapacitacionDetailView.as_view(), name="actividadcapacitacion_detail"),
             path('<str:pk>/eliminar/', views.ActividadCapacitacionDeleteView.as_view(),
                  name="actividadcapacitacion_delete")
 
