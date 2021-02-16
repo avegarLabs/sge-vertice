@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
+from capacitacion.form import ActividadCapacitacionTrabajadoresForm
 from .models import *
 from principal.decorators import module_permission_required
 from rechum.views import SgeListView, SgeCreateView, SgeUpdateView, SgeDetailView, SgeDeleteView
@@ -176,6 +177,7 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
         queryset = self.get_queryset()
         print(self.kwargs)
         codigo_actividad = self.kwargs['codigo_actividad']
+
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
         return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
 

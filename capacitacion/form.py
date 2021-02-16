@@ -20,3 +20,26 @@ class TipoActividadCapacitacionForm(AbstractForm):
     def __init__(self, *args, **kwargs):
         super(TipoActividadCapacitacionForm, self).__init__(*args, **kwargs)
         self._widget_class_modifier()
+
+
+class ActividadCapacitacionForm(AbstractForm):
+    class Meta:
+        model = ActividadCapacitacion
+        fields = '__all__'
+        widgets = {
+            'fecha_inicio': forms.TextInput(attrs={'class':'datepicker'}),
+            'fecha_term': forms.TextInput(attrs={'class':'datepicker'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ActividadCapacitacionForm, self).__init__(*args, **kwargs)
+        self._widget_class_modifier()
+
+class ActividadCapacitacionTrabajadoresForm(AbstractForm):
+    class Meta:
+        model = ActividadCapacitacionTrabajadores
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ActividadCapacitacionTrabajadoresForm, self).__init__(*args, **kwargs)
+        self._widget_class_modifier()
