@@ -51,9 +51,9 @@ urlpatterns = [
             path('<str:pk>/', views.ActividadCapacitacionTrabajadoresDetailView.as_view(),
                  name='actividadcapacitaciontrab_detail'),
             path('<str:pk>/actualizar/', views.ActividadCapacitacionTrabajadoresUpdateView.as_view(),
-                 name='actividadcapacitaciontrab_update'),
+                 name='actividadcapacitaciontrabajadores_update'),
             path('<str:pk>/eliminar/', views.ActividadCapacitacionTrabajadoresDeleteView.as_view(),
-                 name='actividadcapacitaciontrab_delete')
+                 name='actividadcapacitaciontrabajadores_delete')
         ]))
 
     ]))

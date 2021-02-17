@@ -157,9 +157,9 @@ class ActividadCapacitacionTrabajadores(BaseUrls, models.Model):
 class ActividadCapacitacionTrabajadores_new(BaseUrls, models.Model):
     actividad = models.ForeignKey(ActividadCapacitacion_new, on_delete=models.CASCADE)
     trabajador = models.ForeignKey(Trabajador, on_delete=models.SET_NULL, null=True)
-    evaluacion = models.CharField('evaluación', max_length=30, null=True)
-    tomo = models.CharField(max_length=20, null=True)
-    folio = models.CharField(max_length=20, null=True)
+    evaluacion = models.CharField('evaluación', max_length=30, null=True, blank=True)
+    tomo = models.CharField(max_length=20, null=True, blank=True)
+    folio = models.CharField(max_length=20, null=True, blank=True)
     history = auditlog_models.AuditlogHistoryField()
 
     def __str__(self):

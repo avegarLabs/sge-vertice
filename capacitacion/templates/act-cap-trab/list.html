@@ -20,24 +20,26 @@
     <td>{{ item.evaluacion }}</td>
     <td>{{ item.tomo }}</td>
     <td>{{ item.folio }}</td>
-    <td>
-        <div class="icon-acciones text-center">
-            {% if change %}
-                <a href="{% url 'actividadcapacitaciontrab_update' pk %}" onclick="event.stopPropagation()"
-                   class="badge badge-pill badge-primary">
-                    <i class="fa fa-edit fa-submit-buttons-round" title="Editar {{ verbose_name|title }}"
-                       style="color: white;"></i>
-                </a>
-            {% endif %}
-            {% if delete %}
-                <a onclick="event.stopPropagation(); open_re_useful_modal('{% url 'actividadcapacitaciontrab_delete' pk %}')"
-                   class="badge badge-pill badge-danger">
-                    <i class="fa fa-trash fa-submit-buttons-round" title="Eliminar {{ verbose_name|title }}"
-                       style="color: white;"></i>
-                </a>
-            {% endif %}
-        </div>
-    </td>
+    {% submit_row %}
+
+{#    <td>#}
+{#        <div class="icon-acciones text-center">#}
+{#            {% if change %}#}
+{#                <a href="{% url 'actividadcapacitaciontrab_update' pk %}" onclick="event.stopPropagation()"#}
+{#                   class="badge badge-pill badge-primary">#}
+{#                    <i class="fa fa-edit fa-submit-buttons-round" title="Editar {{ verbose_name|title }}"#}
+{#                       style="color: white;"></i>#}
+{#                </a>#}
+{#            {% endif %}#}
+{#            {% if delete %}#}
+{#                <a onclick="event.stopPropagation(); open_re_useful_modal('{% url 'actividadcapacitaciontrab_delete' pk %}')"#}
+{#                   class="badge badge-pill badge-danger">#}
+{#                    <i class="fa fa-trash fa-submit-buttons-round" title="Eliminar {{ verbose_name|title }}"#}
+{#                       style="color: white;"></i>#}
+{#                </a>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </td>#}
 {% endblock table_body %}
 
 {% block table_foot %}
