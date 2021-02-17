@@ -46,7 +46,7 @@ urlpatterns = [
         path('list_trab/', include([
             path('<str:codigo_actividad>/list_trab/', views.ActividadCapacitacionTrabajadoresListView.as_view(),
                  name="actividadcapacitaciontrabajadores_list"),
-            path('/list_trab/', views.ActividadCapacitacionTrabajadoresListView.as_view(),
+            path('', views.ActividadCapacitacionTrabajadoresListView.as_view(),
                  name="actividadcapacitaciontrabajadores_list"),
             path('<str:codigo_actividad>/agregar/', views.ActividadCapacitacionTrabajadoresCreateView.as_view(),
                  name='actividadcapacitaciontrabajadores_create'),
