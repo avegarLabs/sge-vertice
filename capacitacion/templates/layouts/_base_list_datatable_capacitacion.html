@@ -13,7 +13,7 @@
                             </div>
                             <div class="col-6 text-right">
                                 {% if add_perm in perms %}
-                                    <a href="{% url 'actividadcapacitaciontrab_create' codigo_actividad %}"
+                                    <a href="{% url 'actividadcapacitaciontrabajadores_create' codigo_actividad %}"
                                        class="btn btn-sm btn-success font-smaller">
                                         <i class="fa fa-plus mr-1"></i> Agregar
                                     </a>
@@ -27,7 +27,7 @@
                         <div class="row">
                             {% if errores %}
                                 <div class="alert alert-dismissible alert-danger mx-5">
-                                    <a class="ml-5 close" type="button" href="{% url 'actividadcapacitaciontrab_list' %}">
+                                    <a class="ml-5 close" type="button" href="{% url 'actividadcapacitaciontrabajadores_list' %}">
                                         <strong>&times;</strong>
                                     </a>
                                     <strong>Error:</strong> {% block delete_error_message %}{% endblock %}
@@ -43,7 +43,7 @@
                                     <tbody>
                                     {% for item in object_list %}
                                         {% block table_body_outside %}
-                                            <tr onclick="open_re_useful_modal(`{% url 'actividadcapacitaciontrab_detail' item.pk %}`)">
+                                            <tr onclick="open_re_useful_modal(`{% url 'actividadcapacitaciontrabajadores_detail' item.pk %}`)">
                                                 {% block table_body %}{% endblock %}
                                             </tr>
                                         {% endblock %}

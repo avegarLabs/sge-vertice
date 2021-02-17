@@ -171,13 +171,11 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
     model = ActividadCapacitacionTrabajadores
     fields = '__all__'
     template_name = 'act-cap-trab/create.html'
-    success_url = reverse_lazy('actividadcapacitaciontrab_create')
+    success_url = reverse_lazy('actividadcapacitaciontrabajadores_create')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         queryset = self.get_queryset()
-        print(self.kwargs)
         codigo_actividad = self.kwargs['codigo_actividad']
-
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
         return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
 
@@ -187,7 +185,7 @@ class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
     model = ActividadCapacitacionTrabajadores
     fields = '__all__'
     template_name = 'act-cap-trab/create.html'
-    success_url = reverse_lazy('actividadcapacitaciontrab_list')
+    success_url = reverse_lazy('actividadcapacitaciontrabajadores_list')
 
 
 # Detalle
@@ -201,7 +199,15 @@ class ActividadCapacitacionTrabajadoresDetailView(SgeDetailView):
 class ActividadCapacitacionTrabajadoresDeleteView(SgeDeleteView):
     permission_required = 'capacitacion.delete_actividadcapacitaciontrabajadores_new'
     model = ActividadCapacitacionTrabajadores
-    success_url = reverse_lazy('actividadcapacitaciontrab_list')
+    success_url = reverse_lazy('actividadcapacitaciontrabajadores_list')
+
+
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     queryset = self.get_queryset()
+    #     pk = self.kwargs['pk']
+    #     codigo_actividad = ActividadCapacitacionTrabajadores_new.objects.get(pk=pk).actividad.codigo
+    #     object_list = queryset.filter(actividad=codigo_actividad).order_by()
+    #     return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
 
 
 # //////////////////////////////////////////////////////////////////////////

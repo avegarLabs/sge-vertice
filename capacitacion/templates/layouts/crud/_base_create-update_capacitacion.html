@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-4 text-right" style="font-size: 1.3rem">
                         {% if request.current_app|read_perm:model_name in perms %}
-                            <a href="{% url 'actividadcapacitaciontrab_list' codigo_actividad %}">
+                            <a href="{% url 'actividadcapacitaciontrabajadores_list' codigo_actividad %}">
                                 <i class="fa fa-list text-info"></i>
                             </a>
                         {% endif %}
@@ -51,7 +51,7 @@
                                     <button id="submit_button" type="submit" class="btn btn-success">
                                         <i class="fa fa-save"></i> &nbsp;Guardar
                                     </button>
-                                    <a class="btn btn-danger" href="{% url 'actividadcapacitaciontrab_list' codigo_actividad %}">
+                                    <a class="btn btn-danger" href="{% url 'actividadcapacitaciontrabajadores_list' codigo_actividad %}">
                                         <i class="fa fa-close"></i> &nbsp;Cancelar
                                     </a>
                                 </div>

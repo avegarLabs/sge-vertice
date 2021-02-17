@@ -2,8 +2,8 @@
 {% load sge_perms %}
 
 {% block extra_buttons %}
-    {% if request.current_app|add_perm:'read_actividadcapacitaciontrab' %}
-        <a href="{% url 'actividadcapacitaciontrab_list' pk %}" onclick="event.stopPropagation()"
+    {% if request.current_app|add_perm:'read_actividadcapacitaciontrabajadores_new' %}
+        <a href="{% url 'actividadcapacitaciontrabajadores_list' pk %}" onclick="event.stopPropagation()"
            class="badge badge-pill badge-secondary">
             <i class="fa fa-plus" title="Trabajadores por Capacitación"
                style="color: white;"></i>
