@@ -146,7 +146,7 @@ class ActividadCapacitacionTrabajadores(BaseUrls, models.Model):
     history = auditlog_models.AuditlogHistoryField()
 
     def __str__(self):
-        return "Evaluación: " + self.evaluacion
+        return "Trabajador: " + self.trabajador.nombre_completo
 
     class Meta:
         default_permissions = ['read', 'add', 'delete', 'change', 'export', 'report']
