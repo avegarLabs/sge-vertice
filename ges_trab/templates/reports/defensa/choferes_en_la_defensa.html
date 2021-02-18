@@ -3,20 +3,20 @@
 {% block table_title %}Ubicación en la Defensa de los Choferes{% endblock %}
 
 {% block table_header %}
-    <th>No.</th>
-    <th>Nombres y Apellidos</th>
-    <th>Cargo</th>
-    <th>Org. Defensa</th>
-    <th>Lugar</th>
+    <th style="text-align: center; width: 15px">No.</th>
+    <th style="text-align: left; width: 210px">Nombres y Apellidos</th>
+    <th style="text-align: left; width: 270px">Cargo</th>
+    <th style="text-align: center; width: 110px">Org. Defensa</th>
+    <th style="text-align: center; width: 80px">Lugar</th>
 {% endblock table_header %}
 
 {% block table_body %}
     <tr>
-    <td width="5%">{{ forloop.counter }}</td>
-    <td>{{ item.nombre_completo }}</td>
-    <td>{{ item.cargo_nombre }}</td>
-    <td>{{ item.orga_defensa }}</td>
-    <td>{{ item.unidad_militar }}</td>
+    <td style="text-align: center; width: 15px">{{ forloop.counter }}</td>
+    <td style="width: 210px">{{ item.nombre_completo }}</td>
+    <td style="width: 270px">{{ item.cargo_nombre }}</td>
+    <td style="text-align: center; width: 110px">{{ item.orga_defensa }}</td>
+    <td style="text-align: center; width: 80px">{{ item.unidad_militar }}</td>
     </tr>
 {% endblock table_body %}
 

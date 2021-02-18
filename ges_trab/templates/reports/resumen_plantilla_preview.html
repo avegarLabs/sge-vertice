@@ -9,39 +9,39 @@
        <th colspan="5">Categoría Ocupacional</th>
     </tr>
     <th style="width: 150px; padding-top: 3px">Tipo de Contrato</th>
-    <th style="width: 50px">Sexo</th>
-    <th style="width: 50px">Total</th>
-    <th style="width: 40px">A</th>
-    <th style="width: 40px">C</th>
-    <th style="width: 40px">O</th>
-    <th style="width: 40px">S</th>
-    <th style="width: 40px">T</th>
+    <th style="width: 50px; text-align: center">Sexo</th>
+    <th style="width: 50px; text-align: center">Total</th>
+    <th style="width: 40px; text-align: center">A</th>
+    <th style="width: 40px; text-align: center">C</th>
+    <th style="width: 40px; text-align: center">O</th>
+    <th style="width: 40px; text-align: center">S</th>
+    <th style="width: 40px; text-align: center">T</th>
 {% endblock table_header %}
 
 {% block table_body %}
     <tr>
         <td rowspan="2" style="width: 150px; font-size: medium; "><strong>{{ item.nombre }}</strong></td>
-        <td style="width: 50px">&nbsp;M&nbsp;</td>
-        <td style="width: 50px">{{ item.cant_masc }}</td>
-        <td style="width: 40px">{{ item.cant_masc_a }}</td>
-        <td style="width: 40px">{{ item.cant_masc_c }}</td>
-        <td style="width: 40px">{{ item.cant_masc_o }}</td>
-        <td style="width: 40px">{{ item.cant_masc_s }}</td>
-        <td style="width: 40px">{{ item.cant_masc_t }}</td>
+        <td style="width: 50px; text-align: center">&nbsp;M&nbsp;</td>
+        <td style="width: 50px; text-align: center">{{ item.cant_masc }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_masc_a }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_masc_c }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_masc_o }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_masc_s }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_masc_t }}</td>
     </tr>
      <tr>
-        <td style="width: 50px">&nbsp;F&nbsp;</td>
-        <td style="width: 50px">{{ item.cant_fem }}</td>
-        <td style="width: 40px">{{ item.cant_fem_a }}</td>
-        <td style="width: 40px">{{ item.cant_fem_c }}</td>
-        <td style="width: 40px">{{ item.cant_fem_o }}</td>
-        <td style="width: 40px">{{ item.cant_fem_s }}</td>
-        <td style="width: 40px">{{ item.cant_fem_t }}</td>
+        <td style="width: 50px; text-align: center">&nbsp;F&nbsp;</td>
+        <td style="width: 50px; text-align: center">{{ item.cant_fem }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_fem_a }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_fem_c }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_fem_o }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_fem_s }}</td>
+        <td style="width: 40px; text-align: center">{{ item.cant_fem_t }}</td>
     </tr>
 {% endblock table_body %}
 {% block table_body_outside %}
     <tr>
-        <td style="width: 150px;text-align: right;"><strong>Total</strong></td>
+        <td style="width: 150px;text-align: center;"><strong>Total</strong></td>
         <td style="width: 50px"></td>
         <td style="width: 50px"><strong>{{ total }}</strong></td>
         <td style="width: 50px"><strong>{{ total_a }}</strong></td>

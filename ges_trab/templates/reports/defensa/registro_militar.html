@@ -1,28 +1,28 @@
-{% extends 'layouts/reports/_base_export_pdf.html' %}
+{% extends 'layouts/reports/_base_export_landscape_pdf.html' %}
 
 {% block table_title %}Registro Militar{% endblock %}
 
 {% block table_header %}
-    <th>No.</th>
-    <th>Apellidos</th>
-    <th>Nombres</th>
-    <th>Área de Trabajo</th>
-    <th>Cargo</th>
+    <th style="text-align: center">No.</th>
+    <th style="text-align: left">Apellidos</th>
+    <th style="text-align: left">Nombres</th>
+    <th style="text-align: left">Área de Trabajo</th>
+    <th style="text-align: left">Cargo</th>
     <th>E.M.Mcpal</th>
-    <th>S Defensa</th>
+    <th>Org. D</th>
     <th>Lugar</th>
 {% endblock %}
 
 {% block table_body %}
     <tr>
-        <td width="5%">{{ forloop.counter }}</td>
-        <td width="18%">{{ item.apellidos }}</td>
-        <td width="10%">{{ item.primer_nombre }} {% if item.segundo_nombre %}{{ item.segundo_nombre }}{% endif %}</td>
-        <td width="17%">{{ item.departamento.nombre }}</td>
-        <td width="20%">{{ item.cargo.nombre }}</td>
-        <td width="10%">{{ item.estado_mayor }}</td>
-        <td width="10%">{{ item.orga_defensa }}</td>
-        <td width="10%">{{ item.unidad_militar }}</td>
+        <td width="3%">{{ forloop.counter }}</td>
+        <td width="16%" style="text-align: left">{{ item.apellidos }}</td>
+        <td width="13%" style="text-align: left">{{ item.primer_nombre }} {% if item.segundo_nombre %}{{ item.segundo_nombre }}{% endif %}</td>
+        <td width="22%" style="text-align: left">{{ item.departamento.nombre }}</td>
+        <td width="28%">{{ item.cargo.nombre }}</td>
+        <td width="7%" style="text-align: center">{{ item.estado_mayor }}</td>
+        <td width="8%" style="text-align: center">{{ item.orga_defensa }}</td>
+        <td width="4%" style="text-align: center">{{ item.unidad_militar }}</td>
     </tr>
 {% endblock %}
 

@@ -1,0 +1,58 @@
+{% extends 'layouts/reports/_base_export_pdf.html' %}
+
+{% block table_title %}Totales por Escolaridad según Categoría Ocupacional{% endblock %}
+
+{% block table_header %}
+   <tr style="text-align: center">
+       <th style="width: 200px"></th>
+       <th></th>
+       <th></th>
+       <th colspan="5">Categoría Ocupacional</th>
+    </tr>
+    <th style="width: 200px; padding-top: 3px">Escolaridad</th>
+    <th style="width: 100px">Sexo</th>
+    <th style="width: 80px; text-align: center">Total</th>
+    <th style="width: 60px">A</th>
+    <th style="width: 60px">C</th>
+    <th style="width: 60px">O</th>
+    <th style="width: 60px">S</th>
+    <th style="width: 60px">T</th>
+{% endblock table_header %}
+
+{% block table_body %}
+    <tr>
+        <td rowspan="2" style="width: 200px; text-align: center">{{ item.nombre }}</td>
+        <td style="width: 100px; text-align: center">&nbsp;M&nbsp;</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_masc }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_masc_a }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_masc_c }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_masc_o }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_masc_s }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_masc_t }}</td>
+    </tr>
+     <tr>
+        <td style="width: 100px; text-align: center">&nbsp;F&nbsp;</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_fem }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_fem_a }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_fem_c }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_fem_o }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_fem_s }}</td>
+        <td style="width: 60px; text-align: center">{{ item.cant_fem_t }}</td>
+     </tr>
+{% endblock table_body %}
+{% block table_body_outside %}
+    <tr>
+    <td colspan="8" style="color: dimgrey">____________________________________________________________________________________________________</td>
+    </tr>
+    <tr>
+        <td style="width: 200px;text-align: center; font-weight: bold ">Total</td>
+        <td style="width: 100px; font-weight: bold"></td>
+        <td style="width: 80px; text-align: center; font-weight: bold">{{ total }}</td>
+        <td style="width: 60px; text-align: center; font-weight: bold">{{ total_a }}</td>
+        <td style="width: 60px; text-align: center; font-weight: bold">{{ total_c }}</td>
+        <td style="width: 60px; text-align: center; font-weight: bold">{{ total_o }}</td>
+        <td style="width: 60px; text-align: center; font-weight: bold">{{ total_s }}</td>
+        <td style="width: 60px; text-align: center; font-weight: bold">{{ total_t }}</td>
+    </tr>
+{% endblock %}
+

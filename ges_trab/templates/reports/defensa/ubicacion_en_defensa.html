@@ -4,11 +4,11 @@
 
 {% block table_header %}
     <th>No.</th>
-    <th>Nombres y Apellidos</th>
-    <th>Nombre del Área</th>
-    <th>Cargo</th>
-    <th>Dirección</th>
-    <th>Unidad</th>
+    <th style="text-align: left">Nombres y Apellidos</th>
+    <th style="text-align: left">Nombre del Área</th>
+    <th style="text-align: left">Cargo</th>
+    <th style="text-align: left">Dirección</th>
+    <th style="text-align: center">Unidad</th>
 {% endblock %}
 
 {% block table_body %}
@@ -17,12 +17,12 @@
     {% endifchanged %}
     <tr></tr>
     <tr>
-    <td width="5%">{{ forloop.counter }}</td>
-    <td>{{ item.nombre_completo }}</td>
-    <td>{{ item.departamento.nombre }}</td>
-    <td>{{ item.cargo.nombre }}</td>
-    <td>{{ item.direccion }}</td>
-    <td>{{ item.unidad_militar }}</td>
+    <td width="3%">{{ forloop.counter }}</td>
+    <td width="23%" style="text-align: left">{{ item.nombre_completo }}</td>
+    <td width="22%" style="text-align: left">{{ item.departamento.nombre }}</td>
+    <td width="24%" style="text-align: left">{{ item.cargo.nombre }}</td>
+    <td width="23%" style="text-align: left">{{ item.direccion }}</td>
+    <td width="5%" style="text-align: center">{{ item.unidad_militar }}</td>
     </tr>
 {% endblock table_body %}
 
