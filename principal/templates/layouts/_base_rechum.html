@@ -351,12 +351,6 @@
                 </li>
                 <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}"
-                       href="{% url 'trabajadores-contrato_report' %}">
-                        Altas por Contrato
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
                        href="{% url 'calzado_export' %}">
                         Reporte Calzado
                     </a>
@@ -445,7 +439,18 @@
                         Relación de Trabajadores
                     </a>
                 </li>
+		        <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'relacion_trab_edades_report' %}">
+                        Relación de Trabajadores por Edades
+                    </a>
+                </li>
                 <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                       href="{% url 'empresarial_preview' %}">
+                        Trabajadores por grupo escala y sexo
+                    </a>
+                </li>
             </ul>
         </li>
         <li>

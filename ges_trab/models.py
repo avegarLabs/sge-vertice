@@ -691,6 +691,39 @@ class List_Edades:
         self.salario = salario
         self.cat = cat
 
+class Empresarial:
+    grupo = ''
+    salario_esc = ''
+    operar = 0
+    mujer_op = 0
+    serv = 0
+    mujer_serv = 0
+    admin = 0
+    mujer_adm = 0
+    tecnic = 0
+    mujer_tec = 0
+    cuadro = 0
+    mujer_cuad = 0
+    total_grupo = 0
+    mujeres = 0
+
+    def __init__(self, grupo, salario_esc, operar, mujer_op, serv, mujer_serv, admin, mujer_adm, tecnic, mujer_tec,
+                 cuadro, mujer_cuad, total_grupo, mujeres):
+        self.grupo = grupo
+        self.salario_esc = salario_esc
+        self.operar = operar
+        self.mujer_op = mujer_op
+        self.serv = serv
+        self.mujer_serv = mujer_serv
+        self.admin = admin
+        self.mujer_adm = mujer_adm
+        self.tecnic = tecnic
+        self.mujer_tec = mujer_tec
+        self.cuadro = cuadro
+        self.mujer_cuad = mujer_cuad
+        self.total_grupo = total_grupo
+        self.mujeres = mujeres
+
 
 registry.auditlog.register(Trabajador)
 registry.auditlog.register(Movimiento)

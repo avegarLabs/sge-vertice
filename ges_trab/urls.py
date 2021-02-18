@@ -138,7 +138,6 @@ urlpatterns = [
         path('total_etnia/preview/', views.preview_total_etnia, name='total-etnia'),
         path('total_areas_sexo/', views.total_areas_sexo, name='total_areas_sexo_report'),
         path('total_especialidad_sexo/', views.total_especialidad_sexo, name='total_especialidad_sexo_report'),
-        path('trabajadores-x-contrato/', views.trabajadores_x_contrato, name='trabajadores-contrato_report'),
         path('trab_area_contrato_cat/export/', views.export_trab_area_contrato_cat, name='trab_area_contrato_cat_report'),
         path('trab_area_contrato_cat/', views.preview_trab_area_contrato_cat, name='trab_area_contrato_cat'),
         path('cant_trab_edad_sexo_cat/', views.cant_trab_edad_sexo_cat, name='cant_trab_edad_sexo_cat_report'),
@@ -147,6 +146,7 @@ urlpatterns = [
         path('relacion_trabajadores/export/', views.export_relacion_trabajadores, name='relacion_trabajadores_report'),
         path('relacion_trabajadores/', views.preview_relacion_trabajadores, name='relacion_trabajadores'),
         path('relacion_trab_edades/', views.relacion_trab_edades, name='relacion_trab_edades_report'),
+        path('empresarial/export/', views.export_empresarial, name='empresarial_report'),
     ])),
     path('departament/<int:pk>/', views.dep_unidad, name='dep-unidad'),
 
