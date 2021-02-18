@@ -1,0 +1,172 @@
+{% extends 'layouts/reports/_base_export_landscape_pdf1.html' %}
+
+{% block table_title %}CANTIDAD DE TRABAJADORES POR GRUPO DE ESCALA SALARIAL Y SEXO{% endblock %}
+{% block table_args %}border="1" height ="15" {% endblock %}
+
+{% block table_header %}
+<span style="font-size: 9px; text-align: left">SISTEMA EMPRESARIAL</span>
+    <tr>
+        <th style="width: 60px;"></th>
+        <th style="width: 70px; text-align: center; padding-top: 3px; ">Salario</th>
+        <th colspan="2" style="width: 170px; ">OPERARIOS</th>
+        <th colspan="2" style="width: 170px; ">SERVICIOS</th>
+        <th colspan="2" style="width: 170px; ">ADMINISTRATIVOS</th>
+        <th colspan="2" style="width: 170px; ">TÉCNICOS</th>
+        <th colspan="2" style="width: 170px; ">DIRIGENTES</th>
+        <th colspan="2" style="width: 170px; ">TOTAL</th>
+    </tr>
+    <tr>
+        <th style="width: 60px; padding-top: 2px; ">Grupo</th>
+        <th style="width: 70px;">Escala</th>
+        <th style="width: 85px; ">TOTAL</th>
+        <th style="width: 85px; ">MUJERES</th>
+        <th style="width: 85px; ">TOTAL</th>
+        <th style="width: 85px; ">MUJERES</th>
+        <th style="width: 85px; ">TOTAL</th>
+        <th style="width: 85px; ">MUJERES</th>
+        <th style="width: 85px; ">TOTAL</th>
+        <th style="width: 85px; ">MUJERES</th>
+        <th style="width: 85px; ">TOTAL</th>
+        <th style="width: 85px; ">MUJERES</th>
+        <th style="width: 85px; ">TOTAL</th>
+        <th style="width: 85px; ">MUJERES</th>
+    </tr>
+{% endblock table_header %}
+
+{% block table_body %}
+<tr >
+        <td style="width: 60px;"><strong>{{ item.grupo }}</strong></td>
+        <td style="width: 70px; ">{{ item.salario_esc }}</td>
+        {% if item.operar == 0 %}
+            <td style="width: 85px; background-color:#b1bace;">0</td>
+        {% else %}
+            <td style="width: 85px;">{{ item.operar }}</td>
+        {% endif %}
+        {% if item.mujer_op == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px;">{{ item.mujer_op }}</td>
+        {% endif %}
+        {% if item.serv == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.serv }}</td>
+        {% endif %}
+        {% if item.mujer_serv == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.mujer_serv }}</td>
+        {% endif %}
+        {% if item.admin == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.admin }}</td>
+        {% endif %}
+        {% if item.mujer_adm == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.mujer_adm }}</td>
+        {% endif %}
+        {% if item.tecnic == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.tecnic }}</td>
+        {% endif %}
+        {% if item.mujer_tec == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.mujer_tec }}</td>
+        {% endif %}
+        {% if item.cuadro == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.cuadro }}</td>
+        {% endif %}
+        {% if item.mujer_cuad == 0 %}
+            <td style="width: 85px; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 85px; ">{{ item.mujer_cuad }}</td>
+        {% endif %}
+        <td style="width: 85px; ">{{ item.total_grupo }}</td>
+        <td style="width: 85px; ">{{ item.mujeres }}</td>
+    </tr>
+{% endblock table_body %}
+{% block table_body_outside %}
+     <tr>
+        <td style="width: 60px;text-align: center;"><strong>Total</strong></td>
+        <td style="width: 70px; background-color:#b1bace"></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_o }}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_o_m }}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_s }}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_s_m }}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_a}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_a_m}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_t}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_t_m}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_c}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total_c_m}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ total}}</strong></td>
+        <td style="width: 85px; text-align: center"><strong>{{ mujeres}}</strong></td>
+    </tr>
+
+{% endblock %}
+{% block extra_content %}
+    <br>
+    <table cellspacing="0" border="1"; align="left" width="32%">
+        <thead>
+        <span style="font-size: 11px; text-align: left; font-weight: bold">Pagos Adicionales</span>
+        <th style="width: 250px; padding-top: 2px">Concepto</th>
+        <th style="width: 120px; padding-top: 2px">Cantidad de Trabajadores</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Maestría o especialidad equivalente</td>
+            <td>{{ maestria}}</td>
+        </tr>
+        <tr>
+            <td>Doctorados</td>
+            <td>{{ doctorado}}</td>
+        </tr>
+        <tr>
+            <td>Certificación Internacional</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>Condiciones Laborales Anormales</td>
+            <td style="background-color:#b1bace"></td>
+        </tr>
+        <tr>
+            <td>I</td>
+            <td>{{ con_lab_a_1}}</td>
+        </tr>
+        <tr>
+            <td>II</td>
+            <td>{{ con_lab_a_2}}</td>
+        </tr>
+        <tr>
+            <td>III</td>
+            <td>{{ con_lab_a_3}}</td>
+        </tr>
+        <tr>
+            <td>IV</td>
+            <td>{{ con_lab_a_4}}</td>
+        </tr>
+        <tr>
+            <td>V</td>
+            <td>{{ con_lab_a_5}}</td>
+        </tr>
+        <tr>
+            <td>Nocturnidad</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>I</td>
+            <td>{{ noc_I}}</td>
+        </tr>
+        <tr>
+            <td>II</td>
+            <td>{{ noc_II}}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

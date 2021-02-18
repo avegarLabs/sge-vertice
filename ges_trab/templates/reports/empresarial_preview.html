@@ -1,0 +1,111 @@
+{% extends 'layouts/reports/_base_preview_export_pdf.html' %}
+{% block styles %}
+
+{% endblock %}
+
+{% block extra %}border="1"{% endblock %}
+{% block table_header %}
+    <span style="font-weight: bold">SISTEMA EMPRESARIAL</span>
+    <tr>
+        <th rowspan="2" style="width: 80px; padding-top: 3px">Grupo</th>
+        <th rowspan="2" style="width: 50px; text-align: center">Salario Escala</th>
+        <th colspan="2" style="width: 50px; text-align: center">OPERARIOS</th>
+        <th colspan="2" style="width: 40px; text-align: center">SERVICIOS</th>
+        <th colspan="2" style="width: 40px; text-align: center">ADMINISTRATIVOS</th>
+        <th colspan="2" style="width: 40px; text-align: center">TÉCNICOS</th>
+        <th colspan="2" style="width: 40px; text-align: center">DIRIGENTES</th>
+        <th colspan="2" style="width: 40px; text-align: center">TOTAL</th>
+    </tr>
+    <tr>
+        <th style="width: 50px; text-align: center">TOTAL</th>
+        <th style="width: 50px; text-align: center">MUJERES</th>
+        <th style="width: 50px; text-align: center">TOTAL</th>
+        <th style="width: 50px; text-align: center">MUJERES</th>
+        <th style="width: 50px; text-align: center">TOTAL</th>
+        <th style="width: 50px; text-align: center">MUJERES</th>
+        <th style="width: 50px; text-align: center">TOTAL</th>
+        <th style="width: 50px; text-align: center">MUJERES</th>
+        <th style="width: 50px; text-align: center">TOTAL</th>
+        <th style="width: 50px; text-align: center">MUJERES</th>
+        <th style="width: 50px; text-align: center">TOTAL</th>
+        <th style="width: 50px; text-align: center">MUJERES</th>
+    </tr>
+{% endblock table_header %}
+
+{% block table_body %}
+    <tr>
+        <td style="width: 80px;"><strong>{{ item.grupo }}</strong></td>
+        <td style="width: 50px; text-align: center">&nbsp;{{ item.salario_esc }}</td>
+        {% if item.operar == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 50px; text-align: center">{{ item.operar }}</td>
+        {% endif %}
+        {% if item.mujer_op == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.mujer_op }}</td>
+        {% endif %}
+        {% if item.serv == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.serv }}</td>
+        {% endif %}
+        {% if item.mujer_serv == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.mujer_serv }}</td>
+        {% endif %}
+        {% if item.admin == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.admin }}</td>
+        {% endif %}
+        {% if item.mujer_adm == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.mujer_adm }}</td>
+        {% endif %}
+        {% if item.tecnic == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.tecnic }}</td>
+        {% endif %}
+        {% if item.mujer_tec == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.mujer_tec }}</td>
+        {% endif %}
+        {% if item.cuadro == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.cuadro }}</td>
+        {% endif %}
+        {% if item.mujer_cuad == 0 %}
+            <td style="width: 50px; text-align: center; background-color:#b1bace">0</td>
+        {% else %}
+            <td style="width: 40px; text-align: center">{{ item.mujer_cuad }}</td>
+        {% endif %}
+        <td style="width: 40px; text-align: center">{{ item.total_grupo }}</td>
+        <td style="width: 40px; text-align: center">{{ item.mujeres }}</td>
+    </tr>
+{% endblock table_body %}
+{% block table_body_outside %}
+    <tr>
+        <td style="width: 80px;text-align: center;"><strong>Total</strong></td>
+        <td style="width: 50px; background-color:#b1bace"></td>
+        <td style="width: 50px; text-align: center"><strong>{{ total_o }}</strong></td>
+        <td style="width: 50px; text-align: center"><strong>{{ total_o_m }}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_s }}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_s_m }}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_a}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_a_m}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_t}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_t_m}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_c}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total_c_m}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ total}}</strong></td>
+        <td style="width: 40px; text-align: center"><strong>{{ mujeres}}</strong></td>
+    </tr>
+{% endblock %}
+
