@@ -262,6 +262,12 @@
                         Capacitaciones
                     </a>
                 </li>
+                <li>
+                    <a class="{% if model_name == 'actividadcapacitacion' %}active{% endif %}"
+                       href="{% url 'actualizar_datos' %}">
+                        Actualizar datos
+                    </a>
+                </li>
             </ul>
         </li>
     {% endif %}
@@ -448,7 +454,7 @@
                 <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}"
                        href="{% url 'empresarial_preview' %}">
-                        Trabajadores por grupo escala y sexo
+                        Trabajadores por grupo escala y sexo (Empresarial)
                     </a>
                 </li>
             </ul>
