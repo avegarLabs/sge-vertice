@@ -11,6 +11,14 @@ from rechum.views import SgeListView, SgeCreateView, SgeUpdateView, SgeDetailVie
 def home(request):
     return render(request, 'home_cap.html')
 
+# def actualizar_datos(request):
+#     modo_f = ModoFormacion.objects.all()
+#     for mf in modo_f:
+#         mf_new = ModoFormacion_new()
+#         mf_new.nombre = mf.nombre
+#         mf_new.codigo = mf.codigo
+#         mf_new.save()
+#     return render(request, 'home_cap.html')
 
 # Actividad Capacitación
 # Listar
@@ -156,12 +164,14 @@ class ActividadCapacitacionTrabajadoresListView(SgeListView):
     raise_exception = True
     queryset = ActividadCapacitacionTrabajadores.objects.all()
 
-    def get_context_data(self, *, object_list=None, codigo_actividad=None, **kwargs):
+    def get_context_data(self, *, object_list=None, codigo_actividad=None, pk=None, **kwargs):
         queryset = self.get_queryset()
-        print(self.kwargs)
         codigo_actividad = self.kwargs['codigo_actividad']
+        if self.kwargs['pk']:
+            pk = self.kwargs['pk']
+            codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=pk).actividad.codigo
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
-        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
+        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, pk=pk **kwargs)
 
 
 
@@ -173,9 +183,10 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
     template_name = 'act-cap-trab/create.html'
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_create')
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, codigo_actividad=None, **kwargs):
         queryset = self.get_queryset()
         codigo_actividad = self.kwargs['codigo_actividad']
+        print(codigo_actividad)
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
         return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
 
@@ -187,6 +198,12 @@ class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
     template_name = 'act-cap-trab/create.html'
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_list')
 
+    def get_context_data(self, *, object_list=None, pk=None, **kwargs):
+        queryset = self.get_queryset()
+        pk = self.kwargs['pk']
+        codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=pk).actividad.codigo
+        object_list = queryset.filter(actividad=codigo_actividad).order_by()
+        return super().get_context_data(object_list=object_list, pk=pk, codigo_actividad=codigo_actividad, **kwargs)
 
 # Detalle
 class ActividadCapacitacionTrabajadoresDetailView(SgeDetailView):
@@ -202,12 +219,12 @@ class ActividadCapacitacionTrabajadoresDeleteView(SgeDeleteView):
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_list')
 
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     queryset = self.get_queryset()
-    #     pk = self.kwargs['pk']
-    #     codigo_actividad = ActividadCapacitacionTrabajadores_new.objects.get(pk=pk).actividad.codigo
-    #     object_list = queryset.filter(actividad=codigo_actividad).order_by()
-    #     return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
+    def get_context_data(self, *, object_list=None, pk=None, **kwargs):
+        queryset = self.get_queryset()
+        pk = self.kwargs['pk']
+        codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=pk).actividad.codigo
+        object_list = queryset.filter(actividad=codigo_actividad).order_by()
+        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad,  **kwargs)
 
 
 # //////////////////////////////////////////////////////////////////////////
