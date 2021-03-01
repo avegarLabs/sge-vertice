@@ -20,7 +20,7 @@
                         <h3 class="mb-0">
                             {% if current_url == update_url %}Actualizar{% else %}
                                 Crear{% endif %} {{ verbose_name|title }}
-                            #{{ object.pk|default:0 }}
+                            #{{ object.pk|default:0 }} - {{ codigo_actividad }}
                         </h3>
                     </div>
                     <div class="col-4 text-right" style="font-size: 1.3rem">

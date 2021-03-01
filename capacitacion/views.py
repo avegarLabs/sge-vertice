@@ -164,16 +164,28 @@ class ActividadCapacitacionTrabajadoresListView(SgeListView):
     raise_exception = True
     queryset = ActividadCapacitacionTrabajadores.objects.all()
 
-    def get_context_data(self, *, object_list=None, codigo_actividad=None, pk=None, **kwargs):
+    def get_context_data(self, *, object_list=None, codigo_actividad=None, **kwargs):
         queryset = self.get_queryset()
-        codigo_actividad = self.kwargs['codigo_actividad']
-        if self.kwargs['pk']:
-            pk = self.kwargs['pk']
-            codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=pk).actividad.codigo
+        if self.kwargs['codigo_actividad']:
+            codigo_actividad = self.kwargs['codigo_actividad']
+        else:
+            codigo_actividad = self.codigo_actividad
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
-        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, pk=pk **kwargs)
+        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
 
+class ActividadCapacitacionTrabajadoresListView_before_deleted(SgeListView):
+    permission_required = 'capacitacion.read_actividadcapacitaciontrabajadores'
+    model = ActividadCapacitacionTrabajadores
+    template_name = 'act-cap-trab/list.html'
+    raise_exception = True
+    queryset = ActividadCapacitacionTrabajadores.objects.all()
 
+    def get_context_data(self, *, object_list=None, pk=None, **kwargs):
+        queryset = self.get_queryset()
+        pk = self.kwargs['pk']
+        codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=pk).actividad.codigo
+        object_list = queryset.filter(actividad=codigo_actividad).order_by()
+        return super().get_context_data(object_list=object_list, **kwargs)
 
 # Crear
 class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
@@ -183,12 +195,19 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
     template_name = 'act-cap-trab/create.html'
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_create')
 
+    # def get_success_url(self):
+    #       codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=self.kwargs['pk']).actividad.codigo
+    #       return reverse_lazy('actividadcapacitaciontrabajadores_create', kwargs={'codigo_actividad': codigo_actividad})
+
     def get_context_data(self, *, object_list=None, codigo_actividad=None, **kwargs):
         queryset = self.get_queryset()
         codigo_actividad = self.kwargs['codigo_actividad']
-        print(codigo_actividad)
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
         return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
+
+    def get_success_url(self):
+          codigo_actividad = self.kwargs['codigo_actividad']
+          return reverse_lazy('actividadcapacitaciontrabajadores_create', kwargs={'codigo_actividad': codigo_actividad})
 
 # Editar
 class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
@@ -205,6 +224,10 @@ class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
         return super().get_context_data(object_list=object_list, pk=pk, codigo_actividad=codigo_actividad, **kwargs)
 
+    def get_success_url(self):
+          codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=self.kwargs['pk']).actividad.codigo
+          return reverse_lazy('actividadcapacitaciontrabajadores_list', kwargs={'codigo_actividad': codigo_actividad})
+
 # Detalle
 class ActividadCapacitacionTrabajadoresDetailView(SgeDetailView):
     permission_required = 'capacitacion.read_actividadcapacitaciontrabajadores_new'
@@ -218,13 +241,9 @@ class ActividadCapacitacionTrabajadoresDeleteView(SgeDeleteView):
     model = ActividadCapacitacionTrabajadores
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_list')
 
-
-    def get_context_data(self, *, object_list=None, pk=None, **kwargs):
-        queryset = self.get_queryset()
-        pk = self.kwargs['pk']
-        codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=pk).actividad.codigo
-        object_list = queryset.filter(actividad=codigo_actividad).order_by()
-        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad,  **kwargs)
+    def get_success_url(self):
+          codigo_actividad = ActividadCapacitacionTrabajadores.objects.get(pk=self.kwargs['pk']).actividad.codigo
+          return reverse_lazy('actividadcapacitaciontrabajadores_list', kwargs={'codigo_actividad': codigo_actividad})
 
 
 # //////////////////////////////////////////////////////////////////////////

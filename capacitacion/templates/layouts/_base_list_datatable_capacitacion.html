@@ -9,7 +9,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-6">
-                                <h3 class="mb-0">Listado de {{ verbose_name_plural|title }} {% block extra_title %}{% endblock %}</h3>
+                                <h3 class="mb-0">Listado de {{ verbose_name_plural|title }} {% block extra_title %} {{ codigo_actividad }} {% endblock %}</h3>
                             </div>
                             <div class="col-6 text-right">
                                 {% if add_perm in perms %}
@@ -27,7 +27,7 @@
                         <div class="row">
                             {% if errores %}
                                 <div class="alert alert-dismissible alert-danger mx-5">
-                                    <a class="ml-5 close" type="button" href="{% url 'actividadcapacitaciontrabajadores_list' %}">
+                                    <a class="ml-5 close" type="button" href="{% url 'actividadcapacitaciontrabajadores_list' codigo_actividad %}">
                                         <strong>&times;</strong>
                                     </a>
                                     <strong>Error:</strong> {% block delete_error_message %}{% endblock %}

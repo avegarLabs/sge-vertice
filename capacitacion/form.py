@@ -1,6 +1,7 @@
 from django import forms
 
 from capacitacion.models import *
+from django_select2.forms import Select2Widget, ModelSelect2Widget
 
 
 # Capacitacion forms
@@ -11,6 +12,7 @@ class AbstractForm(forms.ModelForm):
     def _widget_class_modifier(self):
         for field in iter(self.fields):
             field.widget.attrs.update({'class': 'form-control'})
+
 
 class TipoActividadCapacitacionForm(AbstractForm):
     class Meta:
@@ -35,11 +37,17 @@ class ActividadCapacitacionForm(AbstractForm):
         super(ActividadCapacitacionForm, self).__init__(*args, **kwargs)
         self._widget_class_modifier()
 
-class ActividadCapacitacionTrabajadoresForm(AbstractForm):
-    class Meta:
-        model = ActividadCapacitacionTrabajadores
-        fields = '__all__'
+class ActividadCapacitacionTrabajadoresForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ActividadCapacitacionTrabajadoresForm, self).__init__(*args, **kwargs)
-        self._widget_class_modifier()
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+    class Meta:
+        model = ActividadCapacitacionTrabajadores
+        fields = '__all__'
+        widgets = {
+            'trabajador': Select2Widget
+        }
+

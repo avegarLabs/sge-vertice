@@ -153,6 +153,10 @@ class ActividadCapacitacionTrabajadores(BaseUrls, models.Model):
         verbose_name = 'actividad capacitación trabajadores'
         verbose_name_plural = 'actividades capacitación trabajadores'
 
+    @property
+    def codigo_actividad(self):
+        return self.actividad.codigo
+
 
 class ActividadCapacitacionTrabajadores_new(BaseUrls, models.Model):
     actividad = models.ForeignKey(ActividadCapacitacion_new, on_delete=models.CASCADE)
