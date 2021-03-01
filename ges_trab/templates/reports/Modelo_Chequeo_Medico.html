@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <style>
+        @page {
+            size: A4 portrait;
+            /* A4  21.0 x 29.7 cm */
+            /* A4  21.0 x 29.7 cm */
+        {#        @frame header_frame { /* Static frame */#}
+        {#        -pdf-frame-content: header_content;#}
+        {#        left: 1cm;#}
+        {#        width: 25.7cm;#}
+        {#        top: 0.5cm;#}
+        {#        height: 2cm;#}
+        {#            /* for debugging the layout */#}
+        {#        }#}
+            @frame col1_frame { /* Content frame 1 */
+            left: 1.2cm;
+            width: 19cm;
+            top: 0.5cm;
+            height: 28cm;
+            /* for debugging the layout */
+        }
+        @frame footer_frame {
+            /* Static frame */
+        -pdf-frame-content:footer_content;
+        left: 1cm; width: 19cm; top: 28cm; height: 2cm;
+            /* for debugging the layout */
+        }
+
+        }
+
+        @media all {
+            div.saltopagina{
+                display: none;
+            }
+        }
+        @media print{
+            div.saltopagina{
+                display: block;
+                page-break-before: always;
+            }
+        }
+    </style>
+    <title>Chequeo Medico</title>
+    <style type="text/css">
+        body {
+            font-weight: 200;
+            font-size: 14px;
+            text-align: justify;
+            margin-right: 16px;
+            margin-left: 10px;
+        }
+
+        .logo {
+            margin-top: 20px;
+            width: 100px;
+            height: 40px;
+            margin-left: 20px;
+        }
+
+        .title {
+            font-size: 15px;
+            position: relative;
+            text-align: center;
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+    {% for movimiento in movimientos_list %}
+        <div class="row">
+            <div class="col-sm-6 text-left" style="margin-top: 40px"><p>
+                _________________________________________________________________________<img
+                    src="{% static 'images/LogoN_h.jpg' %}" class="logo" style="margin-right: auto"></div>
+            </p>
+        </div>
+        <br>
+        <div class="title"><strong>CHEQUEO MÉDICO</strong></div>
+        <p><strong>Nombres y Apellidos: </strong><u>&nbsp;{{movimiento.primer_nombre}} {{movimiento.segundo_nombre}} {{movimiento.apellidos}}</u></p>
+        <p><strong>Edad:</strong>________<strong>&nbsp;&nbsp;&nbsp;Sexo:</strong>________&nbsp;&nbsp;&nbsp;<strong>Peso:</strong>________&nbsp;&nbsp;&nbsp;<strong>Talla:</strong>________&nbsp;&nbsp;&nbsp;<strong>CI:</strong><u>&nbsp;{{movimiento.ci}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+        <p><strong>Cargo: </strong><u>&nbsp;{{movimiento.nombre_cargo}}&nbsp;&nbsp;&nbsp;</u>&nbsp;&nbsp;<strong>Unidad Organizativa: </strong><u>&nbsp;{{movimiento.unidad}}&nbsp;&nbsp;&nbsp;</u></p>
+        <p><strong>APP: </strong>___________________________________________________________________________________<br>
+         ________________________________________________________________________________________<br>
+         ________________________________________________________________________________________</p>
+          <p><strong>APF: </strong>___________________________________________________________________________________<br>
+         ________________________________________________________________________________________<br>
+         ________________________________________________________________________________________<br>
+         ________________________________________________________________________________________</p>
+        <p><strong>Hábitos Tóxicos:</strong> &nbsp;&nbsp;&nbsp;Cigarros: _________ &nbsp;&nbsp;&nbsp;Bebidas Alcohólicas________ &nbsp;&nbsp;&nbsp;Té o Café________</p>
+        <p><strong>Operaciones:</strong>_____________________________________________________________________________</p>
+        <p><strong>Examen Físico:</strong><br>
+        Piel y Mucosa:____________________________________________________________________________<br>
+        AR:_____________________________________________________________________________________<br>
+        ACV:____________________________________________________________________________________<br>
+        TA:_____________________________________________________________________________________<br>
+        Abdomen:________________________________________________________________________________<br>
+        ________________________________________________________________________________________</p>
+        <p>TCS:____________________________________________________________________________________<br>
+        SVP:____________________________________________________________________________________<br>
+        ID:__________________________________________________________&nbsp;&nbsp;Grupo:____________________<br>
+        Citología Fecha y resultado:_________________________________________________________________<br>
+        Vacunación&nbsp;&nbsp;&nbsp;&nbsp; AHB:________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leptosp_________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AMC__________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AT________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TT________<br>
+        <p>Micro Elisa: Fecha y resultado___________________&nbsp;&nbsp;Serología: Fecha y resultado___________________</p>
+        <br>
+        <p>Nombre Dr_______________________________________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firma y Cuño________________</p>
+        ________________________________________________________________________________________<br>
+        <br>
+        <p>Médico_______________________________________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cuño________________<br>
+        <p>Fecha_____________________________</p>
+
+
+        <div class="saltopagina"></div>
+    {% endfor %}
+</body>
+
+
+</html>

@@ -457,6 +457,12 @@
                         Trabajadores por grupo escala y sexo (Empresarial)
                     </a>
                 </li>
+                <li>
+                    <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                    onclick="open_re_useful_modal(`{% url 'ChequeoMedico' %}`)">
+                    Modelos de Chequeo Médico
+                    </a>
+                </li>
             </ul>
         </li>
         <li>

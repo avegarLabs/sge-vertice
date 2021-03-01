@@ -148,6 +148,7 @@ urlpatterns = [
         path('relacion_trab_edades/', views.relacion_trab_edades, name='relacion_trab_edades_report'),
         path('empresarial/export/', views.export_empresarial, name='empresarial_report'),
         path('empresarial/preview', views.empresarial_preview, name='empresarial_preview'),
+        path('chequeo_medico/', views.chequeo_medico, name='ChequeoMedico'),
         path('trabajadores-x-contrato/', views.trabajadores_x_contrato, name='trabajadores-contrato_report'),
     ])),
     path('departament/<int:pk>/', views.dep_unidad, name='dep-unidad'),
