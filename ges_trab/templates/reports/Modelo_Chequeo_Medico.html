@@ -84,8 +84,8 @@
         <br>
         <div class="title"><strong>CHEQUEO MÉDICO</strong></div>
         <p><strong>Nombres y Apellidos: </strong><u>&nbsp;{{movimiento.primer_nombre}} {{movimiento.segundo_nombre}} {{movimiento.apellidos}}</u></p>
-        <p><strong>Edad:</strong>________<strong>&nbsp;&nbsp;&nbsp;Sexo:</strong>________&nbsp;&nbsp;&nbsp;<strong>Peso:</strong>________&nbsp;&nbsp;&nbsp;<strong>Talla:</strong>________&nbsp;&nbsp;&nbsp;<strong>CI:</strong><u>&nbsp;{{movimiento.ci}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
-        <p><strong>Cargo: </strong><u>&nbsp;{{movimiento.nombre_cargo}}&nbsp;&nbsp;&nbsp;</u>&nbsp;&nbsp;<strong>Unidad Organizativa: </strong><u>&nbsp;{{movimiento.unidad}}&nbsp;&nbsp;&nbsp;</u></p>
+        <p><strong>Edad:</strong>_<u>&nbsp;{{movimiento.age_by_ci}}</u>_<strong>&nbsp;&nbsp;&nbsp;Sexo:</strong>_<u>&nbsp;{{movimiento.sexo}}</u>_&nbsp;&nbsp;&nbsp;<strong>Peso:</strong>________&nbsp;&nbsp;&nbsp;<strong>Talla:</strong>________&nbsp;&nbsp;&nbsp;<strong>CI:</strong><u>&nbsp;{{movimiento.ci}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+        <p><strong>Cargo: </strong><u>&nbsp;{{movimiento.nombre_cargo}}&nbsp;&nbsp;&nbsp;</u>&nbsp;&nbsp;<strong>Unidad Organizativa: </strong><u>&nbsp;{{movimiento.unidad_org.siglas}}&nbsp;&nbsp;&nbsp;</u></p>
         <p><strong>APP: </strong>___________________________________________________________________________________<br>
          ________________________________________________________________________________________<br>
          ________________________________________________________________________________________</p>
