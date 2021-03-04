@@ -95,10 +95,16 @@
                         Bajas
                     </a>
                 </li>
+{#                <li>#}
+{#                    <a class="{% if model_name == 'tarjeta_snc' %}active{% endif %}"#}
+{#                       href="#">#}
+{#                        Tarjetas SNC#}
+{#                    </a>#}
+{#                </li>#}
                 <li>
-                    <a class="{% if model_name == 'tarjeta_snc' %}active{% endif %}"
-                       href="#">
-                        Tarjetas SNC
+                    <a class="{% if model_name == 'vacaciones' %}active{% endif %}"
+                       href="{% url 'gestionarVacaciones' %}">
+                        Vacaciones
                     </a>
                 </li>
             </ul>
@@ -271,37 +277,31 @@
             </ul>
         </li>
     {% endif %}
-    {% if user|has_module_perm:'datos_prenom' %}
-        <li>
-            <a href="#submenuDatosPrenom" class="dropdown-toggle"
-               data-toggle="collapse"
-               aria-expanded="{% if request.current_app == 'datos_prenom' %}true{% else %}false{% endif %}">
-                <i class="fa fa-pied-piper"></i>
-                Datos Prenómina
-            </a>
-            <ul class="collapse list-unstyled {% if request.current_app == 'datos_prenom' %}show{% endif %}"
-                id="submenuDatosPrenom">
-                <li>
-                    <a class="{% if model_name == 'trabajo_extraordinario' %}active{% endif %}"
-                       href="{% url 'trabajador_list' %}">
-                        Trabajo extraordinario
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'vacaciones' %}active{% endif %}"
-                       href="#">
-                        Vacaciones
-                    </a>
-                </li>
-                <li>
-                    <a class="{% if model_name == 'alimentacion' %}active{% endif %}"
-                       href="#">
-                        Alimentación
-                    </a>
-                </li>
-            </ul>
-        </li>
-    {% endif %}
+{#    {% if user|has_module_perm:'datos_prenom' %}#}
+{#        <li>#}
+{#            <a href="#submenuDatosPrenom" class="dropdown-toggle"#}
+{#               data-toggle="collapse"#}
+{#               aria-expanded="{% if request.current_app == 'datos_prenom' %}true{% else %}false{% endif %}">#}
+{#                <i class="fa fa-pied-piper"></i>#}
+{#                Datos Prenómina#}
+{#            </a>#}
+{#            <ul class="collapse list-unstyled {% if request.current_app == 'datos_prenom' %}show{% endif %}"#}
+{#                id="submenuDatosPrenom">#}
+{#                <li>#}
+{#                    <a class="{% if model_name == 'trabajo_extraordinario' %}active{% endif %}"#}
+{#                       href="{% url 'trabajador_list' %}">#}
+{#                        Trabajo extraordinario#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a class="{% if model_name == 'alimentacion' %}active{% endif %}"#}
+{#                       href="#">#}
+{#                        Alimentación#}
+{#                    </a>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </li>#}
+{#    {% endif %}#}
     {% if user|has_module_perm:'prenomina15' %}
         <li>
             <a href="#submenuPrenom15" class="dropdown-toggle"

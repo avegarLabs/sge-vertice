@@ -109,7 +109,7 @@ def adicionar_vacaciones(request):
     form = VacacionesForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/vacaciones/')
+        return redirect('/rh/datos-prenomina/vacaciones/')
     cal = Vacaciones.objects.all()
     context = {'list_vacaciones': cal, 'form': form}
     return render(request, 'Gestionar_Vacaciones.html', context)
@@ -120,7 +120,7 @@ def editar_vacaciones(request, pk):
     form = VacacionesForm(request.POST or None, instance=vacaciones)
     if form.is_valid():
         form.save()
-        return redirect('/vacaciones/')
+        return redirect('/rh/datos-prenomina/vacaciones/')
     cal = Vacaciones.objects.all()
     context = {'list_vacaciones': cal, 'form': form, 'edit': pk}
     return render(request, 'Gestionar_Vacaciones.html', context)
