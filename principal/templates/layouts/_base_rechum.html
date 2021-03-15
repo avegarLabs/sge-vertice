@@ -458,6 +458,12 @@
                     </a>
                 </li>
                 <li>
+                  <a class="{% if model_name == 'trabajador' %}active{% endif %}"
+                        href="{% url 'trab_direccion' %}">
+                        Relación de trabajadores por área y dirección particular
+                    </a>
+                </li>
+                <li>
                     <a class="{% if model_name == 'trabajador' %}active{% endif %}"
                     onclick="open_re_useful_modal(`{% url 'ChequeoMedico' %}`)">
                     Modelos de Chequeo Médico

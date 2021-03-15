@@ -1,0 +1,36 @@
+{% extends 'layouts/reports/_base_export_landscape_pdf1.html' %}
+
+{% block table_title %}Relación de trabajadores por área y dirección particular {% endblock %}
+
+{% block table_header %}
+
+    <th style="width: 260px; text-align: left">Nombres y Apellidos</th>
+    <th style="width: 120px; text-align: center">CI</th>
+    <th style="width: 365px; text-align: left">Cargo</th>
+    <th style="width: 400px; text-align: left">Dirección</th>
+{% endblock table_header %}
+
+{% block table_body %}
+{% endblock table_body %}
+{% block table_body_outside %}
+    {% for item in object_list %}
+        <tr>
+            <td colspan="4" style="text-align: left; font-weight: bold; font-size: 12px">{{ item.nombre }}</td>
+        </tr>
+        {% for i in item.personal %}
+            <tr>
+                <td colspan="4" style="font-weight: bold; font-size: 10px; text-align: left">&nbsp;&nbsp;&nbsp;{{ i.nombre }}</td>
+            </tr>
+            {% for per in i.personal %}
+                <tr>
+
+                    <td style="width: 260px; text-align: left; margin-left: 15px">{{ per.nombre}}</td>
+                    <td style="width: 120px; text-align: center">{{per.ci }}</td>
+                    <td style="width: 365px; text-align: left">{{ per.cargo }}</td>
+                    <td style="width: 400px; text-align: left">{{ per.cat }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+

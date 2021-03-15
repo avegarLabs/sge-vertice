@@ -372,6 +372,17 @@ class Trabajador(BaseUrls):
         age = f"{edad.years}"
         return age
 
+    @property
+    def Is_Driver(self):
+        cargo_code = self.cargo.codigo
+        print(cargo_code)
+        if cargo_code is 500629 or cargo_code is 500630 or cargo_code is 500631 or cargo_code is 500632 or cargo_code is 500633 or cargo_code is 500635 or cargo_code is 500297 or cargo_code is 716635 or cargo_code is 716636 or cargo_code is 500635:
+            cargo_code = True
+        else:
+            cargo_code = False
+        return cargo_code
+
+
     def __str__(self):
         return self.nombre_completo
 
