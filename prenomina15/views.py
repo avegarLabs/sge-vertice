@@ -190,9 +190,9 @@ def adicionar_obra(request):
             obra = Obra(
                 orden_trab=form.cleaned_data['orden_trab'],
                 nombre=form.cleaned_data['nombre'],
-                # tipo=form.cleaned_data['tipo'],
-                # horas_a2=form.cleaned_data['horas_a2'],
-                # gesc=form.cleaned_data['gesc'],
+                tipo=form.cleaned_data['tipo'],
+                horas_a2=form.cleaned_data['horas_a2'],
+                gesc=form.cleaned_data['gesc'],
                 owner=request.user,
             )
             obra.save()

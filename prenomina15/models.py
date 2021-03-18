@@ -12,30 +12,11 @@ from rechum.models import BaseUrls
 class SalarioMax(BaseUrls, models.Model):
     grupo_esc = models.ForeignKey(EscalaSalarial, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
     sal = models.DecimalField('salario', max_digits=6, decimal_places=2)
+    TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'))
+    tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
 
     def __str__(self):
         return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
-
-
-class SalarioMaxRef(BaseUrls, models.Model):
-    grupo_esc = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, default='',
-                                  verbose_name="grupo escala")
-    sal = models.DecimalField('salario', max_digits=7, decimal_places=2)
-    TIPO_OPT = (('I', 'Grupo I'), ('II', 'Grupo II'))
-    tipo = models.CharField('grupo', max_length=2, choices=TIPO_OPT, default='')
-
-    def __str__(self):
-        return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
-
-
-class Complejidad(BaseUrls, models.Model):
-    complejidad = models.CharField(max_length=4)
-    horas_a2 = models.IntegerField()
-    grupo = models.ForeignKey(EscalaSalarial, on_delete=models.DO_NOTHING)
-    grupo_ref = models.ForeignKey(EscalaSalarialReforma, on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return ' {} - {}'.format(self.complejidad, self.horas_a2)
 
 
 class Formato(BaseUrls, models.Model):
@@ -73,14 +54,13 @@ class Especialidad(BaseUrls, models.Model):
 class Obra(BaseUrls, models.Model):
     orden_trab = models.ForeignKey(OT, on_delete=models.PROTECT, default='', verbose_name="orden de trabajo")
     nombre = models.CharField(max_length=20)
-    # TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'), ('R6', 'Resolucion 6'))
-    # tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
-    # horas_a2 = models.PositiveIntegerField('horas A2')
-    # gesc = models.ForeignKey(EscalaSalarial, on_delete=models.PROTECT, default='', verbose_name="grupo escala")
+    TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'), ('R6', 'Resolucion 6'))
+    tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
+    horas_a2 = models.PositiveIntegerField('horas A2')
+    gesc = models.ForeignKey(EscalaSalarial, on_delete=models.PROTECT, default='', verbose_name="grupo escala")
     usuarios = models.ManyToManyField(User)
     owner = models.CharField(max_length=20, editable=False, default='admin', verbose_name="dueño")
     activa = models.BooleanField(default=True)
-    complejidad_id = models.ForeignKey(Complejidad, on_delete=models.DO_NOTHING, default=1, null=True, blank=True, verbose_name="complejidad")
 
     def __str__(self):
         return self.nombre
@@ -217,6 +197,9 @@ class Plano(BaseUrls, models.Model):
     history = auditlog_models.AuditlogHistoryField()
 
 
+
+
+
 class Catalogo(BaseUrls, models.Model):
     plano = models.ForeignKey(Plano, on_delete=models.CASCADE, default=0)
     cant = models.PositiveIntegerField('cantidad', default=1)
@@ -252,6 +235,27 @@ class Revision(BaseUrls, models.Model):
     ESTADO_OPT = (('GE', 'GE'), ('V', 'V'), ('VPC', 'VPC'))
     estado = models.CharField(max_length=3, choices=ESTADO_OPT, default='GE')
     history = auditlog_models.AuditlogHistoryField()
+
+class SalarioMaxRef(BaseUrls, models.Model):
+    grupo_esc = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
+    sal = models.DecimalField('salario', max_digits=7, decimal_places=2)
+    TIPO_OPT = (('I', 'Grupo I'), ('II', 'Grupo II'))
+    tipo = models.CharField('grupo', max_length=2, choices=TIPO_OPT, default='')
+
+    def __str__(self):
+        return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
+
+
+class Complejidad(BaseUrls, models.Model):
+    complejidad = models.CharField(max_length=4)
+    horas_a2 = models.IntegerField()
+    grupo = models.ForeignKey(EscalaSalarial, on_delete=models.DO_NOTHING)
+    grupo_ref = models.ForeignKey(EscalaSalarialReforma, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return ' {} - {} - {} - {}'.format(self.complejidad, self.horas_a2, self.grupo, self.grupo_ref)
+
+
 
 
 class Etapas:

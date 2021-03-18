@@ -49,7 +49,9 @@
                         <tr>
                             <th style="width: auto">Orden de Trabajo</th>
                             <th style="width: auto">Nombre de la Obra</th>
-                            <th style="text-align: center; width: 80px">Complejidad</th>
+                            <th style="text-align: center; width: 150px">Tipo de Obra</th>
+                            <th style="text-align: center; width: 80px">Horas A2</th>
+                            <th style="text-align: center; width: 100px">Grupo Escala</th>
                             <th style="text-align: center; width: 60px">Acciones</th>
                         </tr>
                         </thead>
@@ -58,7 +60,15 @@
                             <tr>
                                 <td>{{ i.orden_trab.descripcion_ot }}</td>
                                 <td>{{ i.nombre }}</td>
-                                <td align="center">{{ i.complejidad}}</td>
+                                {% if i.tipo == 'OT' %}
+                                    <td align="center">Obra de Turismo</td>
+                                {% elif i.tipo == 'VT' %}
+                                    <td align="center">Vivienda para Turismo</td>
+                                   {% else %}
+                                        <td align="center">Resolucion 6</td>
+                                {% endif %}
+                                <td align="center">{{ i.horas_a2 }}</td>
+                                <td align="center">{{ i.gesc.grupo }}</td>
                                 <td width="60">
                                     <div class="icon-acciones" align="center">
                                      {% if change %}  <!-- Aqui se verifica si el usuario tiene permiso de editar Obra -->
@@ -84,7 +94,9 @@
                         <tfoot>
                         <th style="padding: 6px 6px !important;">OT</th>
                         <th style="padding: 6px 6px !important;">Nombre</th>
-                        <th style="padding: 6px 6px !important;">Complejidad</th>
+                        <th style="padding: 6px 6px !important;">Tipo</th>
+                        <th style="padding: 6px 6px !important;">Horas A2</th>
+                        <th style="padding: 6px 6px !important;">Grupo</th>
                         <td></td>
                         </tfoot>
                     </table>
@@ -120,12 +132,13 @@
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-sm-4"><strong> Complejidad:</strong>{{ form.complejidad }}</div>
-                            <div class="col-sm-8"><strong> Nombre:</strong>{{ form.nombre }}</div>
+                            <div class="col-sm-6"><strong> Tipo:</strong>{{ form.tipo }}</div>
+                            <div class="col-sm-3"><strong> Horas A2:</strong>{{ form.horas_a2 }}</div>
+                            <div class="col-sm-3"><strong> Grupo:</strong>{{ form.gesc }}</div>
                         </div>
                         <br>
                         <div class="row">
-
+                            <div class="col-sm-6"><strong> Nombre:</strong>{{ form.nombre }}</div>
                         </div>
                     </div>
                 </div>
@@ -156,6 +169,8 @@
 
         exp_horas = "^[0-9]{2}$";
         exp_nombre = "^([A-Z]{1})[A-Za-z0-9áéíóúñ .,]+$";
+        $('#id_horas_a2').prop("title", 'Este campo solo acepta valores numéricos').attr("oninvalid",
+            'setCustomValidity("Campo obligatorio. Solo acepta valores numéricos")').prop("min", '19').prop("max", '30');
         $('#id_nombre').prop("title", 'Este campo no permite caracteres especiales y comienza con mayúscula').attr("oninvalid", 'setCustomValidity("Campo obligatorio.Empieza con mayúscula y no acepta caracteres especiales")');
 
         function validarNombre() {
