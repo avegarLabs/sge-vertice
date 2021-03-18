@@ -1,6 +1,7 @@
 from auditlog import registry, models as auditlog_models
 from django.contrib.auth.models import User
 from django.db import models
+from datetime import datetime, date
 from django.urls import reverse_lazy
 
 from adm.models import EscalaSalarial, Cargo, EscalaSalarialReforma
@@ -211,7 +212,16 @@ class Plano(BaseUrls, models.Model):
     valor_pen = models.DecimalField('valor de penalización', max_digits=6, decimal_places=2, default=0.00)
     history = auditlog_models.AuditlogHistoryField()
 
-
+    @property
+    def Is_Editable(self):
+        if self.fecha_pago:
+            fecha = int(self.fecha_pago.year)
+            if fecha >= 2021:
+                return True
+            else:
+                return False
+        else:
+            return True
 
 
 

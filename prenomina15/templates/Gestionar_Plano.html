@@ -233,11 +233,13 @@
                                 <td width="20" style="font-size: small">
                                     <div class="icon-acciones" align="center">
                                       {% if change %} <!-- Aqui se verifica si el usuario tiene permiso de editar Plano -->
-                                        <a href="{% url 'editarPlano' i.pk %}"
-                                           class="badge badge-pill badge-primary">
-                                            <i class="fa fa-edit" title="Editar Plano"
-                                               style="color: white;"></i>
-                                        </a>
+                                          {% if i.Is_Editable %}
+                                                <a href="{% url 'editarPlano' i.pk %}"
+                                                   class="badge badge-pill badge-primary">
+                                                    <i class="fa fa-edit" title="Editar Plano"
+                                                       style="color: white;"></i>
+                                                </a>
+                                          {% endif %}
                                           <a href="{% url 'gestionarCatalogo' i.pk %}"
                                              class="badge badge-pill badge-primary">
                                             <i class="fa fa-folder" title="Gestionar Catalogo"
