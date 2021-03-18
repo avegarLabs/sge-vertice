@@ -7,7 +7,7 @@ from django.core.cache import cache
 class ObraForm(forms.ModelForm):
     class Meta:
         model = Obra
-        fields = ['orden_trab', 'tipo', 'horas_a2', 'gesc', 'nombre']
+        fields = ['orden_trab', 'nombre']
 
     def __init__(self, *args, **kwargs):
         super(ObraForm, self).__init__(*args, **kwargs)
