@@ -1,13 +1,12 @@
 from django import forms
 from .models import Obra, Plano, Objeto, Revision, Catalogo
-from django.core.cache import cache
-
+# from django.core.cache import cache
 
 
 class ObraForm(forms.ModelForm):
     class Meta:
         model = Obra
-        fields = ['orden_trab','complejidad', 'nombre']
+        fields = ['orden_trab', 'complejidad', 'nombre']
 
     def __init__(self, *args, **kwargs):
         super(ObraForm, self).__init__(*args, **kwargs)
@@ -16,7 +15,6 @@ class ObraForm(forms.ModelForm):
 
 
 class ObjetoForm(forms.ModelForm):
-
 
     class Meta:
         model = Objeto
@@ -29,8 +27,6 @@ class ObjetoForm(forms.ModelForm):
         self.fields['obra'].widget.attrs.update({'class': 'form-control'})
 
 
-
-
 class PlanoForm(forms.ModelForm):
     class Meta:
         model = Plano
@@ -41,6 +37,7 @@ class PlanoForm(forms.ModelForm):
         super(PlanoForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+
 
 class PenalizacionForm(forms.ModelForm):
     class Meta:
