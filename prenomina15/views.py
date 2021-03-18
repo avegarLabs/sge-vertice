@@ -48,7 +48,8 @@ def home_pren15(request):
 def gestionar_obra(request):
     obras = listar_obra(request)
     user_id = User.objects.get(username=request.user)
-    list_obras = Obra.objects.all().select_related("orden_trab").select_related("gesc").filter(usuarios=request.user.id, activa=True)
+    list_obras = Obra.objects.all().select_related("orden_trab").select_related("gesc").filter(usuarios=request.user.id,
+                                                                                               activa=True)
     form = ObraForm(request.POST or None)
     context = {'list_obras': list_obras, 'form': form, 'obras': obras}
     context = context_add_perm(request, context, 'prenomina15', 'obra')
@@ -183,7 +184,6 @@ def listado_revisiones(request, pk):
 @permission_required('prenomina15.add_obra', 'home_principal')
 def adicionar_obra(request):
     obras = listar_obra(request)
-    user_id = User.objects.get(username=request.user)
     form = ObraForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -191,14 +191,13 @@ def adicionar_obra(request):
                 orden_trab=form.cleaned_data['orden_trab'],
                 nombre=form.cleaned_data['nombre'],
                 tipo=form.cleaned_data['tipo'],
-                horas_a2=form.cleaned_data['horas_a2'],
-                gesc=form.cleaned_data['gesc'],
+                complejidad=form.cleaned_data['complejidad'],
                 owner=request.user,
             )
             obra.save()
             obra.usuarios.add(request.user.id)
             return redirect('adicionarObra')
-    context = { 'form': form, 'obras': obras}
+    context = {'form': form, 'obras': obras}
     context = context_add_perm(request, context, 'prenomina15', 'obra')
     return render(request, 'Gestionar_Obra.html', context)
 
@@ -263,12 +262,11 @@ def adicionar_plano(request):
             obra = form.cleaned_data['obra']
             esp_factor = form.cleaned_data['especialidad'].factor
             for_factor = form.cleaned_data['formato'].factor
-            sal_trab = SalarioMax.objects.filter(tipo=obra.tipo,
-                                                 grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
-            sal_obra = SalarioMax.objects.filter(tipo=obra.tipo, grupo_esc=obra.gesc).get()
+            sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
+            sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
             coe = sal_obra.sal / sal_trab.sal
-            cant =  1
-            horas = (obra.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+            cant = 1
+            horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
             horas_esp = (horas * esp_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
             horas_creadas = ((horas_esp * for_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) * Decimal(
                 form.cleaned_data['porciento'])).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -447,7 +445,7 @@ def registrar_revision(request):
                 plano_filter = PlanoFilter(request.GET, queryset=cal)
                 context = {'plano_filter': plano_filter, 'formrev': formrev, 'form': form, 'obras': obras,
                            'errores': 'Intentelo de nuevo. Ha ocurrido un error de Base de Datos', 'objeto': objeto,
-                           'num': num, 'pk': plano.id, 'fecha_pago':fecha_pago}
+                           'num': num, 'pk': plano.id, 'fecha_pago': fecha_pago}
                 context = context_add_perm(request, context, 'prenomina15', 'plano')
                 return render(request, 'Gestionar_Plano.html', context)
             plano.save()
@@ -566,10 +564,6 @@ def editar_plano(request, pk):
     objeto = plano.objeto_id
     act = plano.actividad_id
     obra = plano.obra_id
-    horas_creadas_real = 0
-    valor_plano = 0
-    valor_retenido = 0
-    valor_total = 0
     cal = Plano.objects.all().select_related("actividad").select_related("objeto").select_related(
         "formato").select_related("obra").select_related("especialidad").select_related("trabajador").filter(
         obra__usuarios=request.user.id, obra_id=plano.obra_id)
@@ -595,11 +589,10 @@ def editar_plano(request, pk):
                 obra = form.cleaned_data['obra']
                 esp_factor = form.cleaned_data['especialidad'].factor
                 for_factor = form.cleaned_data['formato'].factor
-                sal_trab = SalarioMax.objects.filter(tipo=obra.tipo,
-                                                     grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
-                sal_obra = SalarioMax.objects.filter(tipo=obra.tipo, grupo_esc=obra.gesc).get()
+                sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
+                sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
                 coe = sal_obra.sal / sal_trab.sal
-                horas = (obra.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+                horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
                 horas_esp = (horas * esp_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
                 horas_creadas = ((horas_esp * for_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) * Decimal(
                     form.cleaned_data['porciento'])).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -660,7 +653,7 @@ def editar_plano(request, pk):
                     plano.valor_pen = plano.valor_pen - plano.incumplimiento_calidad_valor
 
                     plano.valor_retenido = plano.valor_pen * Decimal(0.2)
-                plano.etapa=form.cleaned_data['etapa']
+                plano.etapa = form.cleaned_data['etapa']
                 plano.save()
                 cal = Plano.objects.all().select_related("actividad").select_related("objeto").select_related(
                     "formato").select_related("obra").select_related("especialidad").select_related(
@@ -673,11 +666,10 @@ def editar_plano(request, pk):
             obra = form.cleaned_data['obra']
             esp_factor = form.cleaned_data['especialidad'].factor
             for_factor = form.cleaned_data['formato'].factor
-            sal_trab = SalarioMax.objects.filter(tipo=obra.tipo,
-                                                 grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
-            sal_obra = SalarioMax.objects.filter(tipo=obra.tipo, grupo_esc=obra.gesc).get()
+            sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
+            sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
             coe = sal_obra.sal / sal_trab.sal
-            horas = (obra.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+            horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
             horas_esp = (horas * esp_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
             horas_creadas = ((horas_esp * for_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) * Decimal(
                 form.cleaned_data['porciento'])).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -728,8 +720,7 @@ def editar_plano(request, pk):
                     quantize(Decimal('1.00'))
                 plano.valor_pen = plano.valor_pen - plano.incumplimiento_plano_valor
 
-                plano.incumplimiento_cpl_valor = plano.valor_pen * Decimal(plano.incumplimiento_cpl / Decimal(100.00)). \
-                    quantize(Decimal('1.00'))
+                plano.incumplimiento_cpl_valor = plano.valor_pen * Decimal(plano.incumplimiento_cpl / Decimal(100.00)).quantize(Decimal('1.00'))
                 plano.valor_pen = plano.valor_pen - plano.incumplimiento_cpl_valor
 
                 plano.incumplimiento_calidad_valor = plano.valor_pen * Decimal(
@@ -738,7 +729,7 @@ def editar_plano(request, pk):
                 plano.valor_pen = plano.valor_pen - plano.incumplimiento_calidad_valor
 
                 plano.valor_retenido = plano.valor_pen * Decimal(0.2)
-                plano.etapa=form.cleaned_data['etapa']
+                plano.etapa = form.cleaned_data['etapa']
             plano.save()
             cal = Plano.objects.all().select_related("actividad").select_related("objeto").select_related(
                 "formato").select_related("obra").select_related("especialidad").select_related("trabajador").filter(
@@ -935,10 +926,6 @@ def add_cat(request, pk, formato, cant, porciento):
                                          grupo_esc=plano.trabajador.escala_salarial).get()
     sal_obra = SalarioMax.objects.filter(tipo=plano.obra.tipo, grupo_esc=plano.obra.gesc).get()
     coe = sal_obra.sal / sal_trab.sal
-    horas_creadas_real = 0
-    valor_plano = 0
-    valor_retenido = 0
-    valor_total = 0
     esp_factor = plano.especialidad.factor
     for_factor = formato.factor
     cantn = cant
@@ -1028,7 +1015,7 @@ def eliminar_objeto(request, pk):
         except IntegrityError:
             cal = Objeto.objects.all().select_related("obra").filter(obra__usuarios=user_id)
             form = ObjetoForm(None)
-            context = {'list_obj': cal, 'form': form, 'obras': obras,'obra': obra,
+            context = {'list_obj': cal, 'form': form, 'obras': obras, 'obra': obra,
                        'errores': 'Imposible eliminar el Objeto porque tiene al menos un Plano asociado.'}
             context = context_add_perm(request, context, 'prenomina15', 'objeto')
             return render(request, 'Gestionar_Objeto.html', context)
@@ -1279,7 +1266,6 @@ def listar_obra(request):
     return obras
 
 
-
 @permission_required('prenomina15.read_obra', 'home_principal')
 def listar_trabaj_pen_obra(request, planos=None):
     penalizaciones = []
@@ -1344,7 +1330,8 @@ def penalizar(request, planos, pen_plano=None, pen_cpl=None, pen_calidad=None):
                 cat.valor_retenido = cat.valor * Decimal(0.2)
                 cat.valor_total = cat.valor - cat.valor_retenido
                 cat.valor_pen = (
-                        cat.incumplimiento_plano_valor + cat.incumplimiento_cpl_valor + cat.incumplimiento_calidad_valor)
+                        cat.incumplimiento_plano_valor + cat.incumplimiento_cpl_valor + cat.incumplimiento_calidad_valor
+                )
 
                 cat.save()
     return
@@ -1780,9 +1767,8 @@ def request_report_cp(fecha_inic, fecha_fin, obra, request):
         if not flag:
             objetos.append(
                 Objetos(nombre=element.objeto.nombre, codigo=element.objeto.codigo, etapa=element.etapa,
-                                total_planos_plan=0, total_planos_real=0,
-                                total_planos_vpc_90=0, total_planos_vpc_100=0, total_planos_vpc_ret=0,
-                                total_planos_vpc_ret_ant=0))
+                        total_planos_plan=0, total_planos_real=0, total_planos_vpc_90=0, total_planos_vpc_100=0,
+                        total_planos_vpc_ret=0, total_planos_vpc_ret_ant=0))
 
     for element in result:
         total_planos_plan = 0
@@ -1791,7 +1777,6 @@ def request_report_cp(fecha_inic, fecha_fin, obra, request):
         total_planos_vpc_100 = 0
         total_planos_vpc_ret = 0
         total_planos_vpc_ret_ant = 0
-        val = ''
         inicio = datetime.datetime.strptime(fecha_inic, "%Y-%m-%d").date()
         fin = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d").date()
         fecha_pago = datetime.datetime.strptime(str(element.fecha_pago), "%Y-%m-%d").date()
@@ -1804,7 +1789,7 @@ def request_report_cp(fecha_inic, fecha_fin, obra, request):
                 total_planos_real = 1
                 total_planos_vpc_100 = 1
                 if inicio <= plano_fecha_fin <= fin:
-                   total_planos_plan = 1
+                    total_planos_plan = 1
 
             if (fecha_pago < inicio or fecha_pago > fin) and inicio <= fecha_vpc <= fin:
                 val = 1  # el caso 1 es para cuando se paga el plano 20 %
@@ -1814,7 +1799,7 @@ def request_report_cp(fecha_inic, fecha_fin, obra, request):
                 total_planos_real = 1
                 total_planos_vpc_90 = 1
                 if inicio <= plano_fecha_fin <= fin:
-                   total_planos_plan = 1
+                    total_planos_plan = 1
 
         else:
             if inicio <= fecha_pago <= fin:
@@ -2165,7 +2150,8 @@ def request_report_pren(fecha_inic, fecha_fin, obra, request):
         if element.cant != 1:
             catalogos = Catalogo.objects.all().filter(plano_id=element.id)
             for cat in catalogos:
-                catalogo.append(Cat(formato=cat.formato, porciento=int(float(cat.porciento) * 100), horas_creadas=cat.horas_creadas,
+                catalogo.append(Cat(formato=cat.formato, porciento=int(float(cat.porciento) * 100),
+                                    horas_creadas=cat.horas_creadas,
                                     horas_creadas_real=cat.horas_creadas_real, valor_retenido=cat.valor_retenido,
                                     valor_retenido_real=cat.valor_retenido_real, valor=cat.valor,
                                     valor_real=cat.valor_real, valor_total=cat.valor_total,
@@ -2650,10 +2636,9 @@ def request_report_pren_trab(fecha_inic, fecha_fin, request):
                             if plano.caso != 1:
                                 s_r15 += c.valor
                     per.obras.append(
-                        Obr(id_obra=plano.obra.id, obra=plano.obra.nombre, planos=[], no=0,
-                            horas_creadas=o_hc,
-                            strt=0, inc_r30=0, cies=0, ant=0, valor_total=o_vt,
-                            maest=0, devengado=0, impacto=0, total=0, sal_res15=s_r15, retenido=o_ret, retenido_ant=o_ret_ant))
+                        Obr(id_obra=plano.obra.id, obra=plano.obra.nombre, planos=[], no=0, horas_creadas=o_hc, strt=0,
+                            inc_r30=0, cies=0, ant=0, valor_total=o_vt, maest=0, devengado=0, impacto=0, total=0,
+                            sal_res15=s_r15, retenido=o_ret, retenido_ant=o_ret_ant))
                 per.planos.append(plano)
                 if plano.caso != 1:
                     per.cant += 1
@@ -2703,13 +2688,15 @@ def request_report_pren_trab(fecha_inic, fecha_fin, request):
         for obr in per.obras:
             obr.strt = Decimal(per.tarifa_se * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
             obr.inc_r30 = Decimal(per.tarifa_pa * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
-            obr.cies = Decimal(Decimal(per.tarifa_cies) * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
-            obr.ant = Decimal(Decimal(per.tarifa_ant) * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
-            obr.maest = Decimal(Decimal(per.tarifa_maest) * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
+            obr.cies = Decimal(Decimal(per.tarifa_cies) * obr.horas_creadas).quantize(Decimal('.01'),
+                                                                                      rounding=ROUND_HALF_UP)
+            obr.ant = Decimal(Decimal(per.tarifa_ant) * obr.horas_creadas).quantize(Decimal('.01'),
+                                                                                    rounding=ROUND_HALF_UP)
+            obr.maest = Decimal(Decimal(per.tarifa_maest) * obr.horas_creadas).quantize(Decimal('.01'),
+                                                                                        rounding=ROUND_HALF_UP)
             obr.devengado = obr.strt + obr.inc_r30 + obr.cies + obr.ant + obr.maest
             obr.impacto = (obr.sal_res15 - obr.devengado - obr.retenido) + obr.retenido_ant
             obr.total = obr.impacto + obr.devengado
-
 
     total_planos = 0
     for area in areas:
@@ -2953,7 +2940,8 @@ def request_report_pren_serv(fecha_inic, fecha_fin, request):
         if not flag:
             obrs.append(Obr(id_obra=element.obra.id, obra=element.obra.nombre, planos=[], no=0,
                             horas_creadas=0, strt=0, inc_r30=0, cies=0, ant=0,
-                            maest=0, devengado=0, impacto=0, total=0, sal_res15=0, retenido=0, retenido_ant=0, valor_total=0))
+                            maest=0, devengado=0, impacto=0, total=0, sal_res15=0, retenido=0, retenido_ant=0,
+                            valor_total=0))
     no_loop = 0
     for element in result:
         flag = False
@@ -3140,7 +3128,8 @@ def request_report_pren_serv(fecha_inic, fecha_fin, request):
                         Obr(id_obra=plano.obra.id, obra=plano.obra.nombre, planos=[], no=0,
                             horas_creadas=o_hc,
                             strt=0, inc_r30=0, cies=0, ant=0, valor_total=o_vt,
-                            maest=0, devengado=0, impacto=0, total=0, sal_res15=s_r15, retenido=o_ret, retenido_ant=o_ret_ant))
+                            maest=0, devengado=0, impacto=0, total=0, sal_res15=s_r15, retenido=o_ret,
+                            retenido_ant=o_ret_ant))
                 per.planos.append(plano)
                 if plano.caso != 1:
                     per.cant += 1
@@ -3190,9 +3179,12 @@ def request_report_pren_serv(fecha_inic, fecha_fin, request):
         for obr in per.obras:
             obr.strt = Decimal(per.tarifa_se * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
             obr.inc_r30 = Decimal(per.tarifa_pa * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
-            obr.cies = Decimal(Decimal(per.tarifa_cies) * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
-            obr.ant = Decimal(Decimal(per.tarifa_ant) * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
-            obr.maest = Decimal(Decimal(per.tarifa_maest) * obr.horas_creadas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
+            obr.cies = Decimal(Decimal(per.tarifa_cies) * obr.horas_creadas).quantize(Decimal('.01'),
+                                                                                      rounding=ROUND_HALF_UP)
+            obr.ant = Decimal(Decimal(per.tarifa_ant) * obr.horas_creadas).quantize(Decimal('.01'),
+                                                                                    rounding=ROUND_HALF_UP)
+            obr.maest = Decimal(Decimal(per.tarifa_maest) * obr.horas_creadas).quantize(Decimal('.01'),
+                                                                                        rounding=ROUND_HALF_UP)
             obr.devengado = obr.strt + obr.inc_r30 + obr.cies + obr.ant + obr.maest
             obr.impacto = (obr.sal_res15 - obr.devengado - obr.retenido) + obr.retenido_ant
             obr.total = obr.impacto + obr.devengado
@@ -3212,7 +3204,6 @@ def request_report_pren_serv(fecha_inic, fecha_fin, request):
                     obr.devengado += obrap.devengado
                     obr.impacto += obrap.impacto
                     obr.total += obrap.total
-
 
     total_planos = 0
     for area in areas:
@@ -3512,7 +3503,8 @@ def request_report_anexo(fecha_inic, fecha_fin, obra, horas, request):
             catalogos = Catalogo.objects.all().filter(plano_id=element.id)
             for cat in catalogos:
 
-                catalogo.append(Cat(formato=cat.formato, porciento=int(float(cat.porciento) * 100), horas_creadas=cat.horas_creadas,
+                catalogo.append(Cat(formato=cat.formato, porciento=int(float(cat.porciento) * 100),
+                                    horas_creadas=cat.horas_creadas,
                                     horas_creadas_real=cat.horas_creadas_real, valor_retenido=cat.valor_retenido,
                                     valor_retenido_real=cat.valor_retenido_real, valor=cat.valor,
                                     valor_real=cat.valor_real, valor_total=cat.valor_total,
@@ -3608,7 +3600,8 @@ def request_report_anexo(fecha_inic, fecha_fin, obra, horas, request):
             per.maest_real = Decimal(Decimal(per.tarifa_maest) * per.total_horas).quantize(Decimal('.01'),
                                                                                            rounding=ROUND_HALF_UP)
             per.total_dev = per.se_real + per.pa_real + per.cies_real + per.maest_real + per.ant_real
-            per.impacto = (per.total_valor - per.total_dev - per.total_retenido - per.total_valor_pen) + per.retenido_ant
+            per.impacto = (per.total_valor - per.total_dev - per.total_retenido - per.total_valor_pen) + \
+                          per.retenido_ant
             per.sal_dev_total = per.impacto + per.total_dev
             per.eval = int((per.total_horas / Decimal(horas)).quantize(Decimal('.01'), rounding=ROUND_HALF_UP) * 100)
             per.tarifa_30 = (per.salario_total / Decimal(190.60)).quantize(Decimal('.000001'), rounding=ROUND_HALF_UP)
