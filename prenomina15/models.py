@@ -73,7 +73,10 @@ class Especialidad(BaseUrls, models.Model):
 class Obra(BaseUrls, models.Model):
     orden_trab = models.ForeignKey(OT, on_delete=models.PROTECT, default='', verbose_name="orden de trabajo")
     nombre = models.CharField(max_length=20)
-    complejidad = models.IntegerField(default=1, null=True, blank=True)
+    TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'), ('R6', 'Resolucion 6'))
+    tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
+    horas_a2 = models.PositiveIntegerField('horas A2')
+    gesc = models.ForeignKey(EscalaSalarial, on_delete=models.PROTECT, default='', verbose_name="grupo escala")
     usuarios = models.ManyToManyField(User)
     owner = models.CharField(max_length=20, editable=False, default='admin', verbose_name="dueño")
     activa = models.BooleanField(default=True)
