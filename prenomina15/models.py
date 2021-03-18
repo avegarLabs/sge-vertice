@@ -18,6 +18,25 @@ class SalarioMax(BaseUrls, models.Model):
     def __str__(self):
         return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
 
+class SalarioMaxRef(BaseUrls, models.Model):
+    grupo_esc = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
+    sal = models.DecimalField('salario', max_digits=7, decimal_places=2)
+    TIPO_OPT = (('I', 'Grupo I'), ('II', 'Grupo II'))
+    tipo = models.CharField('grupo', max_length=2, choices=TIPO_OPT, default='')
+
+    def __str__(self):
+        return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
+
+
+class Complejidad(BaseUrls, models.Model):
+    complejidad = models.CharField(max_length=4)
+    horas_a2 = models.IntegerField()
+    grupo = models.ForeignKey(EscalaSalarial, on_delete=models.DO_NOTHING)
+    grupo_ref = models.ForeignKey(EscalaSalarialReforma, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return ' {} - {} - {} - {}'.format(self.complejidad, self.horas_a2, self.grupo, self.grupo_ref)
+
 
 class Formato(BaseUrls, models.Model):
     formato = models.CharField(max_length=6)
@@ -235,27 +254,6 @@ class Revision(BaseUrls, models.Model):
     ESTADO_OPT = (('GE', 'GE'), ('V', 'V'), ('VPC', 'VPC'))
     estado = models.CharField(max_length=3, choices=ESTADO_OPT, default='GE')
     history = auditlog_models.AuditlogHistoryField()
-
-class SalarioMaxRef(BaseUrls, models.Model):
-    grupo_esc = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
-    sal = models.DecimalField('salario', max_digits=7, decimal_places=2)
-    TIPO_OPT = (('I', 'Grupo I'), ('II', 'Grupo II'))
-    tipo = models.CharField('grupo', max_length=2, choices=TIPO_OPT, default='')
-
-    def __str__(self):
-        return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
-
-
-class Complejidad(BaseUrls, models.Model):
-    complejidad = models.CharField(max_length=4)
-    horas_a2 = models.IntegerField()
-    grupo = models.ForeignKey(EscalaSalarial, on_delete=models.DO_NOTHING)
-    grupo_ref = models.ForeignKey(EscalaSalarialReforma, on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return ' {} - {} - {} - {}'.format(self.complejidad, self.horas_a2, self.grupo, self.grupo_ref)
-
-
 
 
 class Etapas:
