@@ -73,7 +73,7 @@ class Especialidad(BaseUrls, models.Model):
 class Obra(BaseUrls, models.Model):
     orden_trab = models.ForeignKey(OT, on_delete=models.PROTECT, default='', verbose_name="orden de trabajo")
     nombre = models.CharField(max_length=20)
-    complejidad = models.IntegerField('complejidad', default='1', null=True, blank=True)
+    complejidad = models.IntegerField(default=1, null=True, blank=True)
     usuarios = models.ManyToManyField(User)
     owner = models.CharField(max_length=20, editable=False, default='admin', verbose_name="dueño")
     activa = models.BooleanField(default=True)
