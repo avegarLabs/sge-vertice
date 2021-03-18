@@ -35,7 +35,7 @@ class Complejidad(BaseUrls, models.Model):
     grupo_ref = models.ForeignKey(EscalaSalarialReforma, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return ' {} - {} - {} - {}'.format(self.complejidad, self.horas_a2, self.grupo, self.grupo_ref)
+        return ' {} - {}'.format(self.complejidad, self.horas_a2)
 
 
 class Formato(BaseUrls, models.Model):
