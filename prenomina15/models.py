@@ -80,7 +80,7 @@ class Obra(BaseUrls, models.Model):
     usuarios = models.ManyToManyField(User)
     owner = models.CharField(max_length=20, editable=False, default='admin', verbose_name="dueño")
     activa = models.BooleanField(default=True)
-    complejidad = models.ForeignKey(Complejidad, on_delete=models.DO_NOTHING, default=1, null=True, blank=True, verbose_name="complejidad")
+    # complejidad = models.ForeignKey(Complejidad, on_delete=models.DO_NOTHING, default=1, null=True, blank=True, verbose_name="complejidad")
 
     def __str__(self):
         return self.nombre
