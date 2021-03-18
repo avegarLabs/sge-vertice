@@ -12,11 +12,10 @@ from rechum.models import BaseUrls
 class SalarioMax(BaseUrls, models.Model):
     grupo_esc = models.ForeignKey(EscalaSalarial, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
     sal = models.DecimalField('salario', max_digits=6, decimal_places=2)
-    TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'))
-    tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
+
 
     def __str__(self):
-        return ' {} - {} - {}'.format(self.tipo, self.grupo_esc, self.sal)
+        return ' {} - {}'.format(self.grupo_esc, self.sal)
 
 class SalarioMaxRef(BaseUrls, models.Model):
     grupo_esc = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
