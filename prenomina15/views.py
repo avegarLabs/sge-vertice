@@ -1560,7 +1560,6 @@ def request_report(fecha_inic, fecha_fin, obra, request):
             prenomina15_salariomax.grupo_esc_id = adm_escalasalarial.id and
             adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id and
             prenomina15_plano.obra_id = '{}' and
-            prenomina15_obra.tipo = prenomina15_salariomax.tipo and
             prenomina15_formato.id = prenomina15_plano.formato_id and
             entrada_datos_actividad.id = prenomina15_plano.actividad_id and
             prenomina15_objeto.id = prenomina15_plano.objeto_id and
@@ -1991,7 +1990,6 @@ def request_report_pren(fecha_inic, fecha_fin, obra, request):
             adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id AND
             adm_departamento.id = ges_trab_trabajador.departamento_id AND
             prenomina15_plano.obra_id = '{}' AND
-            prenomina15_obra.tipo = prenomina15_salariomax.tipo AND
             prenomina15_formato.id = prenomina15_plano.formato_id AND
             entrada_datos_actividad.id = prenomina15_plano.actividad_id AND
             prenomina15_objeto.id = prenomina15_plano.objeto_id AND
@@ -2385,7 +2383,6 @@ def request_report_pren_trab(fecha_inic, fecha_fin, request):
             ges_trab_trabajador.cargo_id = adm_cargo.id AND
             adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id AND
             adm_departamento.id = ges_trab_trabajador.departamento_id AND
-            prenomina15_obra.tipo = prenomina15_salariomax.tipo AND
             prenomina15_formato.id = prenomina15_plano.formato_id AND
             entrada_datos_actividad.id = prenomina15_plano.actividad_id AND
             prenomina15_objeto.id = prenomina15_plano.objeto_id AND
@@ -2861,7 +2858,6 @@ def request_report_pren_serv(fecha_inic, fecha_fin, request):
             ges_trab_trabajador.cargo_id = adm_cargo.id AND
             adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id AND
             adm_departamento.id = ges_trab_trabajador.departamento_id AND
-            prenomina15_obra.tipo = prenomina15_salariomax.tipo AND
             prenomina15_formato.id = prenomina15_plano.formato_id AND
             entrada_datos_actividad.id = prenomina15_plano.actividad_id AND
             prenomina15_objeto.id = prenomina15_plano.objeto_id AND
@@ -3352,7 +3348,6 @@ def request_report_anexo(fecha_inic, fecha_fin, obra, horas, request):
         adm_escalasalarial.id = ges_trab_trabajador.escala_salarial_id and
         adm_departamento.id = ges_trab_trabajador.departamento_id and
         prenomina15_plano.obra_id = '{}' and
-        prenomina15_obra.tipo = prenomina15_salariomax.tipo and 
         prenomina15_formato.id = prenomina15_plano.formato_id and
         entrada_datos_actividad.id = prenomina15_plano.actividad_id and
         prenomina15_objeto.id = prenomina15_plano.objeto_id and
