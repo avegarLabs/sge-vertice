@@ -73,14 +73,14 @@ class Especialidad(BaseUrls, models.Model):
 class Obra(BaseUrls, models.Model):
     orden_trab = models.ForeignKey(OT, on_delete=models.PROTECT, default='', verbose_name="orden de trabajo")
     nombre = models.CharField(max_length=20)
-    TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'), ('R6', 'Resolucion 6'))
-    tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
-    horas_a2 = models.PositiveIntegerField('horas A2')
-    gesc = models.ForeignKey(EscalaSalarial, on_delete=models.PROTECT, default='', verbose_name="grupo escala")
+    # TIPO_OPT = (('OT', 'Obra Turismo'), ('VT', 'Vivienda para Turismo'), ('R6', 'Resolucion 6'))
+    # tipo = models.CharField('tipo de servicio', max_length=2, choices=TIPO_OPT, default='')
+    # horas_a2 = models.PositiveIntegerField('horas A2')
+    # gesc = models.ForeignKey(EscalaSalarial, on_delete=models.PROTECT, default='', verbose_name="grupo escala")
     usuarios = models.ManyToManyField(User)
     owner = models.CharField(max_length=20, editable=False, default='admin', verbose_name="dueño")
     activa = models.BooleanField(default=True)
-    # complejidad = models.ForeignKey(Complejidad, on_delete=models.DO_NOTHING, default=1, verbose_name="complejidad")
+    complejidad = models.ForeignKey(Complejidad, on_delete=models.DO_NOTHING, default=1, verbose_name="complejidad")
 
     def __str__(self):
         return self.nombre
