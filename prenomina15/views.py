@@ -1,9 +1,11 @@
 from django.core.exceptions import FieldError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from adm.models import EscalaSalarialReforma
 from .form import *
 from .models import Obra, Plano, Objeto, SalarioMax, Esp, Persona, Plan, Corte, Especial, Especialidad, Area, Trab, \
-    Catalogo, Penalizaciones, Cortes_Penalizaciones, Cat, Obr, Etapas, Objetos
+    Catalogo, Penalizaciones, Cortes_Penalizaciones, Cat, Obr, Etapas, Objetos, SalarioMaxRef
 import json
 from capacitacion.models import *
 from entrada_datos.models import Actividad
@@ -263,6 +265,8 @@ def adicionar_plano(request):
             esp_factor = form.cleaned_data['especialidad'].factor
             for_factor = form.cleaned_data['formato'].factor
             sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
+            sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial_ref,
+                                                    tipo='II').get()
             sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
             coe = sal_obra.sal / sal_trab.sal
             cant = 1
@@ -278,13 +282,24 @@ def adicionar_plano(request):
                 horas_creadas = form.cleaned_data['especialidad'].lc
             if tipo_doc == 'PR':
                 horas_creadas = form.cleaned_data['especialidad'].pr
-            tarifa = Decimal(sal_trab.sal / Decimal(190.6)).quantize(Decimal('.000001'))
+            tarifa = Decimal(sal_trab1.sal / Decimal(190.6)).quantize(Decimal('.000001'))
             valor_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))).quantize(
                 Decimal('0.01'), rounding=ROUND_HALF_UP)
             # if tipo_doc == 'PL':
             #     valor_real = (horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))
-            valor_retenido_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa) * Decimal(0.2)).quantize(
-                Decimal('.01'))
+            # Calcular valor retenido
+            sal_29 = EscalaSalarialReforma.objects.filter(
+                grupo=form.cleaned_data['trabajador'].escala_salarial_ref).get().salario_escala
+            sal_cat_c = form.cleaned_data['trabajador'].sal_cat_cient
+            tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
+            tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
+            stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
+            maest = (horas_creadas * tarifa_cat_c).quantize(Decimal('.01'))
+            total_29 = stert + maest
+            sal_86 = (horas_creadas * tarifa).quantize(Decimal('.01'))
+            dif_sal = sal_86 - total_29
+            cal1 = dif_sal * Decimal(0.8)
+            valor_retenido_real = (dif_sal - cal1).quantize(Decimal('.01'))
             valor_total_real = valor_real - valor_retenido_real
             if cant == 1:
                 horas_creadas_real = horas_creadas
@@ -590,6 +605,9 @@ def editar_plano(request, pk):
                 esp_factor = form.cleaned_data['especialidad'].factor
                 for_factor = form.cleaned_data['formato'].factor
                 sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
+                sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial_ref,
+                                                        tipo='II').get()
+                print(sal_trab1)
                 sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
                 coe = sal_obra.sal / sal_trab.sal
                 horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -604,15 +622,25 @@ def editar_plano(request, pk):
                 if tipo_doc == 'PR':
                     horas_creadas = form.cleaned_data['especialidad'].pr
 
-                tarifa = Decimal(sal_trab.sal / Decimal(190.6)).quantize(Decimal('.000001'))
+                tarifa = Decimal(sal_trab1.sal / Decimal(190.6)).quantize(Decimal('.000001'))
                 if tipo_doc == 'PL':
                     valor_real = (horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))
                 else:
                     valor_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))).quantize(
                         Decimal('0.01'), rounding=ROUND_HALF_UP)
-
-                valor_retenido_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa) * Decimal(0.2)).quantize(
-                    Decimal('.01'))
+                # Calcular valor retenido
+                sal_29 = EscalaSalarialReforma.objects.filter(
+                    grupo=form.cleaned_data['trabajador'].escala_salarial_ref).get().salario_escala
+                sal_cat_c = form.cleaned_data['trabajador'].sal_cat_cient
+                tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
+                tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
+                stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
+                maest = (horas_creadas * tarifa_cat_c).quantize(Decimal('.01'))
+                total_29 = stert + maest
+                sal_86 = (horas_creadas * tarifa).quantize(Decimal('.01'))
+                dif_sal = sal_86 - total_29
+                cal1 = dif_sal * Decimal(0.8)
+                valor_retenido_real = (dif_sal - cal1).quantize(Decimal('.01'))
                 valor_total_real = valor_real - valor_retenido_real
                 horas_creadas_real = horas_creadas
                 valor_plano = valor_real
@@ -667,6 +695,8 @@ def editar_plano(request, pk):
             esp_factor = form.cleaned_data['especialidad'].factor
             for_factor = form.cleaned_data['formato'].factor
             sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
+            sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial_ref,
+                                                    tipo='II').get()
             sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
             coe = sal_obra.sal / sal_trab.sal
             horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -680,13 +710,24 @@ def editar_plano(request, pk):
                 horas_creadas = form.cleaned_data['especialidad'].lc
             if tipo_doc == 'PR':
                 horas_creadas = form.cleaned_data['especialidad'].pr
-            tarifa = Decimal(sal_trab.sal / Decimal(190.6)).quantize(Decimal('.000001'))
+            tarifa = Decimal(sal_trab1.sal / Decimal(190.6)).quantize(Decimal('.000001'))
             valor_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))).quantize(
                 Decimal('0.01'), rounding=ROUND_HALF_UP)
             if tipo_doc == 'PL':
                 valor_real = (horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))
-            valor_retenido_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa) * Decimal(0.2)).quantize(
-                Decimal('.01'))
+            # Calcular valor retenido
+            sal_29 = EscalaSalarialReforma.objects.filter(
+                grupo=form.cleaned_data['trabajador'].escala_salarial_ref).get().salario_escala
+            sal_cat_c = form.cleaned_data['trabajador'].sal_cat_cient
+            tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
+            tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
+            stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
+            maest = (horas_creadas * tarifa_cat_c).quantize(Decimal('.01'))
+            total_29 = stert + maest
+            sal_86 = (horas_creadas * tarifa).quantize(Decimal('.01'))
+            dif_sal = sal_86 - total_29
+            cal1 = dif_sal * Decimal(0.8)
+            valor_retenido_real = (dif_sal - cal1).quantize(Decimal('.01'))
             valor_total_real = valor_real - valor_retenido_real
             horas_creadas_real = horas_creadas
             valor_plano = valor_real
