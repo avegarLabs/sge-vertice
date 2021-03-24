@@ -963,21 +963,35 @@ def adicionar_cat(request, pk):
 @permission_required('prenomina15.change_plano', 'home_principal')
 def add_cat(request, pk, formato, cant, porciento):
     plano = Plano.objects.get(id=pk)
-    sal_trab = SalarioMax.objects.filter(tipo=plano.obra.tipo,
-                                         grupo_esc=plano.trabajador.escala_salarial).get()
-    sal_obra = SalarioMax.objects.filter(tipo=plano.obra.tipo, grupo_esc=plano.obra.gesc).get()
+    sal_trab = SalarioMax.objects.filter(grupo_esc=plano.trabajador.escala_salarial).get()
+    sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=plano.trabajador.escala_salarial_ref,
+                                             tipo='II').get()
+    sal_obra = SalarioMax.objects.filter(grupo_esc=plano.obra.complejidad.grupo).get()
     coe = sal_obra.sal / sal_trab.sal
     esp_factor = plano.especialidad.factor
     for_factor = formato.factor
     cantn = cant
-    horas = (plano.obra.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    horas = (plano.obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     horas_esp = (horas * esp_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     horas_creadas = ((horas_esp * for_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) * Decimal(
         porciento)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-    tarifa = Decimal(sal_trab.sal / Decimal(190.6)).quantize(Decimal('.000001'))
+    tarifa = Decimal(sal_trab1.sal / Decimal(190.6)).quantize(Decimal('.000001'))
     valor_real = (horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))
     valor_retenido_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa) * Decimal(0.2)).quantize(
         Decimal('.01'))
+    # Calcular valor retenido
+    sal_29 = EscalaSalarialReforma.objects.filter(
+        grupo=plano.trabajador.escala_salarial_ref).get().salario_escala
+    sal_cat_c = plano.trabajador.sal_cat_cient
+    tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
+    tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
+    stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
+    maest = (horas_creadas * tarifa_cat_c).quantize(Decimal('.01'))
+    total_29 = stert + maest
+    sal_86 = (horas_creadas * tarifa).quantize(Decimal('.01'))
+    dif_sal = sal_86 - total_29
+    cal1 = dif_sal * Decimal(0.8)
+    valor_retenido_real = (dif_sal - cal1).quantize(Decimal('.01'))
     valor_total_real = valor_real - valor_retenido_real
     horas_creadas_real = horas_creadas
     valor_plano = valor_real
