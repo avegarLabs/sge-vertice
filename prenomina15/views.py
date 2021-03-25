@@ -86,7 +86,8 @@ def gestionar_penalizacion(request, trab=None, corte=None, obra=None):
         form.fields['incumplimiento_plano'].initial = inc_p
         form.fields['incumplimiento_cpl'].initial = inc_cpl
         form.fields['incumplimiento_calidad'].initial = inc_cal
-        context = {'planos': planos, 'form': form, 'obras': obras, 'obra': obra_id, 'cortes': cortes, 'corte': corte,
+        catalogos = Catalogo.objects.exclude(valor_pen=0.00).filter(plano__obra_id__exact=obra_id)
+        context = {'planos': planos, 'catalogos':catalogos, 'form': form, 'obras': obras, 'obra': obra_id, 'cortes': cortes, 'corte': corte,
                    'trabajador': trab, 'nombre_trab': trab_nom}
     else:
         penalizaciones = listar_trabaj_pen_obra(request, planos)
@@ -1272,6 +1273,28 @@ def visualizar_certifico(request):
         return render(request, 'Exportar_Certifico.html', context)
 
 
+@permission_required('prenomina15.read_certifico', 'home_principal')
+def visualizar_certifico86(request):
+    obras = listar_obra(request)
+    fecha_ini = request.POST['inicio']
+    fecha_fin = request.POST['fin']
+    obra = request.POST['obra1']
+    recibido_por = request.POST['recibido_por']
+    cargo = request.POST['cargo']
+    org = request.POST['org']
+    if fecha_ini == '' or fecha_fin == '':
+        error_cert = True
+        context = {'error_cert': error_cert, 'obras': obras}
+        context = context_add_perm(request, context, 'prenomina15')
+        return render(request, 'home_pren15.html', context)
+    else:
+        context = {'fecha_ini': fecha_ini, 'fecha_fin': fecha_fin, 'obras': obras, 'obra': obra,
+                   'recibido_por': recibido_por, 'cargo': cargo, 'org': org,
+                   'cortes': request_report_certifico86(fecha_ini, fecha_fin, obra)}
+        context = context_add_perm(request, context, 'prenomina15')
+        return render(request, 'Exportar_Certifico86.html', context)
+
+
 @permission_required('prenomina15.generate_acta', 'home_principal')
 def list_acta(request):
     obras = listar_obra(request)
@@ -1446,6 +1469,23 @@ def exportar_datos(request):
 
 
 @permission_required('prenomina15.export_dato', 'home_principal')
+def exportar_datos86(request):
+    obras = listar_obra(request)
+    fecha_ini = request.POST['fecha_inic']
+    fecha_fin = request.POST['fecha_fin']
+    obra = request.POST['obra1']
+    if fecha_ini == '' or fecha_fin == '':
+        error_add = True
+        context = {'error_add': error_add, 'obras': obras}
+        context = context_add_perm(request, context, 'prenomina15')
+        return render(request, 'home_pren15.html', context)
+    else:
+        context = request_report86(fecha_ini, fecha_fin, obra, request)
+        context = context_add_perm(request, context, 'prenomina15')
+        return render(request, 'Exportar_Datos86.html', context)
+
+
+@permission_required('prenomina15.export_dato', 'home_principal')
 def control_planos(request):
     obras = listar_obra(request)
     fecha_ini = request.POST['fecha_inic']
@@ -1514,6 +1554,34 @@ def exportar_certifico(request, obra, fecha_ini, fecha_fin, recibido_por, cargo,
     return response
 
 
+@permission_required('prenomina15.export_certifico', 'home_principal')
+def exportar_certifico86(request, obra, fecha_ini, fecha_fin, recibido_por, cargo, org):
+    obras = listar_obra(request)
+    nombre = Obra.objects.get(id=obra).orden_trab.descripcion_ot
+    diccionario = {'01': 'Enero', '02': 'Febrero', '03': 'Marzo', '04': 'Abril', '05': 'Mayo', '06': 'Junio',
+                   '07': 'Julio', '08': 'Agosto', '09': 'Septiembre', '10': 'Octubre', '11': 'Noviembre',
+                   '12': 'Diciembre'}
+    anno = fecha_fin[0:4]
+    mes = diccionario[fecha_fin[5:7]]
+    director = Trabajador.objects.get(cargo=164)
+    template_path = 'Exportar_Certifico_template86.html'
+    context = {'cortes': request_report_certifico86(fecha_ini, fecha_fin, obra), 'obras': obras, 'fecha_ini': fecha_ini,
+               'fecha_fin': fecha_fin, 'nombre': nombre, 'anno': anno, 'mes': mes, 'director': director,
+               'recibido_por': recibido_por, 'cargo': cargo, 'org': org}
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="Reporte_Certifico.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisastatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
+    if pisastatus.err:
+        return HttpResponse('We had some errors with code %s <pre>%s</pre>' % (pisastatus.err,
+                                                                               html))
+    return response
+
+
 @permission_required('prenomina15.export_prenomina', 'home_principal')
 def exportar_prenomina(request):
     obras = listar_obra(request)
@@ -1561,7 +1629,6 @@ def exportar_comp_obras(request):
         context = request_report_pren_serv(fecha_ini, fecha_fin, request)
         context = context_add_perm(request, context, 'prenomina15')
         return render(request, 'Compendio_servicio.html', context)
-
 
 
 @permission_required('prenomina15.export_anexo', 'home_principal')
@@ -1620,7 +1687,8 @@ def request_report(fecha_inic, fecha_fin, obra, request):
             prenomina15_objeto.id = prenomina15_plano.objeto_id and
             prenomina15_plano.especialidad_id = prenomina15_especialidad.id and
             (prenomina15_plano.fecha_pago BETWEEN '{}'::DATE AND '{}'::DATE or
-            prenomina15_plano.fecha_vpc BETWEEN '{}'::DATE AND '{}'::DATE)
+            prenomina15_plano.fecha_vpc BETWEEN '{}'::DATE AND '{}'::DATE) AND
+            prenomina15_plano.fecha_pago < '2021-01-01' 
         group by
             prenomina15_plano.vpc, prenomina15_especialidad.nombre,
             ges_trab_trabajador.primer_nombre, ges_trab_trabajador.segundo_nombre,
@@ -1640,6 +1708,212 @@ def request_report(fecha_inic, fecha_fin, obra, request):
         order by
             prenomina15_especialidad.nombre,
             adm_escalasalarial.grupo DESC,
+            ges_trab_trabajador.primer_nombre,
+            ges_trab_trabajador.segundo_nombre,
+            ges_trab_trabajador.apellidos,
+            prenomina15_plano.num;
+        """.format(obra, fecha_inic, fecha_fin, fecha_inic, fecha_fin)
+    obras = listar_obra(request)
+    result = Plano.objects.raw(sql)
+    especialidades = []
+    personas = []
+    planos = []
+
+    for element in result:
+        flag = False
+        for esp in especialidades:
+            if esp.nombre == element.nombre_esp:
+                flag = True
+                break
+        if not flag:
+            especialidades.append(Esp(nombre=element.nombre_esp, personas=[], cant=0))
+    for element in result:
+        flag = False
+        for per in personas:
+            if per.no == element.trabajador_id:
+                if per.especialidad == element.nombre_esp:
+                    flag = True
+                    break
+        if not flag:
+            personas.append(
+                Persona(no=element.trabajador_id,
+                        nombre=element.primer_nombre + ' ' + element.segundo_nombre + ' ' + element.apellidos,
+                        planos=[], cargo=element.nom_cargo, ge=element.grupo, sal_max=element.sal,
+                        tarifa=element.tarifa, total_horas=0, total_pagar=0, total_retenido=0, total_valor=0, cant=0,
+                        especialidad=element.nombre_esp, retenido_ant=0, pagar=0))
+
+    for element in result:
+        val = ''
+        pagar = ''
+        retenido = 0
+        pago_ant = 0
+        horas_creadas = 0
+        valor_retenido_real = 0
+        valor_total_real = 0
+        horas_creadas_real = 0
+        list_cant = []
+        catalogo = []
+        cantidad = element.cant - 1
+        inicio = datetime.datetime.strptime(fecha_inic, "%Y-%m-%d").date()
+        fin = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d").date()
+        fecha_pago = datetime.datetime.strptime(str(element.fecha_pago), "%Y-%m-%d").date()
+        if element.fecha_vpc is not None:
+            fecha_vpc = datetime.datetime.strptime(str(element.fecha_vpc), "%Y-%m-%d").date()
+            if inicio <= fecha_pago <= fin and inicio <= fecha_vpc <= fin:
+                val = 0  # el caso 0 es para cuando se paga el plano 100 %
+                horas_creadas = element.horas_creadas
+                pagar = element.valor_real
+                horas_creadas_real = element.horas_creadas_real
+            if (fecha_pago < inicio or fecha_pago > fin) and inicio <= fecha_vpc <= fin:
+                val = 1  # el caso 1 es para cuando se paga el plano 20 %
+                pagar = 0
+                pago_ant = element.valor_retenido
+                horas_creadas = 0
+            if inicio <= fecha_pago <= fin and (fecha_vpc < inicio or fecha_vpc > fin):
+                val = 2  # el caso 2 es para cuando se paga el plano 80 %
+                pagar = element.valor_total_real
+                valor_total_real = element.valor_total_real
+                retenido = element.valor_retenido_real
+                valor_retenido_real = element.valor_retenido_real
+                horas_creadas = element.horas_creadas_real
+                horas_creadas_real = element.horas_creadas_real
+        else:
+            if inicio <= fecha_pago <= fin:
+                val = 2  # el caso 2 es para cuando se paga el plano 80 %
+                pagar = element.valor_total_real
+                valor_total_real = element.valor_total_real
+                retenido = element.valor_retenido_real
+                valor_retenido_real = element.valor_retenido_real
+                horas_creadas = element.horas_creadas_real
+                horas_creadas_real = element.horas_creadas_real
+        while cantidad != 0:
+            list_cant.append(1)
+            cantidad -= 1
+        if element.cant != 1:
+            catalogos = Catalogo.objects.all().filter(plano_id=element.id)
+            for cat in catalogos:
+
+                catalogo.append(Cat(formato=cat.formato, porciento=int(float(cat.porciento) * 100), horas_creadas=cat.horas_creadas,
+                                    horas_creadas_real=cat.horas_creadas_real, valor_retenido=cat.valor_retenido,
+                                    valor_retenido_real=cat.valor_retenido_real, valor=cat.valor,
+                                    valor_real=cat.valor_real, valor_total=cat.valor_total,
+                                    valor_total_real=cat.valor_total_real))
+        planos.append(
+            Plan(nombre=element.nombre, codigo=element.num, objeto=element.codigo, etapa=element.codigo_act,
+                 formato=element.formato.formato, porciento=int(float(element.porciento) * 100),
+                 horas_creadas=horas_creadas, nombre_obj=element.nombre_obj,
+                 valor=element.valor, valor_total=element.valor_total, retenido=retenido, reten_ant=pago_ant,
+                 rev=element.last_rev, vpc=element.vpc, trabajador_id=element.trabajador_id,
+                 ult_rev=element.last_rev, especialidad=element.nombre_esp, caso=val, pagar=pagar, cant=element.cant,
+                 corte=element.corte, horas_creadas_real=horas_creadas_real, valor_real=element.valor_real,
+                 valor_retenido_real=valor_retenido_real, valor_total_real=valor_total_real, list_cant=list_cant,
+                 tarifa=element.tarifa, sigla=element.siglas, tipo_doc=element.tipo_doc, catalogo=catalogo))
+
+    for per in personas:
+        for plano in planos:
+            if plano.trabajador_id == per.no and plano.especialidad == per.especialidad:
+                per.planos.append(plano)
+                if plano.caso != 1:
+                    per.cant += 1
+                    per.total_valor += plano.valor_real
+                per.total_horas += plano.horas_creadas
+                per.total_retenido += plano.valor_retenido_real
+                per.pagar += plano.pagar
+                if plano.caso == 1:
+                    per.retenido_ant += plano.reten_ant
+                if plano.cant != 1:
+                    for c in plano.catalogo:
+                        if plano.caso == 0:
+                            per.total_valor += c.valor_real
+                            per.total_horas += c.horas_creadas
+                            per.pagar += c.valor_real
+                        if plano.caso == 1:
+                            per.total_retenido += c.valor_retenido
+                            per.retenido_ant += c.valor_retenido_real
+                            per.pagar += plano.pagar
+                            per.total_horas += plano.horas_creadas
+                        if plano.caso == 2:
+                            per.total_valor += c.valor_real
+                            per.total_horas += c.horas_creadas
+                            per.total_retenido += c.valor_retenido_real
+                            per.pagar += c.valor_total_real
+
+    total_planos = 0
+    for esp in especialidades:
+        for per in personas:
+            if per.especialidad == esp.nombre:
+                esp.personas.append(per)
+                esp.cant += per.cant
+        total_planos += esp.cant
+
+    completo = Plano.objects.all().filter(fecha_vpc__range=(fecha_inic, fecha_fin),
+                                          fecha_pago__range=(fecha_inic, fecha_fin), obra=obra).count()
+    retenido = Plano.objects.all().filter(fecha_vpc__range=(fecha_inic, fecha_fin), obra=obra).count() - completo
+
+    return {'especialidades': especialidades, 'fecha_inic': fecha_inic, 'fecha_fin': fecha_fin, 'obras': obras,
+            'total_planos': total_planos, 'completo': completo, 'retenido': retenido}
+
+
+def request_report86(fecha_inic, fecha_fin, obra, request):
+    sql = """
+        SELECT
+            ges_trab_trabajador.primer_nombre, ges_trab_trabajador.segundo_nombre,prenomina15_plano.fecha_vpc,
+            ges_trab_trabajador.apellidos, adm_cargo.nombre as nom_cargo,
+            adm_escalasalarialreforma.grupo, prenomina15_salariomaxref.sal, prenomina15_plano.id,
+            prenomina15_plano.formato_id, prenomina15_plano.porciento,
+            prenomina15_plano.tarifa, prenomina15_plano.cant,
+            entrada_datos_actividad.codigo_act, prenomina15_plano.horas_creadas,
+            prenomina15_plano.valor, prenomina15_plano.tipo_doc,
+            prenomina15_plano.valor_total, prenomina15_plano.valor_retenido,
+            prenomina15_plano.nombre,
+            prenomina15_plano.num,
+            prenomina15_objeto.codigo,
+            prenomina15_plano.last_rev, prenomina15_plano.fecha_pago,
+            prenomina15_especialidad.nombre as nombre_esp,
+            prenomina15_plano.trabajador_id, prenomina15_plano.id,
+            prenomina15_objeto.nombre as nombre_obj, prenomina15_plano.corte,
+            prenomina15_plano.horas_creadas_real,
+            prenomina15_plano.valor_real, prenomina15_plano.valor_retenido_real,
+            prenomina15_plano.valor_total_real,
+            prenomina15_plano.vpc, prenomina15_especialidad.siglas
+        from
+            public.ges_trab_trabajador, public.prenomina15_plano, public.adm_cargo,
+            public.adm_escalasalarialreforma, public.prenomina15_salariomaxref, public.prenomina15_obra,
+            public.prenomina15_formato, public.entrada_datos_actividad, public.prenomina15_objeto,
+            public.prenomina15_especialidad
+        where
+            ges_trab_trabajador.id = prenomina15_plano.trabajador_id and
+            adm_cargo.id = ges_trab_trabajador.cargo_id and
+            prenomina15_salariomaxref.grupo_esc_id = adm_escalasalarialreforma.id and
+            adm_escalasalarialreforma.id = ges_trab_trabajador.escala_salarial_ref_id and
+            prenomina15_plano.obra_id = '{}' and
+            prenomina15_salariomaxref.tipo = 'II' and
+            prenomina15_formato.id = prenomina15_plano.formato_id and
+            entrada_datos_actividad.id = prenomina15_plano.actividad_id and
+            prenomina15_objeto.id = prenomina15_plano.objeto_id and
+            prenomina15_plano.especialidad_id = prenomina15_especialidad.id and
+            (prenomina15_plano.fecha_pago BETWEEN '{}'::DATE AND '{}'::DATE or
+            prenomina15_plano.fecha_vpc BETWEEN '{}'::DATE AND '{}'::DATE) AND
+            prenomina15_plano.fecha_pago >= '2021-01-01' 
+        group by
+            prenomina15_plano.vpc, prenomina15_especialidad.nombre,
+            ges_trab_trabajador.primer_nombre, ges_trab_trabajador.segundo_nombre,
+            ges_trab_trabajador.apellidos, adm_cargo.nombre,
+            adm_escalasalarialreforma.grupo, prenomina15_salariomaxref.sal,
+            prenomina15_formato.id, prenomina15_plano.porciento, prenomina15_plano.id,
+            prenomina15_plano.tarifa, entrada_datos_actividad.codigo_act,
+            prenomina15_plano.horas_creadas, prenomina15_plano.valor, prenomina15_plano.tipo_doc,
+            prenomina15_plano.valor_total, prenomina15_plano.valor_retenido,
+            prenomina15_plano.nombre, prenomina15_plano.num,
+            prenomina15_especialidad.siglas, prenomina15_objeto.codigo,
+            prenomina15_plano.last_rev, prenomina15_plano.fecha_pago,
+            prenomina15_plano.fecha_vpc, prenomina15_plano.trabajador_id,
+            prenomina15_plano.id, prenomina15_objeto.nombre, prenomina15_plano.corte,
+            prenomina15_plano.horas_creadas_real, prenomina15_plano.valor_real,
+            prenomina15_plano.valor_retenido_real, prenomina15_plano.valor_total_real
+        order by
+            prenomina15_especialidad.nombre,
+            adm_escalasalarialreforma.grupo DESC,
             ges_trab_trabajador.primer_nombre,
             ges_trab_trabajador.segundo_nombre,
             ges_trab_trabajador.apellidos,
@@ -1960,6 +2234,68 @@ def request_report_certifico(fecha_ini, fecha_fin, obra):
         for esp in corte.especialidades:
             listado_planos_vpc = Plano.objects.all().filter(vpc='Si', corte__contains=corte.nombre, obra=obra,
                                                             fecha_vpc__range=(fecha_ini, fecha_fin),
+                                                            fecha_pago__lt='2021-01-01',
+                                                            especialidad__siglas=esp.sigla).select_related(
+                "actividad").select_related("objeto").select_related(
+                "formato").select_related("obra").select_related("especialidad").select_related("trabajador").order_by(
+                'fecha_vpc')
+            for plano in listado_planos_vpc:
+                esp.planos_vpc.append(plano)
+    return cortes
+
+def request_report_certifico86(fecha_ini, fecha_fin, obra):
+    corte = Plano.objects.filter(corte__isnull=False, obra=obra).order_by('fecha_pago').values('corte').distinct()
+    cortes = []
+    diccionario = {'01': 'Enero', '02': 'Febrero', '03': 'Marzo', '04': 'Abril', '05': 'Mayo', '06': 'Junio',
+                   '07': 'Julio', '08': 'Agosto', '09': 'Septiembre', '10': 'Octubre', '11': 'Noviembre',
+                   '12': 'Diciembre'}
+    for element in corte:
+        flag = False
+        var1 = element['corte']
+        var_corte = var1[0:11]
+        for i in cortes:
+            if i.nombre == var_corte:
+                flag = True
+                break
+        if not flag:
+            descrip = var1[0:2] + ' de ' + diccionario[var1[3:5]] + ' al ' + var1[6:8] + ' de ' + diccionario[
+                var1[9:11]]
+            total = Plano.objects.all().filter(corte__contains=var_corte, obra=obra).count()
+            vpc = Plano.objects.all().filter(vpc='Si', corte__contains=var_corte, obra=obra,
+                                             fecha_vpc__lte=fecha_fin).count()
+            pendientes = total - vpc
+            vpc_mes = Plano.objects.all().filter(vpc='Si', corte__contains=var_corte, obra=obra,
+                                                 fecha_vpc__range=(fecha_ini, fecha_fin)).count()
+            cortes.append(Corte(nombre=var_corte, descripcion=descrip, especialidades=[], total=total,
+                                pendiente=pendientes, vpc_mes=vpc_mes))
+
+    for corte in cortes:
+        corte_esp = Plano.objects.filter(corte__icontains=corte.nombre, obra=obra).values('especialidad').distinct()
+        for i in corte_esp:
+            flag = False
+            temp = Especialidad.objects.get(id=i['especialidad'])
+            for esp in corte.especialidades:
+                if esp.sigla == temp.siglas:
+                    flag = True
+                    break
+            if not flag:
+                total = Plano.objects.all().filter(corte__contains=corte.nombre, obra=obra,
+                                                   especialidad__siglas=temp.siglas).count()
+                vpc = Plano.objects.all().filter(vpc='Si', corte__contains=corte.nombre, obra=obra,
+                                                 fecha_vpc__lte=fecha_fin, especialidad__siglas=temp.siglas).count()
+                pendientes = total - vpc
+                vpc_mes = Plano.objects.all().filter(vpc='Si', corte__contains=corte.nombre, obra=obra,
+                                                     fecha_vpc__range=(fecha_ini, fecha_fin),
+                                                     especialidad__siglas=temp.siglas).count()
+                corte.especialidades.append(
+                    Especial(nombre_esp=temp.nombre, sigla=temp.siglas, planos_vpc=[], total=total,
+                             vpc=vpc_mes, pendiente=pendientes))
+
+    for corte in cortes:
+        for esp in corte.especialidades:
+            listado_planos_vpc = Plano.objects.all().filter(vpc='Si', corte__contains=corte.nombre, obra=obra,
+                                                            fecha_vpc__range=(fecha_ini, fecha_fin),
+                                                            fecha_pago__gte='2021-01-01',
                                                             especialidad__siglas=esp.sigla).select_related(
                 "actividad").select_related("objeto").select_related(
                 "formato").select_related("obra").select_related("especialidad").select_related("trabajador").order_by(
