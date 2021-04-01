@@ -291,7 +291,7 @@ def adicionar_plano(request):
             # Calcular valor retenido
             sal_29 = EscalaSalarialReforma.objects.filter(
                 grupo=form.cleaned_data['trabajador'].escala_salarial_ref).get().salario_escala
-            sal_cat_c = form.cleaned_data['trabajador'].sal_cat_cient
+            sal_cat_c = form.cleaned_data['trabajador'].salario_cat_cient
             tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
             tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
             stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
@@ -609,7 +609,6 @@ def editar_plano(request, pk):
                 sal_trab = SalarioMax.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial).get()
                 sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=form.cleaned_data['trabajador'].escala_salarial_ref,
                                                         tipo='II').get()
-                print(sal_trab1)
                 sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
                 coe = sal_obra.sal / sal_trab.sal
                 horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -633,7 +632,7 @@ def editar_plano(request, pk):
                 # Calcular valor retenido
                 sal_29 = EscalaSalarialReforma.objects.filter(
                     grupo=form.cleaned_data['trabajador'].escala_salarial_ref).get().salario_escala
-                sal_cat_c = form.cleaned_data['trabajador'].sal_cat_cient
+                sal_cat_c = form.cleaned_data['trabajador'].salario_cat_cient
                 tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
                 tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
                 stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
@@ -659,6 +658,7 @@ def editar_plano(request, pk):
                 plano.tarifa = tarifa
                 plano.valor = Decimal(valor_plano)
                 plano.valor_retenido = valor_retenido
+                plano.dif_salario = dif_sal
                 plano.valor_total = valor_total
                 plano.horas_creadas_real = horas_creadas
                 plano.valor_real = valor_real
@@ -720,7 +720,7 @@ def editar_plano(request, pk):
             # Calcular valor retenido
             sal_29 = EscalaSalarialReforma.objects.filter(
                 grupo=form.cleaned_data['trabajador'].escala_salarial_ref).get().salario_escala
-            sal_cat_c = form.cleaned_data['trabajador'].sal_cat_cient
+            sal_cat_c = form.cleaned_data['trabajador'].salario_cat_cient
             tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
             tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
             stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
@@ -750,6 +750,7 @@ def editar_plano(request, pk):
             plano.tarifa = tarifa
             plano.valor = Decimal(valor_plano)
             plano.valor_retenido = valor_retenido
+            plano.dif_salario = dif_sal
             plano.valor_total = valor_total
             plano.horas_creadas_real = horas_creadas
             plano.valor_real = valor_real
@@ -984,7 +985,7 @@ def add_cat(request, pk, formato, cant, porciento):
     # Calcular valor retenido
     sal_29 = EscalaSalarialReforma.objects.filter(
         grupo=plano.trabajador.escala_salarial_ref).get().salario_escala
-    sal_cat_c = plano.trabajador.sal_cat_cient
+    sal_cat_c = plano.trabajador.salario_cat_cient
     tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
     tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
     stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
@@ -1013,7 +1014,8 @@ def add_cat(request, pk, formato, cant, porciento):
             horas_creadas_real=horas_creadas,
             valor_real=valor_real,
             valor_retenido_real=valor_retenido_real,
-            valor_total_real=valor_total_real
+            valor_total_real=valor_total_real,
+            dif_sal=dif_sal
         )
         catalogo.save()
         plano.cant += catalogo.cant
@@ -2871,7 +2873,8 @@ def request_report_pren86(fecha_inic, fecha_fin, obra, request):
             tarifa_se = (element.salario_escala_ref / Decimal(190.60)).quantize(Decimal('.000000001'),
                                                                             rounding=ROUND_HALF_UP)
             if element.sal_cat_cient != 0.00:
-                tarifa_maest = (element.sal_cat_cient / Decimal(190.60)).quantize(Decimal('.000000001'),
+                trab_cat_cien = Trabajador.objects.filter(id=element.trabajador_id).get().salario_cat_cient
+                tarifa_maest = (element.trab_cat_cien / Decimal(190.60)).quantize(Decimal('.000000001'),
                                                                                   rounding=ROUND_HALF_UP)
             else:
                 tarifa_maest = Decimal(0.00)
@@ -2882,7 +2885,7 @@ def request_report_pren86(fecha_inic, fecha_fin, obra, request):
                         tarifa=element.tarifa, total_horas=0, total_pagar=0, total_retenido=0, total_valor=0,
                         cant=0, dpto=element.codigo, retenido_ant=0, pagar=0, ci=element.ci,
                         sal_escala=element.salario_escala_ref,
-                        maestria=element.sal_cat_cient, tarifa_se=tarifa_se,
+                        maestria=trab_cat_cien, tarifa_se=tarifa_se,
                         tarifa_maest=tarifa_maest, salario_total=element.salario_total_reforma, se_real=0.00,
                         maest_real=0.00, total_dev=0.00, impacto=0.00,
                         sal_dev_total=0.00, cargo=element.nombre_cargo, incumplimiento_plano=0, incumplimiento_cpl=0,
