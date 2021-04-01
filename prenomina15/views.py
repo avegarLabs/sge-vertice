@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from adm.models import EscalaSalarialReforma
 from .form import *
 from .models import Obra, Plano, Objeto, SalarioMax, Esp, Persona, Plan, Corte, Especial, Especialidad, Area, Trab, \
-    Catalogo, Penalizaciones, Cortes_Penalizaciones, Cat, Obr, Etapas, Objetos, SalarioMaxRef
+    Catalogo, Penalizaciones, Cortes_Penalizaciones, Cat, Obr, Etapas, Objetos, SalarioMaxRef, AreaRef, PlanRef, TrabRef
 import json
 from capacitacion.models import *
 from entrada_datos.models import Actividad
@@ -334,7 +334,8 @@ def adicionar_plano(request):
                 valor_retenido_real=valor_retenido_real,
                 valor_total_real=valor_total_real,
                 tipo_doc=tipo_doc,
-                etapa=etapa
+                etapa=etapa,
+                dif_salario=dif_sal
             )
             plano.save()
             if cat == 1:
@@ -1598,6 +1599,22 @@ def exportar_prenomina(request):
         context = context_add_perm(request, context, 'prenomina15')
         return render(request, 'Exportar_Prenomina.html', context)
 
+@permission_required('prenomina15.export_prenomina', 'home_principal')
+def exportar_prenomina86(request):
+    obras = listar_obra(request)
+    fecha_ini = request.POST['fecha_inic']
+    fecha_fin = request.POST['fecha_fin']
+    obra = request.POST['obra1']
+    if fecha_ini == '' or fecha_fin == '':
+        error_pren = True
+        context = {'error_pren': error_pren, 'obras': obras}
+        context = context_add_perm(request, context, 'prenomina15')
+        return render(request, 'home_pren15.html', context)
+    else:
+        context = request_report_pren86(fecha_ini, fecha_fin, obra, request)
+        context = context_add_perm(request, context, 'prenomina15')
+        return render(request, 'Exportar_Prenomina86.html', context)
+
 
 @permission_required('prenomina15.export_prenomina', 'home_principal')
 def exportar_comp_trab(request):
@@ -2387,6 +2404,7 @@ def request_report_pren(fecha_inic, fecha_fin, obra, request):
             prenomina15_plano.especialidad_id = prenomina15_especialidad.id AND
             (prenomina15_plano.fecha_pago BETWEEN '{}'::DATE AND '{}'::DATE
             OR prenomina15_plano.fecha_vpc BETWEEN '{}'::DATE AND '{}'::DATE)
+            AND prenomina15_plano.fecha_pago < '2021-01-01'
         GROUP BY
             prenomina15_especialidad.siglas, prenomina15_plano.vpc,adm_departamento.codigo,
             ges_trab_trabajador.departamento_id, nombre_dpto, prenomina15_especialidad.nombre,
@@ -2695,6 +2713,377 @@ def request_report_pren(fecha_inic, fecha_fin, obra, request):
             'inc_res_30': inc_res_30, 'cies': cies, 'ant': ant, 'maest': maest, 'total_dev_30': total_dev_30,
             'cant_planos': cant_planos, 'sal_res15_plano': sal_res15_plano, 'ret': ret, 'ret_ant': ret_ant,
             'impacto': impacto, 'sal_total_dev': sal_total_dev, 'sal_res15': sal_res15, 'inc_plano': inc_plano,
+            'inc_cpl': inc_cpl, 'inc_calidad': inc_calidad}
+
+
+def request_report_pren86(fecha_inic, fecha_fin, obra, request):
+    sql = """
+        SELECT
+            ges_trab_trabajador.primer_nombre,
+            ges_trab_trabajador.segundo_nombre,
+            prenomina15_plano.fecha_vpc,
+            ges_trab_trabajador.apellidos,
+            adm_escalasalarialreforma.grupo,
+            prenomina15_salariomaxref.sal,
+            prenomina15_plano.id,
+            prenomina15_plano.formato_id,
+            prenomina15_plano.porciento,
+            prenomina15_plano.tipo_doc,
+            prenomina15_plano.tarifa,
+            prenomina15_plano.cant,
+            entrada_datos_actividad.codigo_act,
+            prenomina15_plano.horas_creadas,
+            prenomina15_plano.valor,
+            prenomina15_plano.valor_total,
+            prenomina15_plano.valor_retenido,
+            prenomina15_plano.nombre,
+            prenomina15_plano.num,
+            prenomina15_objeto.codigo,
+            prenomina15_plano.last_rev,
+            prenomina15_plano.fecha_pago,
+            prenomina15_especialidad.nombre AS nombre_esp,
+            prenomina15_plano.trabajador_id,
+            prenomina15_plano.id,
+            prenomina15_objeto.nombre AS nombre_obj,
+            prenomina15_plano.corte,
+            prenomina15_plano.horas_creadas_real,
+            prenomina15_plano.valor_real,
+            prenomina15_plano.valor_retenido_real,
+            prenomina15_plano.dif_salario,
+            prenomina15_plano.valor_total_real,
+            prenomina15_plano.vpc,
+            prenomina15_plano.incumplimiento_plano,
+            prenomina15_plano.incumplimiento_cpl,
+            prenomina15_plano.incumplimiento_calidad,
+            prenomina15_plano.incumplimiento_plano_valor,
+            prenomina15_plano.incumplimiento_cpl_valor,
+            prenomina15_plano.incumplimiento_calidad_valor,
+            prenomina15_plano.valor_pen,
+            ges_trab_trabajador.departamento_id,
+            adm_departamento.nombre AS nombre_dpto,
+            adm_departamento.codigo,
+            ges_trab_trabajador.codigo_interno,
+            ges_trab_trabajador.ci,
+            ges_trab_trabajador.categoria,
+            ges_trab_trabajador.cargo_id,
+            ges_trab_trabajador.salario_escala_ref,            
+            adm_cargo.nombre AS nombre_cargo,
+            ges_trab_trabajador.sal_cat_cient,            
+            ges_trab_trabajador.salario_total_reforma,
+            prenomina15_especialidad.siglas
+        FROM
+            ges_trab_trabajador,
+            prenomina15_plano,
+            adm_cargo,
+            adm_escalasalarialreforma,
+            prenomina15_salariomaxref,
+            prenomina15_obra,
+            prenomina15_formato,
+            entrada_datos_actividad,
+            prenomina15_objeto,
+            prenomina15_especialidad,
+            adm_departamento
+        WHERE
+            ges_trab_trabajador.id = prenomina15_plano.trabajador_id AND
+            prenomina15_salariomaxref.grupo_esc_id = adm_escalasalarialreforma.id AND
+            ges_trab_trabajador.cargo_id = adm_cargo.id AND
+            adm_escalasalarialreforma.id = ges_trab_trabajador.escala_salarial_ref_id AND
+            adm_departamento.id = ges_trab_trabajador.departamento_id AND
+            prenomina15_plano.obra_id = '{}' AND
+            prenomina15_salariomaxref.tipo = 'II' AND
+            prenomina15_formato.id = prenomina15_plano.formato_id AND
+            entrada_datos_actividad.id = prenomina15_plano.actividad_id AND
+            prenomina15_objeto.id = prenomina15_plano.objeto_id AND
+            prenomina15_plano.especialidad_id = prenomina15_especialidad.id AND
+            (prenomina15_plano.fecha_pago BETWEEN '{}'::DATE AND '{}'::DATE
+            OR prenomina15_plano.fecha_vpc BETWEEN '{}'::DATE AND '{}'::DATE)
+            AND prenomina15_plano.fecha_pago >= '2021-01-01' 
+        GROUP BY
+            prenomina15_especialidad.siglas, prenomina15_plano.vpc,adm_departamento.codigo,
+            ges_trab_trabajador.departamento_id, nombre_dpto, prenomina15_especialidad.nombre,
+            ges_trab_trabajador.primer_nombre,
+            ges_trab_trabajador.segundo_nombre, ges_trab_trabajador.apellidos,
+            ges_trab_trabajador.categoria, ges_trab_trabajador.cargo_id,
+            adm_escalasalarialreforma.grupo, prenomina15_salariomaxref.sal,
+            prenomina15_formato.id, ges_trab_trabajador.ci, adm_cargo.nombre,prenomina15_plano.id,
+            prenomina15_plano.porciento, prenomina15_plano.tipo_doc, prenomina15_plano.tarifa,
+            entrada_datos_actividad.codigo_act, ges_trab_trabajador.cies,
+            prenomina15_plano.horas_creadas, prenomina15_plano.valor,
+            prenomina15_plano.valor_total, ges_trab_trabajador.salario_escala_ref,
+            prenomina15_plano.valor_retenido, prenomina15_plano.nombre,
+            prenomina15_plano.num, ges_trab_trabajador.codigo_interno,
+            prenomina15_objeto.codigo, prenomina15_plano.last_rev,
+            prenomina15_plano.fecha_pago, prenomina15_plano.fecha_vpc,
+            ges_trab_trabajador.sal_cat_cient, prenomina15_plano.dif_salario,
+            prenomina15_plano.trabajador_id, prenomina15_plano.id,
+            prenomina15_objeto.nombre,
+            prenomina15_plano.corte,
+            prenomina15_plano.incumplimiento_plano,
+            prenomina15_plano.incumplimiento_cpl,
+            prenomina15_plano.incumplimiento_calidad,
+            prenomina15_plano.incumplimiento_plano_valor,
+            prenomina15_plano.incumplimiento_cpl_valor,
+            prenomina15_plano.incumplimiento_calidad_valor,
+            prenomina15_plano.valor_pen,
+            ges_trab_trabajador.salario_total_reforma,
+            prenomina15_plano.horas_creadas_real,
+            prenomina15_plano.valor_real,
+            prenomina15_plano.valor_retenido_real,
+            prenomina15_plano.valor_total_real
+        ORDER BY
+            adm_departamento.codigo,
+            adm_escalasalarialreforma.grupo DESC,
+            prenomina15_especialidad.nombre,
+            ges_trab_trabajador.primer_nombre,
+            ges_trab_trabajador.segundo_nombre,
+            ges_trab_trabajador.apellidos,
+            prenomina15_plano.num;
+        """.format(obra, fecha_inic, fecha_fin, fecha_inic, fecha_fin)
+
+    obras = listar_obra(request)
+    result = Plano.objects.raw(sql)
+    areas = []
+    personas = []
+    planos = []
+    for element in result:
+        flag = False
+        for area in areas:
+            if area.codigo == element.codigo:
+                flag = True
+                break
+        if not flag:
+            areas.append(AreaRef(nombre=element.nombre_dpto, codigo=element.codigo, personas=[], cant=0,
+                                 horas_creadas_total=0, setrt=0, maest=0,
+                                 total_dev_29=0, cant_planos=0, total_horas=0, sal_res86=0, sal_res86_plano=0,
+                                 ret=0, ret_ant=0, impacto=0, sal_tot_dev=0, incumplimiento_plano_valor=0,
+                                 incumplimiento_cpl_valor=0, incumplimiento_calidad_valor=0, valor_pen=0))
+
+    no_loop = 0
+    for element in result:
+        flag = False
+        for per in personas:
+            if per.no == element.codigo_interno:
+                if per.dpto == element.codigo:
+                    flag = True
+                break
+        if not flag:
+            no_loop += 1
+            tarifa_se = (element.salario_escala_ref / Decimal(190.60)).quantize(Decimal('.000000001'),
+                                                                            rounding=ROUND_HALF_UP)
+            if element.sal_cat_cient != 0.00:
+                tarifa_maest = (element.sal_cat_cient / Decimal(190.60)).quantize(Decimal('.000000001'),
+                                                                                  rounding=ROUND_HALF_UP)
+            else:
+                tarifa_maest = Decimal(0.00)
+            personas.append(
+                TrabRef(no=element.codigo_interno, trab_id=element.trabajador_id,
+                        nombre=element.primer_nombre + ' ' + element.segundo_nombre + ' ' + element.apellidos,
+                        planos=[], ge=element.grupo, sal_max=element.sal, categoria=element.categoria,
+                        tarifa=element.tarifa, total_horas=0, total_pagar=0, total_retenido=0, total_valor=0,
+                        cant=0, dpto=element.codigo, retenido_ant=0, pagar=0, ci=element.ci,
+                        sal_escala=element.salario_escala_ref,
+                        maestria=element.sal_cat_cient, tarifa_se=tarifa_se,
+                        tarifa_maest=tarifa_maest, salario_total=element.salario_total_reforma, se_real=0.00,
+                        maest_real=0.00, total_dev=0.00, impacto=0.00,
+                        sal_dev_total=0.00, cargo=element.nombre_cargo, incumplimiento_plano=0, incumplimiento_cpl=0,
+                        incumplimiento_calidad=0, incumplimiento_plano_valor=0, incumplimiento_cpl_valor=0,
+                        incumplimiento_calidad_valor=0, total_valor_pen=0, sal_res86=0, no_loop=no_loop))
+    for element in result:
+        val = ''
+        pagar = ''
+        retenido = 0
+        pago_ant = 0
+        horas_creadas = 0
+        valor_retenido_real = 0
+        valor_total_real = 0
+        horas_creadas_real = 0
+        list_cant = []
+        catalogo = []
+        cantidad = element.cant - 1
+        inicio = datetime.datetime.strptime(fecha_inic, "%Y-%m-%d").date()
+        fin = datetime.datetime.strptime(fecha_fin, "%Y-%m-%d").date()
+        fecha_pago = datetime.datetime.strptime(str(element.fecha_pago), "%Y-%m-%d").date()
+        if element.fecha_vpc is not None:
+            fecha_vpc = datetime.datetime.strptime(str(element.fecha_vpc), "%Y-%m-%d").date()
+            if inicio <= fecha_pago <= fin and inicio <= fecha_vpc <= fin:
+                val = 0  # el caso 0 es para cuando se paga el plano 100 %
+                horas_creadas = element.horas_creadas
+                pagar = element.valor_real
+                horas_creadas_real = element.horas_creadas_real
+            if (fecha_pago < inicio or fecha_pago > fin) and inicio <= fecha_vpc <= fin:
+                val = 1  # el caso 1 es para cuando se paga el plano 20 %
+                pagar = 0
+                pago_ant = element.valor_retenido
+                valor_retenido_real = element.valor_retenido_real
+                horas_creadas = 0
+            if inicio <= fecha_pago <= fin and (fecha_vpc < inicio or fecha_vpc > fin):
+                val = 2  # el caso 2 es para cuando se paga el plano 80 %
+                pagar = element.valor_total_real
+                valor_total_real = element.valor_total_real
+                retenido = element.valor_retenido
+                valor_retenido_real = element.valor_retenido_real
+                horas_creadas = element.horas_creadas
+                horas_creadas_real = element.horas_creadas_real
+        else:
+            if inicio <= fecha_pago <= fin:
+                val = 2  # el caso 2 es para cuando se paga el plano 80 %
+                pagar = element.valor_total_real
+                valor_total_real = element.valor_total_real
+                retenido = element.valor_retenido
+                valor_retenido_real = element.valor_retenido_real
+                horas_creadas = element.horas_creadas
+                horas_creadas_real = element.horas_creadas_real
+        while cantidad != 0:
+            list_cant.append(1)
+            cantidad -= 1
+        if element.cant != 1:
+            catalogos = Catalogo.objects.all().filter(plano_id=element.id)
+            for cat in catalogos:
+                catalogo.append(Cat(formato=cat.formato, porciento=int(float(cat.porciento) * 100),
+                                    horas_creadas=cat.horas_creadas,
+                                    horas_creadas_real=cat.horas_creadas_real, valor_retenido=cat.valor_retenido,
+                                    valor_retenido_real=cat.valor_retenido_real, valor=cat.valor,
+                                    valor_real=cat.valor_real, valor_total=cat.valor_total,
+                                    valor_total_real=cat.valor_total_real,
+                                    incumplimiento_plano=element.incumplimiento_plano,
+                                    incumplimiento_plano_valor=cat.incumplimiento_plano_valor,
+                                    incumplimiento_cpl=element.incumplimiento_cpl,
+                                    incumplimiento_cpl_valor=cat.incumplimiento_cpl_valor,
+                                    incumplimiento_calidad=element.incumplimiento_calidad,
+                                    incumplimiento_calidad_valor=cat.incumplimiento_calidad_valor,
+                                    valor_pen=cat.valor_pen))
+        planos.append(
+            PlanRef(nombre=element.nombre, codigo=element.num, objeto=element.codigo, etapa=element.codigo_act,
+                    formato=element.formato.formato, porciento=int(float(element.porciento) * 100),
+                    horas_creadas=horas_creadas, nombre_obj=element.nombre_obj,
+                    valor=element.valor, valor_total=element.valor_total, retenido=retenido, reten_ant=pago_ant,
+                    rev=element.last_rev, vpc=element.vpc, trabajador_id=element.trabajador_id,
+                    ult_rev=element.last_rev, especialidad=element.nombre_esp, caso=val, pagar=pagar, cant=element.cant,
+                    corte=element.corte, horas_creadas_real=horas_creadas_real, valor_real=element.valor_real,
+                    valor_retenido_real=valor_retenido_real, valor_total_real=valor_total_real, list_cant=list_cant,
+                    tarifa=element.tarifa, sigla=element.siglas, tipo_doc=element.tipo_doc,
+                    incumplimiento_plano=element.incumplimiento_plano, incumplimiento_cpl=element.incumplimiento_cpl,
+                    incumplimiento_calidad=element.incumplimiento_calidad,
+                    incumplimiento_plano_valor=element.incumplimiento_plano_valor,
+                    incumplimiento_cpl_valor=element.incumplimiento_cpl_valor,
+                    incumplimiento_calidad_valor=element.incumplimiento_calidad_valor,
+                    valor_pen=element.valor_pen, catalogo=catalogo, dif_salario=element.dif_salario))
+    for per in personas:
+        for plano in planos:
+            if plano.trabajador_id == per.trab_id:
+                per.planos.append(plano)
+                if plano.caso != 1:
+                    per.cant += 1
+                    per.total_valor += plano.valor_real
+                    per.sal_res86 += plano.valor
+                    per.dif_sal += plano.dif_salario
+                per.total_horas += plano.horas_creadas
+                per.pagar += plano.pagar
+                if plano.caso == 1:
+                    per.retenido_ant += plano.reten_ant
+                if plano.caso == 2:
+                    per.total_retenido += plano.retenido
+                per.incumplimiento_plano = plano.incumplimiento_plano
+                per.incumplimiento_cpl = plano.incumplimiento_cpl
+                per.incumplimiento_calidad = plano.incumplimiento_calidad
+                per.incumplimiento_plano_valor += plano.incumplimiento_plano_valor
+                per.incumplimiento_cpl_valor += plano.incumplimiento_cpl_valor
+                per.incumplimiento_calidad_valor += plano.incumplimiento_calidad_valor
+                per.total_valor_pen += plano.valor_pen
+                if plano.cant != 1:
+                    for c in plano.catalogo:
+                        if plano.caso == 0:
+                            per.total_valor += c.valor_real
+                            per.total_horas += c.horas_creadas
+                            per.pagar += c.valor
+                            per.sal_res86 += c.valor
+                        if plano.caso == 1:
+                            # per.total_retenido += c.valor_retenido
+                            per.retenido_ant += c.valor_retenido
+                            per.pagar += plano.pagar
+                            # per.total_horas += plano.horas_creadas
+                        if plano.caso == 2:
+                            per.total_valor += c.valor_real
+                            per.total_horas += c.horas_creadas
+                            per.total_retenido += c.valor_retenido
+                            per.pagar += c.valor_total
+                            per.sal_res86 += c.valor
+                        per.incumplimiento_plano = plano.incumplimiento_plano
+                        per.incumplimiento_cpl = plano.incumplimiento_cpl
+                        per.incumplimiento_calidad = plano.incumplimiento_calidad
+                        per.incumplimiento_plano_valor += c.incumplimiento_plano_valor
+                        per.incumplimiento_cpl_valor += c.incumplimiento_cpl_valor
+                        per.incumplimiento_calidad_valor += c.incumplimiento_calidad_valor
+                        per.total_valor_pen += c.valor_pen
+    total_planos = 0
+    for area in areas:
+        for per in personas:
+            if per.dpto == area.codigo:
+                area.personas.append(per)
+                area.cant += per.cant
+        total_planos += area.cant
+    completo = Plano.objects.all().filter(fecha_vpc__range=(fecha_inic, fecha_fin),
+                                          fecha_pago__range=(fecha_inic, fecha_fin), obra=obra).count()
+    retenido = Plano.objects.all().filter(fecha_vpc__range=(fecha_inic, fecha_fin), obra=obra).count() - completo
+    for area in areas:
+        for per in area.personas:
+            per.se_real = Decimal(per.tarifa_se * per.total_horas).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)
+            per.maest_real = Decimal(Decimal(per.tarifa_maest) * per.total_horas).quantize(Decimal('.01'),
+                                                                                           rounding=ROUND_HALF_UP)
+            per.total_dev = per.se_real + per.maest_real
+            per.impacto = (per.dif_sal - per.total_retenido) + per.retenido_ant
+            per.sal_dev_total = per.impacto + per.total_dev
+            area.horas_creadas_total += per.total_horas
+            area.setrt += per.se_real
+            area.maest += per.maest_real
+            area.total_dev_29 += per.total_dev
+            area.cant_planos += per.cant
+            area.total_horas += per.total_horas
+            area.sal_res86_plano += per.total_valor
+            area.sal_res86 += per.sal_res86
+            area.ret += per.total_retenido
+            area.total_dif_sal += per.dif_sal
+            area.ret_ant += per.retenido_ant
+            area.impacto += per.impacto
+            area.sal_total_dev += per.sal_dev_total
+            area.incumplimiento_plano_valor += per.incumplimiento_plano_valor
+            area.incumplimiento_cpl_valor += per.incumplimiento_cpl_valor
+            area.incumplimiento_calidad_valor += per.incumplimiento_calidad_valor
+            area.valor_pen += per.total_valor_pen
+    horas = 0
+    setrt = 0
+    maest = 0
+    total_dev_29 = 0
+    cant_planos = 0
+    sal_res86_plano = 0
+    sal_res86 = 0
+    inc_plano = 0
+    inc_cpl = 0
+    inc_calidad = 0
+    ret = 0
+    ret_ant = 0
+    impacto = 0
+    sal_total_dev = 0
+    for area in areas:
+        horas += area.horas_creadas_total
+        setrt += area.setrt
+        maest += area.maest
+        total_dev_29 += area.total_dev_29
+        cant_planos += area.cant_planos
+        sal_res86_plano += area.sal_res86_plano
+        inc_plano += area.incumplimiento_plano_valor
+        inc_cpl += area.incumplimiento_cpl_valor
+        inc_calidad += area.incumplimiento_calidad_valor
+        sal_res86 += area.sal_res86
+        ret += area.ret
+        ret_ant += area.ret_ant
+        impacto += area.impacto
+        sal_total_dev += area.sal_total_dev
+    return {'areas': areas, 'fecha_inic': fecha_inic, 'fecha_fin': fecha_fin, 'obras': obras,
+            'total_planos': total_planos, 'completo': completo, 'retenido': retenido, 'horas': horas, 'setrt': setrt,
+            'maest': maest, 'total_dev_29': total_dev_29,
+            'cant_planos': cant_planos, 'sal_res86_plano': sal_res86_plano, 'ret': ret, 'ret_ant': ret_ant,
+            'impacto': impacto, 'sal_total_dev': sal_total_dev, 'sal_res86': sal_res86, 'inc_plano': inc_plano,
             'inc_cpl': inc_cpl, 'inc_calidad': inc_calidad}
 
 

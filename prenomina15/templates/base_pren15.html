@@ -159,7 +159,11 @@
             {% if menu_export_prenomina %}
             <li>
                 <a aria-expanded="false" class="dropdown-toggle" data-toggle="modal" href="#modalExportarPrenomina"><i
-                        class="fa fa-file-excel-o"></i> Exportar Prenomina</a>
+                        class="fa fa-file-excel-o"></i> Exportar Prenomina Res 15</a>
+            </li>
+            <li>
+                <a aria-expanded="false" class="dropdown-toggle" data-toggle="modal" href="#modalExportarPrenomina86"><i
+                        class="fa fa-file-excel-o"></i> Exportar Prenomina Res 86</a>
             </li>
             <li>
                 <a aria-expanded="false" class="dropdown-toggle" data-toggle="modal" href="#modalcompendiotrabajador"><i
@@ -715,7 +719,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 style="font-weight: bold">Exportar Prenomina</h6>
+                    <h6 style="font-weight: bold">Exportar Prenomina Res 15</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -734,6 +738,78 @@
                         <p style="text-align: center; color: black">Seleccione rango de fecha para generar la
                             prenómina</p>
                         <form method="POST" action="{% url 'exportarPrenomina' %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col-sm-2" style="padding-right: 0; padding-left: 30px; padding-top: 8px;">
+                                    <label style="font-weight: bold;" for="fecha_inic">Desde:</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-left: 5px;">
+                                    <input name="fecha_inic" type="text" class="form-control" id="fecha_inic">
+                                </div>
+                                <div class="col-sm-2" style="padding-right: 0; padding-left: 30px; padding-top: 8px;">
+                                    <label style="font-weight: bold;" for="fecha_fin">Hasta:</label>
+                                </div>
+                                <div class="col-sm-3" style="padding-left: 0;">
+                                    <input name="fecha_fin" type="text" class="form-control" id="fecha_fin"
+                                           title="Fecha Fin">
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-2" style="padding-right: 0; padding-left: 30px; padding-top: 8px;">
+                                    <label style="font-weight: bold;" for="obra1">Obra:</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <select name="obra1" id="id_obra1" class="form-control" title="obra1">
+                                        {% for obra in obras %}
+                                            <option value="{{ obra.id }}">{{ obra.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class=" modal-footer">
+                                <button type="submit" class="btn btn-sm btn-primary" style="text-transform: none;">
+                                    Generar
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" style="text-transform: none;"
+                                        data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalExportarPrenomina86" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 style="font-weight: bold">Exportar Prenomina Res 86</h6>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="panel-body">
+                        <div class="panel panel-default">
+                            <div class="row" style="margin-bottom: 20px;">
+                                {% if error_pren %}
+                                    <div class="alert alert-danger"
+                                         style="width: 100%; text-align: center; margin: 0 auto; padding: 0 10px; border-radius: 0;">
+                                        <p style="margin-top: 10px">Debe seleccionar un rango de fecha válido</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p style="text-align: center; color: black">Seleccione rango de fecha para generar la
+                            prenómina</p>
+                        <form method="POST" action="{% url 'exportarPrenomina86' %}">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col"></div>

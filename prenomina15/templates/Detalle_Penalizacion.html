@@ -83,6 +83,28 @@
                                 <td align="center">${{ i.valor }}</td>
                                 <td align="center">${{ i.valor_retenido }}</td>
                             </tr>
+{#                            {% if i.cant != 1 %}#}
+{#                                {% for cat in catalogos %}#}
+{#                                    {% if cat.plano.pk != i.pk %}#}
+{#                                        <td>{{ cat.plano.num }}</td>#}
+{#                                        <td>{{ cat.plano.nombre }}</td>#}
+{#                                        <td>{{ cat.plano.obra }}</td>#}
+{#                                        <td>{{ cat.plano.trabajador }}</td>#}
+{#                                        <td>{{ cat.plano.corte }}</td>#}
+{#                                        <td align="center">${{ cat.valor_real }}</td>#}
+{#                                        <td align="center">{{ cat.incumplimiento_plano }} %</td>#}
+{#                                        <td align="center">{{ cat.incumplimiento_cpl }} %</td>#}
+{#                                        <td align="center">{{ cat.incumplimiento_calidad }} %</td>#}
+{#                                        <td align="center">${{ cat.incumplimiento_plano_valor }}</td>#}
+{#                                        <td align="center">${{ cat.incumplimiento_cpl_valor }}</td>#}
+{#                                        <td align="center">${{ cat.incumplimiento_calidad_valor }}</td>#}
+{#                                        <td align="center">${{ cat.valor_pen }}</td>#}
+{#                                        <td align="center">${{ cat.valor }}</td>#}
+{#                                        <td align="center">${{ cat.valor_retenido }}</td>#}
+{#                                    {% endif %}#}
+{#                                {% endfor %}#}
+{##}
+{#                            {% endif %}#}
                         {% endfor %}
                         </tbody>
                         <tfoot>

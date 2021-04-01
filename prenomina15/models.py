@@ -18,6 +18,7 @@ class SalarioMax(BaseUrls, models.Model):
     def __str__(self):
         return ' {} - {}'.format(self.grupo_esc, self.sal)
 
+
 class SalarioMaxRef(BaseUrls, models.Model):
     grupo_esc = models.ForeignKey(EscalaSalarialReforma, on_delete=models.CASCADE, default='', verbose_name="grupo escala")
     sal = models.DecimalField('salario', max_digits=7, decimal_places=2)
@@ -210,6 +211,7 @@ class Plano(BaseUrls, models.Model):
     incumplimiento_calidad_valor = models.DecimalField('valor de incumplimiento en calidad', max_digits=6,
                                                        decimal_places=2, editable=False, default=0.00)
     valor_pen = models.DecimalField('valor de penalización', max_digits=6, decimal_places=2, default=0.00)
+    dif_salario = models.DecimalField(max_digits=6, decimal_places=2, editable=False, default=0.00)
     history = auditlog_models.AuditlogHistoryField()
 
     @property
@@ -222,7 +224,6 @@ class Plano(BaseUrls, models.Model):
                 return False
         else:
             return True
-
 
 
 class Catalogo(BaseUrls, models.Model):
@@ -246,6 +247,7 @@ class Catalogo(BaseUrls, models.Model):
     incumplimiento_calidad_valor = models.DecimalField('valor de incumplimiento en calidad', max_digits=6,
                                                        decimal_places=2, editable=False, default=0.00)
     valor_pen = models.DecimalField('valor de penalización', max_digits=6, decimal_places=2, default=0.00)
+    dif_salario = models.DecimalField(max_digits=6, decimal_places=2, editable=False, default=0.00)
     history = auditlog_models.AuditlogHistoryField()
 
 
@@ -753,6 +755,239 @@ class Obr:
         self.retenido_ant = retenido_ant
         self.valor_total = valor_total
 
+
+class AreaRef:
+    nombre = ''
+    codigo = ''
+    personas = []
+    cant = ''
+    horas_creadas_total = ''
+    setrt = ''
+    maest = ''
+    total_dev_29 = ''
+    cant_planos = ''
+    total_horas = ''
+    sal_res86 = ''
+    sal_res86_plano = ''
+    ret = ''
+    ret_ant = ''
+    impacto = ''
+    sal_total_dev = ''
+    total_vac = 0
+    total_otros = 0
+    total_dif_sal = 0
+    incumplimiento_plano_valor = 0.00
+    incumplimiento_cpl_valor = 0.00
+    incumplimiento_calidad_valor = 0.00
+    valor_pen = 0.00
+
+    def __init__(self, nombre, personas, cant, codigo, horas_creadas_total, setrt, maest,
+                 total_dev_29, cant_planos, total_horas, sal_res86, sal_res86_plano, ret, ret_ant, impacto,
+                 sal_tot_dev, incumplimiento_plano_valor=None, incumplimiento_cpl_valor=None,
+                 incumplimiento_calidad_valor=None,
+                 valor_pen=None):
+        self.nombre = nombre
+        self.personas = personas
+        self.cant = cant
+        self.codigo = codigo
+        self.horas_creadas_total = horas_creadas_total
+        self.setrt = setrt
+        self.maest = maest
+        self.total_dev_29 = total_dev_29
+        self.cant_planos = cant_planos
+        self.total_horas = total_horas
+        self.sal_res86 = sal_res86
+        self.sal_res86_plano = sal_res86_plano
+        self.ret = ret
+        self.ret_ant = ret_ant
+        self.impacto = impacto
+        self.sal_total_dev = sal_tot_dev
+        self.incumplimiento_plano_valor = incumplimiento_plano_valor
+        self.incumplimiento_cpl_valor = incumplimiento_cpl_valor
+        self.incumplimiento_calidad_valor = incumplimiento_calidad_valor
+        self.valor_pen = valor_pen
+
+
+class TrabRef:
+    no_loop = ''
+    no = ''
+    trab_id = ''
+    nombre = ''
+    cargo = ''
+    ge = ''
+    sal_max = ''
+    tarifa = ''
+    planos = []
+    obras = []
+    total_horas = ''
+    total_valor = ''
+    total_retenido = ''
+    total_pagar = ''
+    cant = ''
+    dpto = ''
+    retenido_ant = ''
+    pagar = ''
+    ci = ''
+    categoria = ''
+    sal_escala = ''
+    maestria = ''
+    tarifa_se = ''
+    tarifa_maest = ''
+    salario_total = ''
+    se_real = ''
+    maest_real = ''
+    total_dev = ''
+    impacto = ''
+    sal_dev_total = ''
+    eval = 0
+    tarifa_29 = 0
+    dif_29_86 = 0
+    vac = 0
+    otros = 0
+    dif_sal = 0
+    incumplimiento_plano = 0
+    incumplimiento_cpl = 0
+    incumplimiento_calidad = 0
+    incumplimiento_plano_valor = 0.00
+    incumplimiento_cpl_valor = 0.00
+    incumplimiento_calidad_valor = 0.00
+    total_valor_pen = 0.00
+    sal_res86 = 0.00
+
+    def __init__(self, no, nombre, ge, sal_max, tarifa, planos, total_horas, total_valor, total_retenido,
+                 total_pagar, cant, dpto, retenido_ant, pagar, trab_id, ci, categoria, sal_escala,
+                 maestria, tarifa_se, tarifa_maest, salario_total,
+                 se_real, maest_real, total_dev, impacto, sal_dev_total, cargo,
+                 incumplimiento_plano=None, incumplimiento_cpl=None, incumplimiento_calidad=None,
+                 incumplimiento_plano_valor=None, incumplimiento_cpl_valor=None,
+                 incumplimiento_calidad_valor=None, total_valor_pen=None, obras=None, sal_res86=None, no_loop=None):
+        self.no_loop = no_loop
+        self.no = no
+        self.nombre = nombre
+        self.ge = ge
+        self.sal_max = sal_max
+        self.tarifa = tarifa
+        self.planos = planos
+        self.total_horas = total_horas
+        self.total_valor = total_valor
+        self.total_valor_pen = total_valor_pen
+        self.total_retenido = total_retenido
+        self.total_pagar = total_pagar
+        self.cant = cant
+        self.dpto = dpto
+        self.retenido_ant = retenido_ant
+        self.pagar = pagar
+        self.trab_id = trab_id
+        self.ci = ci
+        self.categoria = categoria
+        self.sal_escala = sal_escala
+        self.maestria = maestria
+        self.tarifa_se = tarifa_se
+        self.tarifa_maest = tarifa_maest
+        self.salario_total = salario_total
+        self.se_real = se_real
+        self.maest_real = maest_real
+        self.total_dev = total_dev
+        self.impacto = impacto
+        self.sal_dev_total = sal_dev_total
+        self.cargo = cargo
+        self.incumplimiento_plano = incumplimiento_plano
+        self.incumplimiento_cpl = incumplimiento_cpl
+        self.incumplimiento_calidad = incumplimiento_calidad
+        self.incumplimiento_plano_valor = incumplimiento_plano_valor
+        self.incumplimiento_cpl_valor = incumplimiento_cpl_valor
+        self.incumplimiento_calidad_valor = incumplimiento_calidad_valor
+        self.total_valor_pen = total_valor_pen
+        self.sal_res86 = sal_res86
+        self.obras = obras
+
+
+class PlanRef:
+    nombre = ''
+    codigo = ''
+    objeto = ''
+    obra = ''
+    etapa = ''
+    formato = ''
+    porciento = ''
+    horas_creadas = ''
+    valor = ''
+    valor_total = ''
+    retenido = ''
+    rev = ''
+    vpc = ''
+    trabajador_id = ''
+    ult_rev = ''
+    especialidad = ''
+    caso = ''
+    pagar = ''
+    reten_ant = ''
+    cant = 1
+    nombre_obj = ''
+    corte = ''
+    horas_creadas_real = 0
+    valor_real = 0
+    valor_retenido_real = 0
+    dif_salario = 0.00
+    valor_total_real = 0
+    list_cant = []
+    tarifa = 0
+    sigla = ''
+    tipo_doc = ''
+    incumplimiento_plano = 0
+    incumplimiento_cpl = 0
+    incumplimiento_calidad = 0
+    incumplimiento_plano_valor = 0.00
+    incumplimiento_cpl_valor = 0.00
+    incumplimiento_calidad_valor = 0.00
+    valor_pen = 0.00
+    catalogo = []
+
+    def __init__(self, nombre, codigo, objeto, etapa, formato, porciento, horas_creadas, valor, valor_total,
+                 retenido, rev, vpc, trabajador_id, ult_rev, especialidad, caso, pagar, reten_ant, cant, nombre_obj,
+                 corte, horas_creadas_real, valor_real, valor_retenido_real, dif_salario, valor_total_real, list_cant, tarifa,
+                 sigla, tipo_doc=None, incumplimiento_plano=None, incumplimiento_cpl=None, incumplimiento_calidad=None,
+                 incumplimiento_plano_valor=None, incumplimiento_cpl_valor=None, incumplimiento_calidad_valor=None,
+                 valor_pen=None, catalogo=None, obra=None):
+        self.nombre = nombre
+        self.codigo = codigo
+        self.objeto = objeto
+        self.etapa = etapa
+        self.formato = formato
+        self.porciento = porciento
+        self.horas_creadas = horas_creadas
+        self.valor = valor
+        self.valor_total = valor_total
+        self.retenido = retenido
+        self.rev = rev
+        self.vpc = vpc
+        self.trabajador_id = trabajador_id
+        self.ult_rev = ult_rev
+        self.especialidad = especialidad
+        self.caso = caso
+        self.pagar = pagar
+        self.reten_ant = reten_ant
+        self.cant = cant
+        self.nombre_obj = nombre_obj
+        self.corte = corte
+        self.horas_creadas_real = horas_creadas_real
+        self.valor_real = valor_real
+        self.valor_retenido_real = valor_retenido_real
+        self.valor_total_real = valor_total_real
+        self.list_cant = list_cant
+        self.tarifa = tarifa
+        self.sigla = sigla
+        self.tipo_doc = tipo_doc
+        self.incumplimiento_plano = incumplimiento_plano
+        self.incumplimiento_cpl = incumplimiento_cpl
+        self.incumplimiento_calidad = incumplimiento_calidad
+        self.incumplimiento_plano_valor = incumplimiento_plano_valor
+        self.incumplimiento_cpl_valor = incumplimiento_cpl_valor
+        self.incumplimiento_calidad_valor = incumplimiento_calidad_valor
+        self.valor_pen = valor_pen
+        self.catalogo = catalogo
+        self.obra = obra
+        self.dif_salario = dif_salario
 
 registry.auditlog.register(Plano)
 registry.auditlog.register(Revision)

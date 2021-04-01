@@ -42,6 +42,7 @@ urlpatterns = [
     path('visualizar_certifico86/', login_required(views.visualizar_certifico86), name='visualizarCertifico86'),
     path('eliminar_revision/<pk>', login_required(views.eliminar_revision), name='eliminarRevision'),
     path('exportar_prenomina/', login_required(views.exportar_prenomina), name='exportarPrenomina'),
+    path('exportar_prenomina86/', login_required(views.exportar_prenomina86), name='exportarPrenomina86'),
     path('exportar_comp_trab/', login_required(views.exportar_comp_trab), name='exportar_comp_trab'),
     path('exportar_comp_obras/', login_required(views.exportar_comp_obras), name='exportar_comp_obras'),
     path('exportar_certifico/<obra>/<fecha_ini>/<fecha_fin>/<recibido_por>/<cargo>/<org>/',
