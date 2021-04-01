@@ -2875,7 +2875,7 @@ def request_report_pren86(fecha_inic, fecha_fin, obra, request):
             trab_cat_cien = 0.00
             if element.sal_cat_cient != 0.00:
                 trab_cat_cien = Trabajador.objects.filter(id=element.trabajador_id).get().salario_cat_cient
-                tarifa_maest = (element.trab_cat_cien / Decimal(190.60)).quantize(Decimal('.000000001'),
+                tarifa_maest = (trab_cat_cien / Decimal(190.60)).quantize(Decimal('.000000001'),
                                                                                   rounding=ROUND_HALF_UP)
             else:
                 tarifa_maest = Decimal(0.00)
