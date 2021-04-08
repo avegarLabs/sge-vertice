@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from capacitacion.form import ActividadCapacitacionTrabajadoresForm
+from capacitacion.form import ActividadCapacitacionForm ,ActividadCapacitacionTrabajadoresForm
 from .models import *
 from principal.decorators import module_permission_required
 from rechum.views import SgeListView, SgeCreateView, SgeUpdateView, SgeDetailView, SgeDeleteView
@@ -9,16 +10,30 @@ from rechum.views import SgeListView, SgeCreateView, SgeUpdateView, SgeDetailVie
 
 @module_permission_required('capacitacion')
 def home(request):
+
+    capacitaciones = ActividadCapacitacionTrabajadores.objects.all()
+    for cap in capacitaciones:
+        if ActividadCapacitacion.objects.filter(codigo=cap.actividad.codigo).count() == 0:
+            print(cap.actividad.codigo)
+        # capacitaciones_new = ActividadCapacitacionTrabajadores_new()
+        # capacitaciones_new.actividad = ActividadCapacitacion_new.objects.filter(codigo=cap.actividad.codigo).get()
+        # capacitaciones_new.trabajador = cap.trabajador
+        # capacitaciones_new.save()
+
+    print('Hola mundo')
     return render(request, 'home_cap.html')
 
-# def actualizar_datos(request):
-#     modo_f = ModoFormacion.objects.all()
-#     for mf in modo_f:
-#         mf_new = ModoFormacion_new()
-#         mf_new.nombre = mf.nombre
-#         mf_new.codigo = mf.codigo
-#         mf_new.save()
-#     return render(request, 'home_cap.html')
+def actualizar_datos(request):
+    print('Holassss')
+    # capacitaciones = ActividadCapacitacionTrabajadores.objects.all()
+    # for cap in capacitaciones:
+    #     actividad = ActividadCapacitacion_new.objects.filter(codigo=cap.actividad).get().pk
+    #     capacitaciones_new = ActividadCapacitacionTrabajadores_new()
+    #     capacitaciones_new.actividad = actividad
+    #     capacitaciones_new.trabajador = cap.trabajador
+    #     capacitaciones_new.save()
+    #     print(cap)
+    return render(request, 'home_cap.html')
 
 # Actividad Capacitación
 # Listar
@@ -123,16 +138,18 @@ class ActividadCapacitacionListView(SgeListView):
 class ActividadCapacitacionCreateView(SgeCreateView):
     permission_required = 'capacitacion.add_actividadcapacitacion'
     model = ActividadCapacitacion
-    fields = '__all__'
+    form_class = ActividadCapacitacionForm
     template_name = 'act-cap/create.html'
     success_url = reverse_lazy('actividadcapacitacion_create')
+
+
 
 
 # Editar
 class ActividadCapacitacionUpdateView(SgeUpdateView):
     permission_required = 'capacitacion.change_actividadcapacitacion'
     model = ActividadCapacitacion
-    fields = '__all__'
+    form_class = ActividadCapacitacionForm
     template_name = 'act-cap/create.html'
     success_url = reverse_lazy('actividadcapacitacion_list')
 
@@ -191,7 +208,8 @@ class ActividadCapacitacionTrabajadoresListView_before_deleted(SgeListView):
 class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
     permission_required = 'capacitacion.add_actividadcapacitaciontrabajadores_new'
     model = ActividadCapacitacionTrabajadores
-    fields = '__all__'
+    # fields = '__all__'
+    form_class = ActividadCapacitacionTrabajadoresForm
     template_name = 'act-cap-trab/create.html'
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_create')
 
@@ -200,10 +218,13 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
     #       return reverse_lazy('actividadcapacitaciontrabajadores_create', kwargs={'codigo_actividad': codigo_actividad})
 
     def get_context_data(self, *, object_list=None, codigo_actividad=None, **kwargs):
+        context = super(ActividadCapacitacionTrabajadoresCreateView, self).get_context_data(**kwargs)
         queryset = self.get_queryset()
         codigo_actividad = self.kwargs['codigo_actividad']
+        form = self.form_class(self.request.GET)
+        form.fields['actividad'].queryset = ActividadCapacitacion.objects.filter(pk=codigo_actividad)
         object_list = queryset.filter(actividad=codigo_actividad).order_by()
-        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, **kwargs)
+        return super().get_context_data(object_list=object_list, codigo_actividad=codigo_actividad, form=form, **kwargs)
 
     def get_success_url(self):
           codigo_actividad = self.kwargs['codigo_actividad']
@@ -213,7 +234,7 @@ class ActividadCapacitacionTrabajadoresCreateView(SgeCreateView):
 class ActividadCapacitacionTrabajadoresUpdateView(SgeUpdateView):
     permission_required = 'capacitacion.change_actividadcapacitaciontrabajadores_new'
     model = ActividadCapacitacionTrabajadores
-    fields = '__all__'
+    form_class = ActividadCapacitacionTrabajadoresForm
     template_name = 'act-cap-trab/create.html'
     success_url = reverse_lazy('actividadcapacitaciontrabajadores_list')
 

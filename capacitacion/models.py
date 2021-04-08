@@ -1,9 +1,12 @@
-from auditlog import registry, models as auditlog_models
 from django.db import models
-from ges_trab.models import Trabajador
-from plantilla.models import Plantilla
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from auditlog import registry, models as auditlog_models
 from rechum.models import BaseUrls
 from rechum.validators import *
+from ges_trab.models import Trabajador
+from plantilla.models import Plantilla
+
 
 
 class ModoFormacion(BaseUrls, models.Model):
@@ -113,6 +116,15 @@ class ActividadCapacitacion(BaseUrls, models.Model):
         verbose_name = 'actividad capacitación'
         verbose_name_plural = 'actividades capacitación'
 
+# @receiver(post_save, sender = ActividadCapacitacion)
+# def actualizar_codigo_actividad(sender, instance, **kwargs):
+#     actividad = instance.pk
+#     trabajadores_actividad = ActividadCapacitacionTrabajadores.objects.filter(actividad_id=actividad)
+#     print(trabajadores_actividad)
+#
+# # post_save(actualizar_codigo_actividad, sender= ActividadCapacitacion)
+
+
 class ActividadCapacitacion_new(BaseUrls, models.Model):
     nombre = models.CharField(max_length=150)
     codigo = models.CharField('código', max_length=10)
@@ -140,11 +152,10 @@ class ActividadCapacitacion_new(BaseUrls, models.Model):
 class ActividadCapacitacionTrabajadores(BaseUrls, models.Model):
     actividad = models.ForeignKey(ActividadCapacitacion, on_delete=models.CASCADE)
     trabajador = models.ForeignKey(Trabajador, on_delete=models.SET_NULL, null=True)
-    evaluacion = models.CharField('evaluación', max_length=30, null=True)
-    tomo = models.CharField(max_length=20, null=True)
-    folio = models.CharField(max_length=20, null=True)
+    evaluacion = models.CharField('evaluación', max_length=30, null=True, default=0, blank=True)
+    tomo = models.CharField(max_length=20, null=True, default=0, blank=True)
+    folio = models.CharField(max_length=20, null=True, default=0, blank=True)
     history = auditlog_models.AuditlogHistoryField()
-
     def __str__(self):
         return "Trabajador: " + self.trabajador.nombre_completo
 
@@ -188,3 +199,5 @@ class Ponencia(BaseUrls, models.Model):
         default_permissions = ['read', 'add', 'delete', 'change', 'export', 'report']
         verbose_name = 'ponencia'
         verbose_name_plural = 'ponencias'
+
+

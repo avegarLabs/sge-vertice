@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path('capacitacion/', include([
         path('', views.home, name='capacitacion_home'),
-        # path('', views.actualizar_datos, name='actualizar_datos'),
+        path('', views.actualizar_datos, name='actualizar_datos'),
         path('actividad/', include([
             path('', views.ActividadCapacitacionListView.as_view(), name="actividadcapacitacion_list"),
             path('agregar/', views.ActividadCapacitacionCreateView.as_view(), name="actividadcapacitacion_create"),

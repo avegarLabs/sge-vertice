@@ -1,7 +1,8 @@
 from django import forms
-
-from capacitacion.models import *
 from django_select2.forms import Select2Widget, ModelSelect2Widget
+from capacitacion.models import *
+
+
 
 
 # Capacitacion forms
@@ -35,7 +36,9 @@ class ActividadCapacitacionForm(AbstractForm):
 
     def __init__(self, *args, **kwargs):
         super(ActividadCapacitacionForm, self).__init__(*args, **kwargs)
-        self._widget_class_modifier()
+        # self._widget_class_modifier()
+
+
 
 class ActividadCapacitacionTrabajadoresForm(forms.ModelForm):
 
@@ -48,6 +51,7 @@ class ActividadCapacitacionTrabajadoresForm(forms.ModelForm):
         model = ActividadCapacitacionTrabajadores
         fields = '__all__'
         widgets = {
+            'actividad': Select2Widget,
             'trabajador': Select2Widget
         }
 
