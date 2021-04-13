@@ -34,6 +34,131 @@ from django.views.decorators.cache import cache_page
 def home_pren15(request):
     # Verificando si tiene permiso para el modulo de Prenomina15
     permiso_app_adm = _user_has_module_perms(request.user, 'prenomina15')
+    # catalogos = Catalogo.objects.all().filter(plano__fecha_pago__gte='2021-01-01')
+    # for catalogo in catalogos:
+    #     plano = catalogo.plano
+    #     formato = catalogo.formato
+    #     porciento = catalogo.porciento
+    #
+    #     sal_trab = SalarioMax.objects.filter(grupo_esc=plano.trabajador.escala_salarial).get()
+    #     sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=plano.trabajador.escala_salarial_ref,
+    #                                              tipo='II').get()
+    #     sal_obra = SalarioMax.objects.filter(grupo_esc=plano.obra.complejidad.grupo).get()
+    #     coe = sal_obra.sal / sal_trab.sal
+    #     esp_factor = plano.especialidad.factor
+    #     for_factor = formato.factor
+    #     horas = (plano.obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     horas_esp = (horas * esp_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     horas_creadas = ((horas_esp * for_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) * Decimal(
+    #         porciento)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     tarifa = Decimal(sal_trab1.sal / Decimal(190.6)).quantize(Decimal('.000001'))
+    #     valor_real = (horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))
+    #     valor_retenido_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa) * Decimal(0.2)).quantize(
+    #         Decimal('.01'))
+    #     # Calcular valor retenido
+    #     sal_29 = EscalaSalarialReforma.objects.filter(
+    #         grupo=plano.trabajador.escala_salarial_ref).get().salario_escala
+    #     sal_cat_c = plano.trabajador.salario_cat_cient
+    #     tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
+    #     tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
+    #     stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
+    #     maest = (horas_creadas * tarifa_cat_c).quantize(Decimal('.01'))
+    #     total_29 = stert + maest
+    #     sal_86 = (horas_creadas * tarifa).quantize(Decimal('.01'))
+    #     dif_sal = sal_86 - total_29
+    #     cal1 = dif_sal * Decimal(0.8)
+    #     valor_retenido_real = (dif_sal - cal1).quantize(Decimal('.01'))
+    #     valor_total_real = valor_real - valor_retenido_real
+    #     horas_creadas_real = horas_creadas
+    #     valor_plano = valor_real
+    #     valor_retenido = valor_retenido_real
+    #     valor_total = valor_total_real
+    #
+    #     catalogo.horas_creadas=horas_creadas_real
+    #     catalogo.valor=Decimal(valor_plano)
+    #     catalogo.valor_retenido=valor_retenido
+    #     catalogo.valor_total=valor_total
+    #     catalogo.horas_creadas_real=horas_creadas
+    #     catalogo.valor_real=valor_real
+    #     catalogo.valor_retenido_real=valor_retenido_real
+    #     catalogo.valor_total_real=valor_total_real
+    #     catalogo.dif_sal=dif_sal
+    #     catalogo.save()
+    #     # print(catalogo.plano.num +'  '+ str(catalogo.plano.fecha_pago))
+    # migrar planos
+    # planos = Plano.objects.all().filter(fecha_pago__gte='2021-01-01')
+    # for plano in planos:
+    #     # print(str(plano.num) +'   '+ str(plano.fecha_pago))
+    #     obra = plano.obra
+    #     esp_factor = plano.especialidad.factor
+    #     for_factor = plano.formato.factor
+    #     sal_trab = SalarioMax.objects.filter(grupo_esc=plano.trabajador.escala_salarial).get()
+    #     sal_trab1 = SalarioMaxRef.objects.filter(grupo_esc=plano.trabajador.escala_salarial_ref,
+    #                                              tipo='II').get()
+    #     sal_obra = SalarioMax.objects.filter(grupo_esc=obra.complejidad.grupo).get()
+    #     coe = sal_obra.sal / sal_trab.sal
+    #     horas = (obra.complejidad.horas_a2 * coe).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     horas_esp = (horas * esp_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     horas_creadas = ((horas_esp * for_factor).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) * Decimal(
+    #         plano.porciento)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     tipo_doc = plano.tipo_doc
+    #     if tipo_doc == 'MD':
+    #         horas_creadas = plano.especialidad.md
+    #     if tipo_doc == 'LC':
+    #         horas_creadas = plano.especialidad.lc
+    #     if tipo_doc == 'PR':
+    #         horas_creadas = plano.especialidad.pr
+    #
+    #     tarifa = Decimal(sal_trab1.sal / Decimal(190.6)).quantize(Decimal('.000001'))
+    #     if tipo_doc == 'PL':
+    #         valor_real = (horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))
+    #     else:
+    #         valor_real = ((horas_creadas.quantize(Decimal('.01')) * tarifa).quantize(Decimal('.01'))).quantize(
+    #             Decimal('0.01'), rounding=ROUND_HALF_UP)
+    #     # Calcular valor retenido
+    #     sal_29 = EscalaSalarialReforma.objects.filter(
+    #         grupo=plano.trabajador.escala_salarial_ref).get().salario_escala
+    #     sal_cat_c = plano.trabajador.salario_cat_cient
+    #     tarifa_ge = Decimal(sal_29 / Decimal(190.6)).quantize(Decimal('.000001'))
+    #     tarifa_cat_c = Decimal(sal_cat_c / Decimal(190.6)).quantize(Decimal('.000001'))
+    #     stert = (horas_creadas * tarifa_ge).quantize(Decimal('.01'))
+    #     maest = (horas_creadas * tarifa_cat_c).quantize(Decimal('.01'))
+    #     total_29 = stert + maest
+    #     sal_86 = (horas_creadas * tarifa).quantize(Decimal('.01'))
+    #     dif_sal = sal_86 - total_29
+    #     cal1 = dif_sal * Decimal(0.8)
+    #     valor_retenido_real = (dif_sal - cal1).quantize(Decimal('.01'))
+    #     valor_total_real = valor_real - valor_retenido_real
+    #     horas_creadas_real = horas_creadas
+    #     valor_plano = valor_real
+    #     valor_retenido = valor_retenido_real
+    #     valor_total = valor_total_real
+    #     plano.horas_creadas = horas_creadas_real
+    #     plano.tarifa = tarifa
+    #     plano.valor = Decimal(valor_plano)
+    #     plano.valor_retenido = valor_retenido
+    #     plano.dif_salario = dif_sal
+    #     plano.valor_total = valor_total
+    #     plano.horas_creadas_real = horas_creadas
+    #     plano.valor_real = valor_real
+    #     plano.valor_retenido_real = valor_retenido_real
+    #     plano.valor_total_real = valor_total_real
+    #     if plano.valor_pen:
+    #         plano.valor_pen = plano.valor
+    #         plano.incumplimiento_plano_valor = plano.valor_pen * Decimal(
+    #             plano.incumplimiento_plano / Decimal(100.00)). \
+    #             quantize(Decimal('1.00'))
+    #         plano.valor_pen = plano.valor_pen - plano.incumplimiento_plano_valor
+    #         plano.incumplimiento_cpl_valor = plano.valor_pen * Decimal(
+    #             plano.incumplimiento_cpl / Decimal(100.00)). \
+    #             quantize(Decimal('1.00'))
+    #         plano.valor_pen = plano.valor_pen - plano.incumplimiento_cpl_valor
+    #         plano.incumplimiento_calidad_valor = plano.valor_pen * Decimal(
+    #             plano.incumplimiento_calidad / Decimal(100.00)). \
+    #             quantize(Decimal('1.00'))
+    #         plano.valor_pen = plano.valor_pen - plano.incumplimiento_calidad_valor
+    #         plano.valor_retenido = plano.valor_pen * Decimal(0.2)
+    #     plano.save()
     if permiso_app_adm:
         obras = listar_obra(request)
         context = {'request': request, 'obras': obras}
@@ -1015,7 +1140,7 @@ def add_cat(request, pk, formato, cant, porciento):
             valor_real=valor_real,
             valor_retenido_real=valor_retenido_real,
             valor_total_real=valor_total_real,
-            dif_sal=dif_sal
+            dif_salario=dif_sal
         )
         catalogo.save()
         plano.cant += catalogo.cant

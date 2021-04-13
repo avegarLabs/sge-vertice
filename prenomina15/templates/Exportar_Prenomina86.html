@@ -351,13 +351,22 @@
                                                 {% else %}
                                                     <td>&nbsp;</td>
                                                 {% endif %}
-                                                <td>&nbsp;</td>
+                                                {% if plano.caso != 1 %}
+                                                    <td style="text-align: center">{{ cat.dif_salario|replace }}</td>
+                                                {% else %}
+                                                    <td>&nbsp;</td>
+                                                {% endif %}
                                                 <td>{{ cat.incumplimiento_plano |replace}} %</td>
                                                 <td>{{ cat.incumplimiento_cpl |replace}} %</td>
                                                 <td>{{ cat.incumplimiento_calidad |replace}} %</td>
                                                 <td>{{ cat.incumplimiento_plano_valor |replace}}</td>
                                                 <td>{{ cat.incumplimiento_cpl_valor |replace}}</td>
                                                 <td>{{ cat.incumplimiento_calidad_valor |replace}}</td>
+                                                {% if plano.caso != 1 %}
+                                                    <td style="text-align: center">{{ cat.dif_salario|replace }}</td>
+                                                {% else %}
+                                                    <td>&nbsp;</td>
+                                                {% endif %}
                                                 {% if plano.caso != 1 %}
                                                     <td style="text-align: center">{{ cat.valor|replace }}</td>
                                                 {% else %}
