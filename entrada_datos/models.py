@@ -24,10 +24,16 @@ class Area (BaseUrls, models.Model):
     area = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=False, blank=False)
     nombre = models.CharField(max_length=20, null=False, unique=True, blank=False)
 
+    def __str__(self):
+        return '{}'.format(self.nombre)
+
 
 class Servicio (BaseUrls, models.Model):
     codigo = models.CharField(null=False, blank=False, unique=True, max_length=2)
     nombre = models.CharField(max_length=20, null=False, unique=True, blank=False)
+
+    def __str__(self):
+        return '{}'.format(self.nombre)
 
 
 class OT(BaseUrls, models.Model):
