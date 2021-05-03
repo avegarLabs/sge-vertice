@@ -6,6 +6,9 @@
     <th colspan="3">Nombre y Apellidos</th>
     <th>Cargo</th>
     <th>Talla calzado</th>
+    <th>Talla pitusa</th>
+    <th>Talla pullover</th>
+    <th>Talla camisa</th>
     <th>Firma</th>
 {% endblock %}
 
@@ -27,6 +30,9 @@
         <td width="30%">{{ item.nombre_completo }}</td>
         <td width="40%">{{ item.cargo_nombre }}</td>
         <td width="15%" style="text-align: center">{{ item.zapato }}</td>
+        <td width="15%" style="text-align: center">{{ item.pitusa }}</td>
+        <td width="15%" style="text-align: center">{{ item.pullover }}</td>
+        <td width="15%" style="text-align: center">{{ item.camisa }}</td>
         <td width="9%">_______</td>
     </tr>
 {% endblock table_body %}
