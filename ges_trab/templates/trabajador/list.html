@@ -152,6 +152,10 @@
                     <th align="center" style="width: 50px">Edad</th>
                     <th align="center" style="width: 50px">Año servicio</th>
                     <th align="center" style="width: 50px">Fecha Alta</th>
+                    <th align="center" style="width: 50px">Zapato</th>
+                    <th align="center" style="width: 50px">Pitusa</th>
+                    <th align="center" style="width: 50px">Pullover</th>
+                    <th align="center" style="width: 50px">Camisa</th>
                     <th style="width: 100px">Acciones</th>
                 </tr>
                 </thead>
@@ -174,6 +178,10 @@
                         <td align="center">{{ i.age_by_ci }}</td>
                         <td>{{ i.service_age }}</td>
                         <td align="center" data-sort="{{i.fecha_alta|date:'Ymd'}}">{{ i.fecha_alta|date:"d/m/Y" }}</td>
+                        <td align="center">{{ i.zapato }}</td>
+                        <td align="center">{{ i.pitusa }}</td>
+                        <td align="center">{{ i.pullover }}</td>
+                        <td align="center">{{ i.camisa }}</td>
                         <td>
                             <div class="icon-acciones" align="center">
                                 <a href="{{ i.geturl }}"
@@ -213,6 +221,10 @@
                 <th style="">Edad</th>
                 <th style="">Año servicio</th>
                 <th style="padding: 6px 6px !important;">Fecha Altas</th>
+                <th style="padding: 6px 6px !important;">Zapato</th>
+                <th style="padding: 6px 6px !important;">Pitusa</th>
+                <th style="padding: 6px 6px !important;">Pullover</th>
+                <th style="padding: 6px 6px !important;">Camisa</th>
                 <td style="padding: 6px 6px !important;"></td>
                 </tfoot>
 
@@ -436,6 +448,10 @@
                         last: "Último"
                     }
                 },
+                {#"columnDefs": [#}
+                {##}
+                {#    { "visible": false, "targets": [16, 17, 18, 19] }#}
+                {#],#}
                 dom: 'lBfrtip',
                 buttons: [
                     {
