@@ -287,7 +287,7 @@ def eliminar_inversionista(request, pk):
         from django.db import IntegrityError
         try:
             inversionista.delete()
-            return redirect('/inversionista/')
+            return redirect('gestionarInversionista')
         except IntegrityError:
             cal = Inversionista.objects.all()
             form = InversionistaForm(None)
