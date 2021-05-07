@@ -90,7 +90,7 @@ def adicionar_inversionista(request):
     form = InversionistaForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/inversionista/')
+        return redirect('gestionarInversionista')
     cal = Inversionista.objects.all()
     context = {'list_inv': cal, 'form': form}
     return render(request, 'Gestionar_Inversionista.html', context)
