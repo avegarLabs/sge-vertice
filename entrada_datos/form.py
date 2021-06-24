@@ -1,5 +1,5 @@
 from django import forms
-from django_select2.forms import Select2Widget
+from django_select2.forms import Select2Widget, ModelSelect2Widget
 
 from .models import *
 from adm.models import UnidadOrg
@@ -62,11 +62,33 @@ class TipoActividadForm(forms.ModelForm):
 
 
 class AreaForm(forms.ModelForm):
-    unidad = forms.ModelChoiceField(UnidadOrg.objects, label=u'Unidad Organizacional:', widget=Select2Widget)
+    # unidad = forms.ModelChoiceField(UnidadOrg.objects.all(), label=u'Unidad Organizacional:', widget=Select2Widget)
+
+    unidad = forms.ModelChoiceField(
+       queryset=UnidadOrg.objects.all(),
+       label=u'Unidad Organizacional:',
+       widget=ModelSelect2Widget(
+           model=UnidadOrg,
+           search_fields=['nombre__icontains']
+       )
+    )
+
+    area = forms.ModelChoiceField(
+       queryset=Departamento.objects.all(),
+       label=u'Área:',
+       widget=ModelSelect2Widget(
+           model=Departamento,
+           search_fields=['nombre__icontains'],
+           dependent_fields={'unidad': 'unidad'}
+       )
+    )
+
+
+
     class Meta:
         model = Area
         fields = '__all__'
-        widgets = {'area': Select2Widget}
+        # widgets = {'area': Select2Widget}
 
     def __init__(self, *args, **kwargs):
         super(AreaForm, self).__init__(*args, **kwargs)

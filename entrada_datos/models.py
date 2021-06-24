@@ -20,7 +20,7 @@ class Inversionista(BaseUrls, models.Model):
 
 
 class Area (BaseUrls, models.Model):
-    codigo = models.PositiveIntegerField(null=False, blank=False)
+    codigo = models.PositiveIntegerField(null=False, blank=False, verbose_name='Código')
     area = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=False, blank=False)
     nombre = models.CharField(max_length=20, null=False, unique=True, blank=False)
 
@@ -29,7 +29,7 @@ class Area (BaseUrls, models.Model):
 
 
 class Servicio (BaseUrls, models.Model):
-    codigo = models.CharField(null=False, blank=False, unique=True, max_length=2)
+    codigo = models.CharField(null=False, blank=False, unique=True, max_length=2, verbose_name='Código')
     nombre = models.CharField(max_length=20, null=False, unique=True, blank=False)
 
     def __str__(self):
@@ -52,28 +52,35 @@ class OT(BaseUrls, models.Model):
 
 
 class TipoActividad(BaseUrls, models.Model):
-    nombre_tipo_act = models.CharField(max_length=60, blank=False, null=False, unique=True)
-    valor = models.PositiveIntegerField(unique=True)
+    nombre_tipo_act = models.CharField(max_length=60, blank=False, null=False, unique=True, verbose_name='Nombre')
+    valor = models.PositiveIntegerField(unique=True, verbose_name='Código')
 
     def __str__(self):
         return '{}'.format(self.nombre_tipo_act)
 
+    class Meta:
+        verbose_name = 'Tipo de Actividad'
+        verbose_name_plural = 'Tipos de Actividades'
+
 
 class Actividad(BaseUrls, models.Model):
     tipo_act = models.ForeignKey(TipoActividad, on_delete=models.DO_NOTHING, default='', null=False, blank=False)
-    codigo_act = models.PositiveIntegerField(null=False, blank=False)
+    codigo_act = models.PositiveIntegerField(null=False, verbose_name='Código', blank=False)
     descripcion_act = models.CharField(max_length=100, null=False, blank=True)
     valor_prod_act = models.DecimalField(max_digits=9, decimal_places=2, editable=False, default=0.00)
     activa = models.BooleanField(editable=False, default=True)
-    orden_trab = models.ForeignKey(OT, on_delete=models.DO_NOTHING, default='', null=False, blank=False)
-    numero = models.PositiveIntegerField(null=False, blank=False, verbose_name='N&uacute;mero', default=1)
-    valor_act = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
-    prod_tecleada = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    orden_trab = models.ForeignKey(OT, on_delete=models.DO_NOTHING, verbose_name='Orden de Trabajo', default='', null=False, blank=False)
+    numero = models.PositiveIntegerField(null=False, blank=False, verbose_name='Número', default=1)
+    valor_act = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Valor', default=0.00)
+    prod_tecleada = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Producción Tecleada', default=0.00)
     venta = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 
     def __str__(self):
         return '{} {}'.format(self.codigo_act, self.descripcion_act)
 
+    class Meta:
+        verbose_name = 'Actividad'
+        verbose_name_plural = 'Actividades'
 
 class UnidadFacturacion(BaseUrls, models.Model):
     codigo_uf = models.CharField(max_length=12, blank=False, null=False)

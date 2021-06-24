@@ -4,10 +4,239 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import FieldError
 from django.db import DatabaseError
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import generic
+
+from rechum.views import SgeListView, SgeCreateView, SgeUpdateView, SgeDetailView, SgeDeleteView
 from .form import *
 from rechum.my_decorators import context_add_perm
 from adm.models import UnidadOrg, Departamento
+
+
+
+class InvListView(SgeListView):
+    model = Inversionista
+    template_name = 'inversionista/list.html'
+    permission_required = 'entrada_datos.read_inversionista'
+
+
+class InvCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_inversionista'
+    model = Inversionista
+    form_class = InversionistaForm
+    template_name = 'inversionista/create.html'
+    success_url = reverse_lazy('inversionista_create')
+
+
+class InvUpdateView(SgeUpdateView):
+    model = Inversionista
+    form_class = InversionistaForm
+    template_name = 'inversionista/create.html'
+    permission_required = 'entrada_datos.change_inversionista'
+    success_url = reverse_lazy('inversionista_list')
+
+
+class InvDetailView(SgeDetailView):
+    model = Inversionista
+    template_name = 'inversionista/detail.html'
+    permission_required = 'entrada_datos.read_inversionista'
+
+
+class InvDeleteView(SgeDeleteView):
+    model = Inversionista
+    permission_required = 'entrada_datos.delete_inversionista'
+    success_url = reverse_lazy('inversionista_list')
+
+
+# Area
+class AreaListView(SgeListView):
+    model = Area
+    template_name = 'area/list.html'
+    permission_required = 'entrada_datos.read_area'
+
+
+class AreaCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_area'
+    model = Area
+    form_class = AreaForm
+    template_name = 'area/create.html'
+    success_url = reverse_lazy('area_create')
+
+
+class AreaUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_area'
+    model = Area
+    form_class = AreaForm
+    template_name = 'area/create.html'
+    success_url = reverse_lazy('area_list')
+
+
+class AreaDetailView(SgeDetailView):
+    model = Area
+    template_name = 'area/detail.html'
+    permission_required = 'entrada_datos.read_area'
+
+
+class AreaDeleteView(SgeDeleteView):
+    model = Area
+    permission_required = 'entrada_datos.delete_area'
+    success_url = reverse_lazy('area_list')
+
+# Servicio
+class ServListView(SgeListView):
+    model = Servicio
+    template_name = 'servicio/list.html'
+    permission_required = 'entrada_datos.read_servicio'
+
+
+class ServCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_servicio'
+    model = Servicio
+    form_class = ServicioForm
+    template_name = 'servicio/create.html'
+    success_url = reverse_lazy('servicio_create')
+
+
+class ServUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_servicio'
+    model = Servicio
+    form_class = ServicioForm
+    template_name = 'servicio/create.html'
+    success_url = reverse_lazy('servicio_list')
+
+
+class ServDetailView(SgeDetailView):
+    model = Servicio
+    template_name = 'servicio/detail.html'
+    permission_required = 'entrada_datos.read_servicio'
+
+
+class ServDeleteView(SgeDeleteView):
+    model = Servicio
+    permission_required = 'entrada_datos.delete_servicio'
+    success_url = reverse_lazy('servicio_list')
+
+
+# Orden de Trabajo
+class OTListView(SgeListView):
+    model = OT
+    template_name = 'ot/list.html'
+    permission_required = 'entrada_datos.read_ot'
+
+
+class OTCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_ot'
+    model = OT
+    form_class = OTForm
+    template_name = 'ot/create.html'
+    success_url = reverse_lazy('ot_create')
+
+
+class OTUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_ot'
+    model = OT
+    form_class = OTForm
+    template_name = 'ot/create.html'
+    success_url = reverse_lazy('ot_list')
+
+
+class OTDetailView(SgeDetailView):
+    model = OT
+    template_name = 'ot/detail.html'
+    permission_required = 'entrada_datos.read_ot'
+    extra_context = {"dict": {3: 'USTI', 7: 'UGDD'}}
+
+
+class OTDeleteView(SgeDeleteView):
+    model = OT
+    permission_required = 'entrada_datos.delete_ot'
+    success_url = reverse_lazy('ot_list')
+
+
+# Tipo de Actividad
+class TipoActListView(SgeListView):
+    model = TipoActividad
+    template_name = 'tipo-actividad/list.html'
+    permission_required = 'entrada_datos.read_tipoactividad'
+
+
+class TipoActCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_tipoactividad'
+    model = TipoActividad
+    form_class = TipoActividadForm
+    template_name = 'tipo-actividad/create.html'
+    success_url = reverse_lazy('tipoactividad_create')
+
+
+class TipoActUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_tipoactividad'
+    model = TipoActividad
+    form_class = TipoActividadForm
+    template_name = 'tipo-actividad/create.html'
+    success_url = reverse_lazy('tipoactividad_list')
+
+
+class TipoActDetailView(SgeDetailView):
+    model = TipoActividad
+    template_name = 'tipo-actividad/detail.html'
+    permission_required = 'entrada_datos.read_tipoactividad'
+
+
+class TipoActDeleteView(SgeDeleteView):
+    model = TipoActividad
+    permission_required = 'entrada_datos.delete_tipoactividad'
+    success_url = reverse_lazy('tipoactividad_list')
+
+
+# Actividad
+class ActListView(SgeListView):
+    model = Actividad
+    template_name = 'actividad/list.html'
+    permission_required = 'entrada_datos.read_actividad'
+
+
+class ActCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_actividad'
+    model = Actividad
+    form_class = ActividadForm
+    template_name = 'actividad/create.html'
+    success_url = reverse_lazy('actividad_create')
+
+
+class ActUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_actividad'
+    model = Actividad
+    form_class = ActividadForm
+    template_name = 'actividad/create.html'
+    success_url = reverse_lazy('actividad_list')
+
+
+class ActDetailView(SgeDetailView):
+    model = Actividad
+    template_name = 'actividad/detail.html'
+    permission_required = 'entrada_datos.read_actividad'
+
+
+class ActDeleteView(SgeDeleteView):  # todo no puede eliminar actividad si esta activa
+    model = Actividad
+    permission_required = 'entrada_datos.delete_actividad'
+    success_url = reverse_lazy('actividad_list')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #@permission_required('entrada_datos','home_principal')

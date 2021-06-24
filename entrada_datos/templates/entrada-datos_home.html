@@ -10,13 +10,13 @@
 {% block javascript %}
     {{ block.super }}
 
-    {% highcharts_js 1 0 0 0 %}
+{#    {% highcharts_js 1 0 0 0 %}#}
 
     <script>
-    $(function() {
-        $.getJSON("{% url 'drilldown' %}", function(data) {
-            $("#container").highcharts(data)
-        });
-    })
+    {#$(function() {#}
+    {#    $.getJSON("{% url 'drilldown' %}", function(data) {#}
+    {#        $("#container").highcharts(data)#}
+    {#    });#}
+    {#})#}
     </script>
 {% endblock javascript %}
