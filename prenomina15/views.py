@@ -270,7 +270,7 @@ def gestionar_objeto(request, obra=None):
 @permission_required('prenomina15.read_plano', 'home_principal')
 def gestionar_plano(request, obra=None):
     obras = listar_obra(request)
-    if 'obra' is request.POST:
+    if 'obra' in request.POST:
         obra = request.POST['obra']
     obra_id = obra
     obra = Obra.objects.get(id=obra_id)
