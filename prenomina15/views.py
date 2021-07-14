@@ -268,9 +268,11 @@ def gestionar_objeto(request, obra=None):
 
 
 @permission_required('prenomina15.read_plano', 'home_principal')
-def gestionar_plano(request):
+def gestionar_plano(request, obra=None):
     obras = listar_obra(request)
-    obra_id = request.POST['obra']
+    if 'obra' is request.POST:
+        obra = request.POST['obra']
+    obra_id = obra
     obra = Obra.objects.get(id=obra_id)
     form = PlanoForm(request.POST or None)
     form.fields['obra'].queryset = Obra.objects.filter(id=obra_id)
@@ -1212,13 +1214,13 @@ def eliminar_plano(request, pk):
     plano = Plano.objects.get(id=pk)
     obra = Obra.objects.get(id=plano.obra_id)
     if request.method == 'GET':
-        context = {'object': plano}
+        context = {'object': plano, 'obra': obra, 'obras': obras}
         return render(request, 'Eliminar_Plano.html', context)
     else:
         from django.db import IntegrityError
         try:
             plano.delete()
-            return redirect('/pren/planos/')
+            return redirect('gestionarPlano', obra.id)
         except IntegrityError:
             cal = Plano.objects.all().select_related("actividad").select_related("objeto").select_related(
                 "formato").select_related("obra").select_related("especialidad").select_related("trabajador").filter(
