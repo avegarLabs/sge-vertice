@@ -46,7 +46,6 @@ class OT(BaseUrls, models.Model):
     inversionista = models.ForeignKey(Inversionista, on_delete=models.DO_NOTHING, default='')
     OPT_Unidad = (('03', 'USTI'), ('07', 'UGDD'))
     unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='03', null=False, blank=False)
-    fecha_recepcion = models.DateField(verbose_name='Fecha de Recepción de Solicitud', null=True, blank=True)
 
 
     def __str__(self):
