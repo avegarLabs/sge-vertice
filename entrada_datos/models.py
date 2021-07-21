@@ -39,7 +39,7 @@ class Servicio (BaseUrls, models.Model):
 class OT(BaseUrls, models.Model):
     codigo_ot = models.CharField(max_length=10, unique=True)
     descripcion_ot = models.CharField(verbose_name='Descripción del Servicio', max_length=100, null=False, blank=False)
-    alcance = models.CharField(verbose_name='Alcance', max_length=200, null=False, blank=False, default='')
+    alcance = models.CharField(verbose_name='Alcance', max_length=200, null=False, blank=False)
     no_contrato = models.CharField(max_length=5, null=False, blank=False, unique=True)
     valor_contrato = models.DecimalField(max_digits=9, decimal_places=2, null=False, default=0.00)
     tipo_servicio = models. ForeignKey(Servicio, on_delete=models.DO_NOTHING, default='')
