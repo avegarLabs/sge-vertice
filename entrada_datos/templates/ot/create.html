@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block styles %}{{ block.super }} {{ form.media.css }}{% endblock %}
-{% block javascript %}{{ block.super }} {{ form.media.js }}{% endblock %}
+
 
 {% block form_elements %}
     {{ form.non_field_errors }}
@@ -16,29 +16,282 @@
         {{ form.no_contrato.errors }}
         {{ form.no_contrato }}
     </div>
-    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+    <div class="col-lg-3 col-6 ">
         {{ form.tipo_servicio.label_tag }}
         {{ form.tipo_servicio.errors }}
         {{ form.tipo_servicio }}
     </div>
-    <div class="col-lg-3 col-6 mt-2">
+    <div class="col-lg-3 col-6 ">
         {{ form.unidad.label_tag }}
         {{ form.unidad.errors }}
         {{ form.unidad }}
     </div>
-    <div class="col-lg-3 col-6 mt-2">
+    <div class="col-lg-4 col-12 ">
         {{ form.area.label_tag }}
         {{ form.area.errors }}
         {{ form.area }}
     </div>
-    <div class="col-lg-6 col-12 mt-2">
+    <div class="col-lg-6 col-12 ">
         {{ form.inversionista.label_tag }}
         {{ form.inversionista.errors }}
         {{ form.inversionista }}
+    </div>
+    <div class="col-lg-2 col-12 ">
+        {{ form.valor_contrato.label_tag }}
+        {{ form.valor_contrato.errors }}
+        {{ form.valor_contrato }}
     </div>
     <div class="col-12 mt-2">
         {{ form.descripcion_ot.label_tag }}
         {{ form.descripcion_ot.errors }}
         {{ form.descripcion_ot }}
     </div>
+    <div class="col-12 ">
+        {{ form.alcance.label_tag }}
+        {{ form.alcance.errors }}
+        {{ form.alcance }}
+    </div>
+    <div class="col-lg-12 col-12 mt-2 ">
+        <strong><i>Control de la Solicitud </i> </strong>
+    </div>
+    <div class="col-lg-4 col-12 mt-2 ">
+        {{ form.fecha_recepcion.label_tag }}
+        {{ form.fecha_recepcion.errors }}
+        {{ form.fecha_recepcion }}
+    </div>
+    <div class="col-lg-4 col-12 mt-2 ">
+        {{ form.fecha_aprobacion.label_tag }}
+        {{ form.fecha_aprobacion.errors }}
+        {{ form.fecha_aprobacion }}
+    </div>
+    <div class="col-lg-4 col-12 mt-2 ">
+        {{ form.fecha_entrega_pt.label_tag }}
+        {{ form.fecha_entrega_pt.errors }}
+        {{ form.fecha_entrega_pt }}
+    </div>
+    <div class="col-lg-12 col-12 mt-2 ">
+        <strong><i>Control del Contrato </i> </strong>
+    </div>
+    <div class="col-lg-3 col-12 mt-2">
+        {{ form.fecha_terminado_contrato.label_tag }}
+        {{ form.fecha_terminado_contrato.errors }}
+        {{ form.fecha_terminado_contrato }}
+    </div>
+    <div class="col-lg-3 col-12 mt-2">
+        {{ form.fecha_entrega_cliente.label_tag }}
+        {{ form.fecha_entrega_cliente.errors }}
+        {{ form.fecha_entrega_cliente }}
+    </div>
+    <div class="col-lg-3 col-12 mt-2">
+        {{ form.fecha_firma_contrato.label_tag }}
+        {{ form.fecha_firma_contrato.errors }}
+        {{ form.fecha_firma_contrato }}
+    </div>
+    <div class="col-lg-3 col-12 mt-2">
+        {{ form.fecha_recepcion_contrato.label_tag }}
+        {{ form.fecha_recepcion_contrato.errors }}
+        {{ form.fecha_recepcion_contrato }}
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+    {{ block.super }}
+    {{ form.media.js }}
+    <script type="text/javascript">
+        function validarFormulario() {
+            if (validarNoCont() && validarNombre() && validarCodigo()) {
+                $('#enviar').removeAttr('disabled');
+            } else {
+                $('#enviar').attr('disabled', '');
+            }
+        }
+
+        function validarFormulario1() {
+            if (ValidarMonto() && validarSolicitud()) {
+                $('#enviar1').removeAttr('disabled');
+            } else {
+                $('#enviar1').attr('disabled', '');
+            }
+        }
+
+        $(document).ready(function () {
+            validarFormulario();
+            validarFormulario1()
+        });
+
+        $("#id_unidad").on('change', function () {
+            validarFormulario();
+            ShowSelected();
+        });
+
+        $("#id_tipo_servicio").on('change', function () {
+            validarFormulario();
+            ShowSelected();
+        });
+
+        $("#id_area").on('change', function () {
+            validarFormulario();
+            ShowSelected();
+        });
+
+        function ShowSelected() {
+            var codeServicio = $('option:selected', $('#id_tipo_servicio')).val();
+            var codeArea = $('option:selected', $('#id_area')).val();
+            var codeUnidad = $('option:selected', $('#id_unidad')).val();
+
+            var no_con = $('#id_no_contrato').val();
+            var codigo = codeUnidad + codeArea + codeServicio + no_con;
+            $('#id_codigo_ot').val(codigo);
+            validarFormulario();
+        }
+
+        exp_codigo = "^[0-9]{10}$";
+        exp_nombre = "^([A-Z]{1})[A-Za-z0-9áéíóúñ .,()]+$";
+        exp_cont = "^[0-9]{5}$";
+        exp_monto = "^([0-9]{1,5}){1}(([,]{1})([0-9]{0,2}))?";
+        exp_solicitud = "^[A-Za-z0-9áéíóúñ .,]+$";
+
+        $('#id_codigo_ot').prop("title", 'Código numérico de 10 dígitos').attr("oninvalid", 'setCustomValidity("Código numérico de 10 dígitos")').prop("readonly", true).on('change', function () {
+            validarFormulario();
+        });
+        $('#id_descripcion_ot').prop("title", 'Descripción de la orden de trabajo').attr("oninvalid", 'setCustomValidity("Campo obligatorio.Comienza con mayúscula. No permite caracteres especiales")');
+        $('#id_no_contrato').prop("title", 'Código numérico de 5 dígitos').attr("oninvalid", 'setCustomValidity("Código numérico de 5 dígitos")').on('change', function () {
+            validarFormulario();
+            ShowSelected();
+        });
+        $('#id_monto').prop("title", 'Monto del suplemento').attr("oninvalid", 'setCustomValidity("Campo obligatorio, numérico hasta 99999")').on('change', function () {
+            validarFormulario1();
+        });
+        $('#id_solicitud').prop("title", 'Solicitud').attr("oninvalid", 'setCustomValidity("Campo obligatorio.Alfanumérico")');
+
+        $('#submit_button').click(function () {
+            $('#popup form').prop('action', '{% url "ot_create" %}');
+            $('#popup').modal('show');
+        });
+
+        $('.badge.badge-pill.badge-warning.addSuplemento').click(function () {
+            var nombre = this.id.split('-');
+            $('#popup1 input#orden_trab').prop('value', nombre[0]);
+            $('#formularioSuplemento .modal-header h5 strong').html('Crear suplemento a Orden de Trabajo' + nombre[1]);
+            $('#popup1').modal('show');
+        });
+
+        $('#id_fecha').prop("readonly", true).datepicker({
+            uiLibrary: 'bootstrap4',
+            language: 'es'
+        });
+
+        {% if form.errors %}
+            $('#popup').modal('show');
+        {% endif %}
+
+        {% if formsup.errors %}
+            $('#popup1').modal('show');
+        {% endif %}
+
+        function validarNoCont() {
+            var cadena = $('#id_no_contrato')[0].value;
+            if (!(cadena.match(exp_cont) && cadena.length === 5)) {
+                $('#id_no_contrato').addClass('has-error');
+                return false;
+            } else {
+                $('#id_no_contrato').removeClass('has-error');
+                return true;
+            }
+        }
+
+        function validarNombre() {
+            if ($('#id_descripcion_ot')[0].value.match(exp_nombre)) {
+                $('#id_descripcion_ot').removeClass('has-error');
+                return true;
+            } else {
+                $('#id_descripcion_ot').addClass('has-error');
+                return false;
+            }
+        }
+
+        function validarSolicitud() {
+            if ($('#id_solicitud')[0].value.match(exp_solicitud)) {
+                $('#id_solicitud').removeClass('has-error');
+                return true;
+            } else {
+                $('#id_solicitud').addClass('has-error');
+                return false;
+            }
+        }
+
+        function ValidarMonto() {
+            var cadena = $('#id_monto')[0].value;
+            if (!(cadena.match(exp_monto) && cadena.length < 100000 && cadena >= 1)) {
+                $('#id_monto').addClass('has-error');
+                return false;
+            } else {
+                $('#id_monto').removeClass('has-error');
+                return true;
+            }
+        }
+
+        function validarCodigo() {
+            var cadena = $('#id_codigo_ot')[0].value;
+            if (!(cadena.match(exp_codigo) && cadena.length === 10)) {
+                $('#id_codigo_ot').addClass('has-error');
+                return false;
+            } else {
+                $('#id_codigo_ot').removeClass('has-error');
+                return true;
+            }
+        }
+
+        $("#formularioOT").on('keyup', function () {
+            validarFormulario();
+        });
+
+        $("#formularioSuplemento").on('keyup', function () {
+            validarFormulario1();
+        });
+
+        $(document).ready(function () {
+            // DataTable
+            var table = $('#tabla_ot').DataTable({
+                "language": {
+                    processing: "Procesando...",
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                    infoPostFix: "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron resultados",
+                    emptyTable: "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first: "Último",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    }
+                }
+            });
+            // Setup - add a text input to each footer cell
+            $('#tabla_ot').find('tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input class="form-control" type="text" style="font-size: smaller" placeholder="Buscar ' + title + '"/>');
+            });
+
+            // Apply the search
+            table.columns().every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

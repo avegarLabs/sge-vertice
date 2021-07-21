@@ -38,14 +38,23 @@ class Servicio (BaseUrls, models.Model):
 
 class OT(BaseUrls, models.Model):
     codigo_ot = models.CharField(max_length=10, unique=True)
-    descripcion_ot = models.CharField(max_length=100, null=False, blank=False)
+    descripcion_ot = models.CharField(verbose_name='Descripción del Servicio', max_length=100, null=False, blank=False)
+    alcance = models.CharField(verbose_name='Alcance', max_length=200, null=False, blank=False)
     no_contrato = models.CharField(max_length=5, null=False, blank=False, unique=True)
-    valor_contrato = models.DecimalField(max_digits=9, decimal_places=2, editable=False, default=0.00)
+    valor_contrato = models.DecimalField(max_digits=9, decimal_places=2, null=False, default=0.00)
     tipo_servicio = models. ForeignKey(Servicio, on_delete=models.DO_NOTHING, default='')
     area = models.ForeignKey(Area, on_delete=models.DO_NOTHING, default='')
     inversionista = models.ForeignKey(Inversionista, on_delete=models.DO_NOTHING, default='')
     OPT_Unidad = (('03', 'USTI'), ('07', 'UGDD'))
     unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='', null=False, blank=False)
+    fecha_recepcion = models.DateField(verbose_name='Fecha de Recepción de Solicitud', null=True, blank=True)
+    fecha_aprobacion = models.DateField(verbose_name='Fecha de Aprobación de Solicitud', null=True, blank=True)
+    fecha_entrega_pt = models.DateField(verbose_name='Fecha de Entrega de la PT', null=True, blank=True)
+    fecha_terminado_contrato = models.DateField(verbose_name='Fecha de Terminado Contrato', null=True, blank=True)
+    fecha_entrega_cliente = models.DateField(verbose_name='Fecha Entrega al Cliente', null=True, blank=True)
+    fecha_firma_contrato = models.DateField(verbose_name='Fecha de Firma del Contrato', null=True, blank=True)
+    fecha_recepcion_contrato = models.DateField(verbose_name='Fecha de Recepción del Contrato', null=True, blank=True)
+
 
     def __str__(self):
         return '{} {}'.format(self.codigo_ot, self.descripcion_ot)
@@ -56,7 +65,7 @@ class TipoActividad(BaseUrls, models.Model):
     valor = models.PositiveIntegerField(unique=True, verbose_name='Código')
 
     def __str__(self):
-        return '{}'.format(self.nombre_tipo_act)
+        return '{} {}'.format(self.valor, self.nombre_tipo_act)
 
     class Meta:
         verbose_name = 'Tipo de Actividad'

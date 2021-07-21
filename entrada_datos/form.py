@@ -8,7 +8,7 @@ from adm.models import UnidadOrg
 class ActividadForm(forms.ModelForm):
     class Meta:
         model = Actividad
-        fields = ['descripcion_act', 'orden_trab', 'codigo_act', 'numero', 'valor_act', 'prod_tecleada']
+        fields = ['descripcion_act', 'orden_trab', 'codigo_act', 'numero', 'tipo_act', 'valor_act', 'prod_tecleada']
         widgets = {
             'orden_trab': Select2Widget,
             'tipo_act': Select2Widget
@@ -34,6 +34,26 @@ class InversionistaForm(forms.ModelForm):
 
 
 class OTForm(forms.ModelForm):
+
+    # unidad = forms.ModelChoiceField(
+    #    queryset=UnidadOrg.objects.all(),
+    #    label=u'Unidad Organizacional:',
+    #    widget=ModelSelect2Widget(
+    #        model=UnidadOrg,
+    #        search_fields=['nombre__icontains']
+    #    )
+    # )
+
+    # area = forms.ModelChoiceField(
+    #    queryset=Departamento.objects.all(),
+    #    label=u'Área:',
+    #    widget=ModelSelect2Widget(
+    #        model=Departamento,
+    #        search_fields=['nombre__icontains'],
+    #        dependent_fields={'unidad': 'unidad'}
+    #    )
+    # )
+
     class Meta:
         model = OT
         fields = '__all__'
