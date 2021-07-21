@@ -39,13 +39,14 @@ class Servicio (BaseUrls, models.Model):
 class OT(BaseUrls, models.Model):
     codigo_ot = models.CharField(max_length=10, unique=True)
     descripcion_ot = models.CharField(max_length=100, null=False, blank=False)
+    alcance = models.CharField(verbose_name='Alcance', max_length=200, null=False, blank=False, default='')
     no_contrato = models.CharField(max_length=5, null=False, blank=False, unique=True)
     valor_contrato = models.DecimalField(max_digits=9, decimal_places=2, editable=False, default=0.00)
     tipo_servicio = models. ForeignKey(Servicio, on_delete=models.DO_NOTHING, default='')
     area = models.ForeignKey(Area, on_delete=models.DO_NOTHING, default='')
     inversionista = models.ForeignKey(Inversionista, on_delete=models.DO_NOTHING, default='')
     OPT_Unidad = (('03', 'USTI'), ('07', 'UGDD'))
-    unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='', null=False, blank=False)
+    unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='03', null=False, blank=False)
 
 
     def __str__(self):
