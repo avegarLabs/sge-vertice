@@ -47,13 +47,13 @@ class OT(BaseUrls, models.Model):
     inversionista = models.ForeignKey(Inversionista, on_delete=models.DO_NOTHING, default='')
     OPT_Unidad = (('03', 'USTI'), ('07', 'UGDD'))
     unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='', null=False, blank=False)
-    fecha_recepcion = models.DateField(verbose_name='Fecha de Recepción de Solicitud', null=True, blank=True, default='')
-    fecha_aprobacion = models.DateField(verbose_name='Fecha de Aprobación de Solicitud', null=True, blank=True, default='')
-    fecha_entrega_pt = models.DateField(verbose_name='Fecha de Entrega de la PT', null=True, blank=True, default='')
-    fecha_terminado_contrato = models.DateField(verbose_name='Fecha de Terminado Contrato', null=True, blank=True, default='')
-    fecha_entrega_cliente = models.DateField(verbose_name='Fecha Entrega al Cliente', null=True, blank=True, default='')
-    fecha_firma_contrato = models.DateField(verbose_name='Fecha de Firma del Contrato', null=True, blank=True, default='')
-    fecha_recepcion_contrato = models.DateField(verbose_name='Fecha de Recepción del Contrato', null=True, blank=True, default='')
+    fecha_recepcion = models.DateField(verbose_name='Fecha de Recepción de Solicitud', null=True, blank=True)
+    fecha_aprobacion = models.DateField(verbose_name='Fecha de Aprobación de Solicitud', null=True, blank=True)
+    fecha_entrega_pt = models.DateField(verbose_name='Fecha de Entrega de la PT', null=True, blank=True)
+    fecha_terminado_contrato = models.DateField(verbose_name='Fecha de Terminado Contrato', null=True, blank=True)
+    fecha_entrega_cliente = models.DateField(verbose_name='Fecha Entrega al Cliente', null=True, blank=True)
+    fecha_firma_contrato = models.DateField(verbose_name='Fecha de Firma del Contrato', null=True, blank=True)
+    fecha_recepcion_contrato = models.DateField(verbose_name='Fecha de Recepción del Contrato', null=True, blank=True)
 
 
     def __str__(self):
