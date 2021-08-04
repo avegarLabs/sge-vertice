@@ -104,9 +104,38 @@ class Suplemento(BaseUrls, models.Model):
     usuario = models.CharField(max_length=100)
     solicitud = models.CharField(max_length=60)
 
+
+class Surtidos(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
+
+class tipo_servicio(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
+
+class tipo_obra(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
+
+class programa(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
+
 class Roles(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     codigo = models.CharField(max_length=10, blank=False, null=False)
+
+class Etapa(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=160, blank=False, null=False)
+    codigo = models.CharField(max_length=20, blank=False, null=False)
+    inicio_rango = models.DateField()
+    fin_rango = models.DateField()
+    clasificador_etapa = models.CharField(max_length=20, blank=False, null=False)
+    surtido = models.CharField(max_length=100, blank=False, null=False)
+    seguimiento = models.CharField(max_length=60, blank=False, null=False)
+    anticipo = models.CharField(max_length=160, blank=False, null=False)
+    vista = models.CharField(max_length=50, blank=False, null=False)
+
 
 class Clientes(BaseUrls, models.Model):
     nombre = models.CharField(max_length=160, blank=False, null=False)
