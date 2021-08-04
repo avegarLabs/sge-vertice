@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block styles %}{{ block.super }} {{ form.media.css }}{% endblock %}
-
+{% block javascript %}{{ block.super }} {{ form.media.js }}{% endblock %}
 
 {% block form_elements %}
     {{ form.non_field_errors }}
@@ -11,15 +11,15 @@
         {{ form.codigo_act.errors }}
         {{ form.codigo_act }}
     </div>
-    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
-        {{ form.tipo_act.label_tag }}
-        {{ form.tipo_act.errors }}
-        {{ form.tipo_act }}
-    </div>
     <div class="col-lg-3 col-6">
         {{ form.numero.label_tag }}
         {{ form.numero.errors }}
         {{ form.numero }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.tipo_act.label_tag }}
+        {{ form.tipo_act.errors }}
+        {{ form.tipo_act }}
     </div>
     <div class="col-lg-3 col-6 mt-2">
         {{ form.valor_act.label_tag }}
@@ -46,145 +46,4 @@
         {{ form.venta.errors }}
         {{ form.venta }}
     </div>
-{% endblock %}
-
-{% block javascript %}
-    {{ block.super }}
-    {{ form.media.js }}
-    <script type="text/javascript">
-
-        function validarFormulario() {
-            if (validarNoAct() && validarNombre() && validarCodigo()) {
-                $('#enviar').removeAttr('disabled');
-            } else {
-                $('#enviar').attr('disabled', '');
-            }
-        }
-
-        $(document).ready(function () {
-            validarFormulario();
-        });
-
-
-
-        exp_codigo = "^[0-9]{4}$";
-        exp_nombre = "^([A-Z]{1})[A-Za-záéíóúñ .,\"\"()]+$";
-        exp_num = "^[0-9]{1,2}$";
-
-        {#$('#id_prod_tecleada').prop("type", 'hidden');#}
-        $('#id_numero').prop("min", '1').prop("max", '99').prop("title", 'Valor entre 1 y 99').attr("oninvalid", 'setCustomValidity("Campo obligatorio. Rango entre 1 y 99")').on('change', function () {
-            validarFormulario();
-            ShowSelected();
-        });
-        $("#id_numero").on('change', function () {
-            validarFormulario();
-            ShowSelected();
-        });
-
-        $('#id_codigo_act').prop("min", '1000').prop("max", '9999').prop("title", 'Valor entre 1000 y 9999').attr("oninvalid", 'setCustomValidity("Campo obligatorio. Rango entre 1000 y 9999")').prop("readonly", true);
-
-        $("#id_tipo_act").on('change', function () {
-            validarFormulario();
-            ShowSelected();
-        });
-
-        $('#id_descripcion_act').prop("title", 'Este campo permite solo letras y comienza con mayúscula').attr("oninvalid", 'setCustomValidity("Campo obligatorio.Este campo permite solo letras y comienza con mayúscula")');
-        $('#addButtonActividad').click(function () {
-            $('#popup form').prop('action', '{% url "actividad_create" %}');
-            $('#popup').modal('show');
-        });
-{#        {% if form.errors or edit %}#}
-{#            $('#popup').modal('show');#}
-{#        {% endif %}#}
-
-        function validarNoAct() {
-            var cadena = $('#id_numero')[0].value;
-            if (!(cadena.match(exp_num))) {
-                $('#id_numero').addClass('has-error');
-                return false;
-            } else {
-                $('#id_numero').removeClass('has-error');
-                return true;
-            }
-        }
-
-        function validarNombre() {
-            if ($('#id_descripcion_act')[0].value.match(exp_nombre)) {
-                $('#id_descripcion_act').removeClass('has-error');
-                return true;
-            } else {
-                $('#id_descripcion_act').addClass('has-error');
-                return false;
-            }
-        }
-
-        function validarCodigo() {
-            var cadena = $('#id_codigo_act')[0].value;
-            if (!(cadena.match(exp_codigo) && cadena.length === 4)) {
-                $('#id_codigo_act').addClass('has-error');
-                return false;
-            } else {
-                $('#id_codigo_act').removeClass('has-error');
-                return true;
-            }
-        }
-
-        $("#formularioActividad").on('keyup', function () {
-            validarFormulario();
-        });
-
-
-        function ShowSelected() {
-            var act = $('option:selected', $('#id_tipo_act')).attr('valor');
-            {#var act = $('option:selected', document.getElementById("tipo_act"))[1].value;#}
-            var numero = parseInt($('#id_numero').val());
-            var codigo = parseInt(act) + numero;
-            $('#id_codigo_act').val(codigo);
-            validarFormulario();
-        }
-
-        $(document).ready(function () {
-            ShowSelected();
-            // DataTable
-            var table = $('#tabla_act').DataTable({
-                "language": {
-                    processing: "Procesando...",
-                    search: "Buscar:",
-                    lengthMenu: "Mostrar _MENU_ registros",
-                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                    infoPostFix: "",
-                    loadingRecords: "Cargando...",
-                    zeroRecords: "No se encontraron resultados",
-                    emptyTable: "Ningún dato disponible en esta tabla",
-                    paginate: {
-                        first: "Último",
-                        previous: "Anterior",
-                        next: "Siguiente",
-                        last: "Último"
-                    }
-                }
-            });
-            // Setup - add a text input to each footer cell
-            $('#tabla_act').find('tfoot th').each(function () {
-                var title = $(this).text();
-                $(this).html('<input class="form-control" type="text" style="font-size: small" placeholder="Buscar ' + title + '"/>');
-            });
-
-            // Apply the search
-            table.columns().every(function () {
-                var that = this;
-
-                $('input', this.footer()).on('keyup change', function () {
-                    if (that.search() !== this.value) {
-                        that
-                            .search(this.value)
-                            .draw();
-                    }
-                });
-            });
-        });
-
-    </script>
 {% endblock %}

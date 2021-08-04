@@ -45,8 +45,7 @@ class OT(BaseUrls, models.Model):
     area = models.ForeignKey(Area, on_delete=models.DO_NOTHING, default='')
     inversionista = models.ForeignKey(Inversionista, on_delete=models.DO_NOTHING, default='')
     OPT_Unidad = (('03', 'USTI'), ('07', 'UGDD'))
-    unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='03', null=False, blank=False)
-
+    unidad = models.CharField(max_length=4, choices=OPT_Unidad, default='', null=False, blank=False)
 
     def __str__(self):
         return '{} {}'.format(self.codigo_ot, self.descripcion_ot)
@@ -57,7 +56,7 @@ class TipoActividad(BaseUrls, models.Model):
     valor = models.PositiveIntegerField(unique=True, verbose_name='Código')
 
     def __str__(self):
-        return '{} {}'.format(self.valor, self.nombre_tipo_act)
+        return '{}'.format(self.nombre_tipo_act)
 
     class Meta:
         verbose_name = 'Tipo de Actividad'
