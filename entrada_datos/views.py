@@ -245,7 +245,7 @@ def home_ent_dat(request):
     permiso_app_adm = _user_has_module_perms(request.user, 'entrada_datos')
     if permiso_app_adm:
         context = {'request': request}
-        return render(request, 'home_ent_dat.html', context)
+        return render(request, 'entrada-datos_home.html', context)
     else:
         return redirect('home_principal')
 
