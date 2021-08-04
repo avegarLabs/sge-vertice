@@ -106,11 +106,32 @@ class Suplemento(BaseUrls, models.Model):
 
 class Banco(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
-    codigo_uf = models.CharField(max_length=10, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
     denominacion = models.CharField(max_length=100, blank=False, null=False)
 
 class Moneda(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     simbolo = models.CharField(max_length=10, blank=False, null=False)
     activa = models.BooleanField(default=True)
+
+class Roles(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
+
+class Clientes(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=160, blank=False, null=False)
+    codigo_reup = models.CharField(max_length=20, blank=False, null=False)
+    codigo_compartido = models.CharField(max_length=20, blank=False, null=False)
+    organismo = models.CharField(max_length=100, blank=False, null=False)
+    resolucion_const = models.CharField(max_length=60, blank=False, null=False)
+    direccion = models.CharField(max_length=160, blank=False, null=False)
+    telefono = models.CharField(max_length=50, blank=False, null=False)
+    fax = models.CharField(max_length=50, blank=False, null=False)
+    nit = models.CharField(max_length=20, blank=False, null=False)
+    acronimo = models.CharField(max_length=20, blank=False, null=False)
+    grupo_empresarial = models.CharField(max_length=60, blank=False, null=False)
+    fecha = models.DateField()
+    email = models.EmailField()
+
+
 
