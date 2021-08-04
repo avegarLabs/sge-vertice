@@ -104,16 +104,6 @@ class Suplemento(BaseUrls, models.Model):
     usuario = models.CharField(max_length=100)
     solicitud = models.CharField(max_length=60)
 
-class Banco(BaseUrls, models.Model):
-    nombre = models.CharField(max_length=100, blank=False, null=False)
-    codigo = models.CharField(max_length=10, blank=False, null=False)
-    denominacion = models.CharField(max_length=100, blank=False, null=False)
-
-class Moneda(BaseUrls, models.Model):
-    nombre = models.CharField(max_length=100, blank=False, null=False)
-    simbolo = models.CharField(max_length=10, blank=False, null=False)
-    activa = models.BooleanField(default=True)
-
 class Roles(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     codigo = models.CharField(max_length=10, blank=False, null=False)
@@ -132,6 +122,25 @@ class Clientes(BaseUrls, models.Model):
     grupo_empresarial = models.CharField(max_length=60, blank=False, null=False)
     fecha = models.DateField()
     email = models.EmailField()
+
+class Banco(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
+    denominacion = models.CharField(max_length=100, blank=False, null=False)
+
+class Moneda(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    simbolo = models.CharField(max_length=10, blank=False, null=False)
+    activa = models.BooleanField(default=True)
+
+class CuentaBancaria(BaseUrls, models.Model):
+    empresa = models.ForeignKey(Clientes, on_delete=models.DO_NOTHING)
+    moneda = models.ForeignKey(Moneda, on_delete=models.DO_NOTHING)
+    banco = models.ForeignKey(Banco, on_delete=models.DO_NOTHING)
+    cuenta_bancaria = models.CharField(max_length=100, blank=False, null=False)
+    numero_cuenta = models.CharField(max_length=100, blank=False, null=False)
+    licencia = models.CharField(max_length=100, blank=False, null=False)
+    registro_comercio = models.CharField(max_length=100, blank=False, null=False)
 
 
 
