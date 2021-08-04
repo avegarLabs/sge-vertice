@@ -105,7 +105,11 @@ class Suplemento(BaseUrls, models.Model):
     solicitud = models.CharField(max_length=60)
 
 class Banco(BaseUrls, models.Model):
-    nombre = models.CharField(max_length=100)
-    codigo_uf = models.CharField(max_length=6, blank=False, null=False)
-    denominacion = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    codigo_uf = models.CharField(max_length=10, blank=False, null=False)
+    denominacion = models.CharField(max_length=100, blank=False, null=False)
+
+class Moneda(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100, blank=False, null=False)
+    simbolo = models.CharField(max_length=10, blank=False, null=False)
 
