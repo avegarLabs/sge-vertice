@@ -112,4 +112,5 @@ class Banco(BaseUrls, models.Model):
 class Moneda(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     simbolo = models.CharField(max_length=10, blank=False, null=False)
+    activa = models.BooleanField(default=True)
 
