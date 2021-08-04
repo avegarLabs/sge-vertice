@@ -103,3 +103,9 @@ class Suplemento(BaseUrls, models.Model):
     fecha = models.DateField()
     usuario = models.CharField(max_length=100)
     solicitud = models.CharField(max_length=60)
+
+class Banco(BaseUrls, models.Model):
+    nombre = models.CharField(max_length=100)
+    codigo_uf = models.CharField(max_length=6, blank=False, null=False)
+    denominacion = models.CharField(max_length=100)
+
