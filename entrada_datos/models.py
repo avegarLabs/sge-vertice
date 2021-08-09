@@ -124,7 +124,7 @@ class Programa(BaseUrls, models.Model):
     def __str__(self):
         return '{}'.format(self.nombre)
 
-class Roles(BaseUrls, models.Model):
+class Rol(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     codigo = models.CharField(max_length=10, blank=False, null=False)
 

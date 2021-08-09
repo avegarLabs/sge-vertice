@@ -179,12 +179,12 @@ class TipoObraForm(forms.ModelForm):
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
-class RolesForm(forms.ModelForm):
+class RolForm(forms.ModelForm):
     class Meta:
-        model = Roles
+        model = Rol
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(RolesForm, self).__init__(*args, **kwargs)
+        super(RolForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})

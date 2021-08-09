@@ -226,14 +226,14 @@ class ActDeleteView(SgeDeleteView):  # todo no puede eliminar actividad si esta 
 
 # Surtidos
 class SurtidoListView(SgeListView):
-    model = Surtidos
+    model = Surtido
     template_name = 'surtidos/list.html'
     permission_required = 'entrada_datos.read_surtido'
 
 
 class SurtidoCreateView(SgeCreateView):
     permission_required = 'entrada_datos.add_surtido'
-    model = Surtidos
+    model = Surtido
     form_class = SurtidosForm
     template_name = 'surtidos/create.html'
     success_url = reverse_lazy('surtido_create')
@@ -241,20 +241,20 @@ class SurtidoCreateView(SgeCreateView):
 
 class SurtidoUpdateView(SgeUpdateView):
     permission_required = 'entrada_datos.change_surtido'
-    model = Surtidos
+    model = Surtido
     form_class = SurtidosForm
     template_name = 'surtidos/create.html'
-    success_url = reverse_lazy('surtido_list')
+    success_url = reverse_lazy('surtidos_list')
 
 
 class SurtidoDetailView(SgeDetailView):
-    model = Surtidos
+    model = Surtido
     template_name = 'surtidos/detail.html'
     permission_required = 'entrada_datos.read_surtido'
 
 
 class SurtidoDeleteView(SgeDeleteView):
-    model = Surtidos
+    model = Surtido
     permission_required = 'entrada_datos.delete_surtido'
     success_url = reverse_lazy('surtido_list')
 
@@ -363,35 +363,35 @@ class TipoObraDeleteView(SgeDeleteView):
 
 # Roles
 class RolListView(SgeListView):
-    model = Roles
+    model = Rol
     template_name = 'roles/list.html'
     permission_required = 'entrada_datos.read_rol'
 
 
 class RolCreateView(SgeCreateView):
     permission_required = 'entrada_datos.add_rol'
-    model = Roles
-    form_class = RolesForm
+    model = Rol
+    form_class = RolForm
     template_name = 'roles/create.html'
     success_url = reverse_lazy('rol_create')
 
 
 class RolUpdateView(SgeUpdateView):
     permission_required = 'entrada_datos.change_rol'
-    model = Roles
-    form_class = RolesForm
+    model = Rol
+    form_class = RolForm
     template_name = 'roles/create.html'
     success_url = reverse_lazy('rol_list')
 
 
 class RolDetailView(SgeDetailView):
-    model = Roles
+    model = Rol
     template_name = 'roles/detail.html'
     permission_required = 'entrada_datos.read_rol'
 
 
 class RolDeleteView(SgeDeleteView):
-    model = Roles
+    model = Rol
     permission_required = 'entrada_datos.delete_rol'
     success_url = reverse_lazy('rol_list')
 
