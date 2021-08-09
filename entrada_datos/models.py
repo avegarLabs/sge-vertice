@@ -168,6 +168,9 @@ class Moneda(BaseUrls, models.Model):
     simbolo = models.CharField(max_length=10, blank=False, null=False)
     activa = models.BooleanField(default=True)
 
+    def __str__(self):
+        return '{}'.format(self.simbolo)
+
 class CuentaBancaria(BaseUrls, models.Model):
     empresa = models.ForeignKey(Clientes, on_delete=models.DO_NOTHING)
     moneda = models.ForeignKey(Moneda, on_delete=models.DO_NOTHING)

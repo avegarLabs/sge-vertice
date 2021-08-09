@@ -1,0 +1,22 @@
+{% extends 'layouts/_base_list_datatable.html' %}
+{% load sge_url sge_inclusion %}
+
+{% block delete_error_message %}
+    Imposible eliminar Programa porque tiene asociada al menos una OT
+{% endblock %}
+
+{% block table_header %}
+    <th>Nombre</th>
+    <th>Código</th>
+{% endblock %}
+
+{% block table_body %}
+    <td>{{ item.nombre }}</td>
+    <td style="width: 100px">{{ item.codigo }}</td>
+    {% submit_row %}
+{% endblock %}
+
+{% block table_foot %}
+    <th>Nombre</th>
+    <th>Código</th>
+{% endblock %}

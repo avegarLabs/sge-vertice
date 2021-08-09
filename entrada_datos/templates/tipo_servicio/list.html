@@ -1,0 +1,21 @@
+{% extends 'layouts/_base_list_datatable.html' %}
+{% load sge_url sge_perms sge_inclusion %}
+
+{% block delete_error_message %}
+    Imposible eliminar Tipo de Servicio porque esta asociada a uno o varios Proyectos
+{% endblock %}
+
+{% block table_header %}
+    <th>Nombre</th>
+
+
+{% endblock %}
+
+{% block table_body %}
+    <td style="width: 100px">{{ item.nombre }}</td>
+    {% submit_row_extra_buttons %}
+{% endblock %}
+
+{% block table_foot %}
+    <th>Nombre</th>
+{% endblock %}

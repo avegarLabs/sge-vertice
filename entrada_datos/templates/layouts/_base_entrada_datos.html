@@ -1,7 +1,7 @@
 {% extends "layouts/_base_module.html" %}
 {% load sge_url %}
 
-{% block title %}Entrada de Datos{% endblock %}
+{% block title %}Contratación-Producción{% endblock %}
 
 {% block styles %}
     {{ block.super }}
@@ -25,7 +25,7 @@
     </style>
 {% endblock %}
 
-{% block sidebar_title %}Entrada de Datos{% endblock %}
+{% block sidebar_title %}Contratación Producción{% endblock %}
 {% block sidebar_home_url %}{% url 'entrada-datos_home' %}{% endblock %}
 {% block sidebar_list %}
     <li>
@@ -82,6 +82,88 @@
                     <a class="{% if model_name == 'actividad' %}active{% endif %}"
                        href="{% url 'actividad_list' %}">
                         Actividad
+                    </a>
+                </li>
+            </ul>
+        </li>
+    {% endwith %}
+    {% with serv=request.resolver_match.url_name|is_x_menu:"serv" %}
+        <li>
+            <a href="#Proyectos" data-toggle="collapse" class="dropdown-toggle"
+               aria-expanded="{% if serv %}true{% else %}false{% endif %}">
+                <i class="fa fa-folder"></i>
+                Servicios o Proyectos
+            </a>
+            <ul class="collapse list-unstyled{% if serv %} show{% endif %}" id="Proyectos">
+                <li>
+                    <a class="{% if model_name == 'surtido' %}active{% endif %}"
+                       href="{% url 'surtido_list' %}">
+                        Surtidos o Conceptos
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'actividades' %}active{% endif %}"
+                       href="#">
+                        Actividades
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'tiposervicio' %}active{% endif %}"
+                       href="{% url 'tiposervicio_list' %}">
+                        Tipos de Servicios
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'tipoobra' %}active{% endif %}"
+                       href="{% url 'tipoobra_list' %}">
+                        Tipos de Obras
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'programa' %}active{% endif %}"
+                       href="{% url 'programa_list' %}">
+                        Programas
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'clientes' %}active{% endif %}"
+                       href="#">
+                        Clientes
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'rol' %}active{% endif %}"
+                       href="{% url 'rol_list' %}">
+                        Roles
+                    </a>
+                </li>
+            </ul>
+        </li>
+    {% endwith %}
+    {% with cb=request.resolver_match.url_name|is_x_menu:"cb" %}
+        <li>
+            <a href="#CuentaBancaria" data-toggle="collapse" class="dropdown-toggle"
+               aria-expanded="{% if cb %}true{% else %}false{% endif %}">
+                <i class="fa fa-folder"></i>
+                Cuentas Bancarias
+            </a>
+            <ul class="collapse list-unstyled{% if cb %} show{% endif %}" id="CuentaBancaria">
+                <li>
+                    <a class="{% if model_name == 'moneda' %}active{% endif %}"
+                       href="{% url 'moneda_list' %}">
+                        Monedas
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'banco' %}active{% endif %}"
+                       href="{% url 'banco_list' %}">
+                        Bancos
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'banco' %}active{% endif %}"
+                       href="#">
+                        Cuentas Bancarias
                     </a>
                 </li>
             </ul>

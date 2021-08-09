@@ -84,5 +84,54 @@ urlpatterns = [
         path('<int:pk>/eliminar/', views.ActDeleteView.as_view(), name='actividad_delete'),
         path('<int:pk>/', views.ActDetailView.as_view(), name='actividad_detail')
     ])),
+    path('moneda/', include([
+        path('', views.MonedaListView.as_view(), name='moneda_list'),
+        path('agregar/', views.MonedaCreateView.as_view(), name='moneda_create'),
+        path('<int:pk>/actualizar/', views.MonedaUpdateView.as_view(), name=',moneda_update'),
+        path('<int:pk>/eliminar/', views.MonedaDeleteView.as_view(), name='moneda_delete'),
+        path('<int:pk>/', views.MonedaDetailView.as_view(), name='moneda_detail')
+    ])),
+    path('banco/', include([
+        path('', views.BancoListView.as_view(), name='banco_list'),
+        path('agregar/', views.BancoCreateView.as_view(), name='banco_create'),
+        path('<int:pk>/actualizar/', views.BancoUpdateView.as_view(), name=',banco_update'),
+        path('<int:pk>/eliminar/', views.BancoDeleteView.as_view(), name='banco_delete'),
+        path('<int:pk>/', views.BancoDetailView.as_view(), name='banco_detail')
+    ])),
+    path('surtido/', include([
+        path('', views.SurtidoListView.as_view(), name='surtido_list'),
+        path('agregar/', views.SurtidoCreateView.as_view(), name='surtido_create'),
+        path('<int:pk>/actualizar/', views.SurtidoUpdateView.as_view(), name=',surtido_update'),
+        path('<int:pk>/eliminar/', views.SurtidoDeleteView.as_view(), name='surtido_delete'),
+        path('<int:pk>/', views.SurtidoDetailView.as_view(), name='surtido_detail')
+    ])),
+    path('programa/', include([
+        path('', views.ProgramaListView.as_view(), name='programa_list'),
+        path('agregar/', views.ProgramaCreateView.as_view(), name='programa_create'),
+        path('<int:pk>/actualizar/', views.ProgramaUpdateView.as_view(), name=',programa_update'),
+        path('<int:pk>/eliminar/', views.ProgramaDeleteView.as_view(), name='programa_delete'),
+        path('<int:pk>/', views.ProgramaDetailView.as_view(), name='programa_detail')
+    ])),
+    path('tipo-servicio/', include([
+        path('', views.TipoServicioListView.as_view(), name='tiposervicio_list'),
+        path('agregar/', views.TipoServicioCreateView.as_view(), name='tiposervicio_create'),
+        path('<int:pk>/actualizar/', views.TipoServicioUpdateView.as_view(), name=',tiposervicio_update'),
+        path('<int:pk>/eliminar/', views.TipoServicioDeleteView.as_view(), name='tiposervicio_delete'),
+        path('<int:pk>/', views.TipoServicioDetailView.as_view(), name='tiposervicio_detail')
+    ])),
+    path('tipo-obra/', include([
+        path('', views.TipoObraListView.as_view(), name='tipoobra_list'),
+        path('agregar/', views.TipoObraCreateView.as_view(), name='tipoobra_create'),
+        path('<int:pk>/actualizar/', views.TipoObraUpdateView.as_view(), name=',tipoobra_update'),
+        path('<int:pk>/eliminar/', views.TipoObraDeleteView.as_view(), name='tipoobra_delete'),
+        path('<int:pk>/', views.TipoObraDetailView.as_view(), name='tipoobra_detail')
+    ])),
+    path('roles/', include([
+        path('', views.RolListView.as_view(), name='rol_list'),
+        path('agregar/', views.RolCreateView.as_view(), name='rol_create'),
+        path('<int:pk>/actualizar/', views.RolUpdateView.as_view(), name=',rol_update'),
+        path('<int:pk>/eliminar/', views.RolDeleteView.as_view(), name='rol_delete'),
+        path('<int:pk>/', views.RolDetailView.as_view(), name='rol_detail')
+    ])),
 
 ]

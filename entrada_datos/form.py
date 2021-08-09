@@ -117,3 +117,74 @@ class SuplementoForm(forms.ModelForm):
         super(SuplementoForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+
+class MonedaForm(forms.ModelForm):
+    class Meta:
+        model = Moneda
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(MonedaForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class BancoForm(forms.ModelForm):
+    class Meta:
+        model = Banco
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(BancoForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class SurtidosForm(forms.ModelForm):
+    class Meta:
+        model = Surtidos
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(SurtidosForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class ProgramaForm(forms.ModelForm):
+    class Meta:
+        model = Programa
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ProgramaForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class TipoServicioForm(forms.ModelForm):
+    class Meta:
+        model = TipoServicio
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(TipoServicioForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class TipoObraForm(forms.ModelForm):
+    class Meta:
+        model = TipoObra
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(TipoObraForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class RolesForm(forms.ModelForm):
+    class Meta:
+        model = Roles
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(RolesForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})

@@ -224,7 +224,245 @@ class ActDeleteView(SgeDeleteView):  # todo no puede eliminar actividad si esta 
 
 
 
+# Surtidos
+class SurtidoListView(SgeListView):
+    model = Surtidos
+    template_name = 'surtidos/list.html'
+    permission_required = 'entrada_datos.read_surtido'
 
+
+class SurtidoCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_surtido'
+    model = Surtidos
+    form_class = SurtidosForm
+    template_name = 'surtidos/create.html'
+    success_url = reverse_lazy('surtido_create')
+
+
+class SurtidoUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_surtido'
+    model = Surtidos
+    form_class = SurtidosForm
+    template_name = 'surtidos/create.html'
+    success_url = reverse_lazy('surtido_list')
+
+
+class SurtidoDetailView(SgeDetailView):
+    model = Surtidos
+    template_name = 'surtidos/detail.html'
+    permission_required = 'entrada_datos.read_surtido'
+
+
+class SurtidoDeleteView(SgeDeleteView):
+    model = Surtidos
+    permission_required = 'entrada_datos.delete_surtido'
+    success_url = reverse_lazy('surtido_list')
+
+# Programa
+class ProgramaListView(SgeListView):
+    model = Programa
+    template_name = 'programa/list.html'
+    permission_required = 'entrada_datos.read_programa'
+
+
+class ProgramaCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_programa'
+    model = Programa
+    form_class = ProgramaForm
+    template_name = 'programa/create.html'
+    success_url = reverse_lazy('programa_create')
+
+
+class ProgramaUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_programa'
+    model = Programa
+    form_class = ProgramaForm
+    template_name = 'programa/create.html'
+    success_url = reverse_lazy('programa_list')
+
+
+class ProgramaDetailView(SgeDetailView):
+    model = Programa
+    template_name = 'programa/detail.html'
+    permission_required = 'entrada_datos.read_programa'
+
+
+class ProgramaDeleteView(SgeDeleteView):
+    model = Programa
+    permission_required = 'entrada_datos.delete_programa'
+    success_url = reverse_lazy('programa_list')
+
+# Tipo Servicio
+class TipoServicioListView(SgeListView):
+    model = TipoServicio
+    template_name = 'tipo_servicio/list.html'
+    permission_required = 'entrada_datos.read_tiposervicio'
+
+
+class TipoServicioCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_tiposervicio'
+    model = TipoServicio
+    form_class = TipoServicioForm
+    template_name = 'tipo_servicio/create.html'
+    success_url = reverse_lazy('tiposervicio_create')
+
+
+class TipoServicioUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_tiposervicio'
+    model = TipoServicio
+    form_class = TipoServicioForm
+    template_name = 'tipo_servicio/create.html'
+    success_url = reverse_lazy('tiposervicio_list')
+
+
+class TipoServicioDetailView(SgeDetailView):
+    model = TipoServicio
+    template_name = 'tipo_servicio/detail.html'
+    permission_required = 'entrada_datos.read_tiposervicio'
+
+
+class TipoServicioDeleteView(SgeDeleteView):
+    model = TipoServicio
+    permission_required = 'entrada_datos.delete_tiposervicio'
+    success_url = reverse_lazy('tiposervicio_list')
+
+# Tipo Obra
+class TipoObraListView(SgeListView):
+    model = TipoObra
+    template_name = 'tipo_obra/list.html'
+    permission_required = 'entrada_datos.read_tipoobra'
+
+
+class TipoObraCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_tipoobra'
+    model = TipoObra
+    form_class = TipoObraForm
+    template_name = 'tipo_obra/create.html'
+    success_url = reverse_lazy('tipoobra_create')
+
+
+class TipoObraUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_tipoobra'
+    model = TipoObra
+    form_class = TipoObraForm
+    template_name = 'tipo_obra/create.html'
+    success_url = reverse_lazy('tipoobra_list')
+
+
+class TipoObraDetailView(SgeDetailView):
+    model = TipoObra
+    template_name = 'tipo_obra/detail.html'
+    permission_required = 'entrada_datos.read_tipoobra'
+
+
+class TipoObraDeleteView(SgeDeleteView):
+    model = TipoObra
+    permission_required = 'entrada_datos.delete_tipoobra'
+    success_url = reverse_lazy('tipoobra_list')
+
+
+# Roles
+class RolListView(SgeListView):
+    model = Roles
+    template_name = 'roles/list.html'
+    permission_required = 'entrada_datos.read_rol'
+
+
+class RolCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_rol'
+    model = Roles
+    form_class = RolesForm
+    template_name = 'roles/create.html'
+    success_url = reverse_lazy('rol_create')
+
+
+class RolUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_rol'
+    model = Roles
+    form_class = RolesForm
+    template_name = 'roles/create.html'
+    success_url = reverse_lazy('rol_list')
+
+
+class RolDetailView(SgeDetailView):
+    model = Roles
+    template_name = 'roles/detail.html'
+    permission_required = 'entrada_datos.read_rol'
+
+
+class RolDeleteView(SgeDeleteView):
+    model = Roles
+    permission_required = 'entrada_datos.delete_rol'
+    success_url = reverse_lazy('rol_list')
+
+
+# Moneda
+class MonedaListView(SgeListView):
+    model = Moneda
+    template_name = 'moneda/list.html'
+    permission_required = 'entrada_datos.read_moneda'
+
+
+class MonedaCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_moneda'
+    model = Moneda
+    form_class = MonedaForm
+    template_name = 'moneda/create.html'
+    success_url = reverse_lazy('moneda_create')
+
+
+class MonedaUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_moneda'
+    model = Moneda
+    form_class = MonedaForm
+    template_name = 'moneda/create.html'
+    success_url = reverse_lazy('moneda_list')
+
+
+class MonedaDetailView(SgeDetailView):
+    model = Moneda
+    template_name = 'moneda/detail.html'
+    permission_required = 'entrada_datos.read_moneda'
+
+
+class MonedaDeleteView(SgeDeleteView):
+    model = Moneda
+    permission_required = 'entrada_datos.delete_moneda'
+    success_url = reverse_lazy('moneda_list')
+
+# Banco
+class BancoListView(SgeListView):
+    model = Banco
+    template_name = 'banco/list.html'
+    permission_required = 'entrada_datos.read_banco'
+
+
+class BancoCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_banco'
+    model = Banco
+    form_class = BancoForm
+    template_name = 'banco/create.html'
+    success_url = reverse_lazy('banco_create')
+
+
+class BancoUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_banco'
+    model = Banco
+    form_class = BancoForm
+    template_name = 'banco/create.html'
+    success_url = reverse_lazy('banco_list')
+
+
+class BancoDetailView(SgeDetailView):
+    model = Banco
+    template_name = 'banco/detail.html'
+    permission_required = 'entrada_datos.read_banco'
+
+
+class BancoDeleteView(SgeDeleteView):
+    model = Banco
+    permission_required = 'entrada_datos.delete_banco'
+    success_url = reverse_lazy('banco_list')
 
 
 
@@ -659,7 +897,7 @@ def listado_suplementos(request, pk):
     return render(request, 'Listado_Suplemento.html', context)
 
 
-
+# //////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
