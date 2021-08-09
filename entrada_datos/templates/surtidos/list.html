@@ -13,12 +13,12 @@
 {% endblock %}
 
 {% block table_body %}
-    <td style="width: 300px">{{ item.nombre }}</td>
+    <td style="width: 400px">{{ item.nombre }}</td>
     <td>{{ item.codigo }}</td>
-    {% submit_row_extra_buttons %}
+    {% submit_row %}
 {% endblock %}
 
-{% block table_foot %}K
+{% block table_foot %}
     <th>Nombre</th>
     <th>Nombre Abreviado</th>
 {% endblock %}
