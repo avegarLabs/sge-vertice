@@ -125,6 +125,9 @@ class Roles(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     codigo = models.CharField(max_length=10, blank=False, null=False)
 
+    def __str__(self):
+        return '{}'.format(self.nombre)
+
 class Etapa(BaseUrls, models.Model):
     nombre = models.CharField(max_length=160, blank=False, null=False)
     codigo = models.CharField(max_length=20, blank=False, null=False)
