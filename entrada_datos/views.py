@@ -234,7 +234,7 @@ class SurtidoListView(SgeListView):
 class SurtidoCreateView(SgeCreateView):
     permission_required = 'entrada_datos.add_surtido'
     model = Surtido
-    form_class = SurtidosForm
+    form_class = SurtidoForm
     template_name = 'surtidos/create.html'
     success_url = reverse_lazy('surtido_create')
 
@@ -242,7 +242,7 @@ class SurtidoCreateView(SgeCreateView):
 class SurtidoUpdateView(SgeUpdateView):
     permission_required = 'entrada_datos.change_surtido'
     model = Surtido
-    form_class = SurtidosForm
+    form_class = SurtidoForm
     template_name = 'surtidos/create.html'
     success_url = reverse_lazy('surtidos_list')
 

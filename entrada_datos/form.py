@@ -139,13 +139,13 @@ class BancoForm(forms.ModelForm):
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
-class SurtidosForm(forms.ModelForm):
+class SurtidoForm(forms.ModelForm):
     class Meta:
-        model = Surtidos
+        model = Surtido
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(SurtidosForm, self).__init__(*args, **kwargs)
+        super(SurtidoForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
