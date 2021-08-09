@@ -101,7 +101,7 @@ urlpatterns = [
     path('surtido/', include([
         path('', views.SurtidoListView.as_view(), name='surtido_list'),
         path('agregar/', views.SurtidoCreateView.as_view(), name='surtido_create'),
-        path('<int:pk>/actualizar/', views.SurtidoUpdateView.as_view(), name=',surtido_update'),
+        path('<int:pk>/actualizar/', views.SurtidoUpdateView.as_view(), name='surtido_update'),
         path('<int:pk>/eliminar/', views.SurtidoDeleteView.as_view(), name='surtido_delete'),
         path('<int:pk>/', views.SurtidoDetailView.as_view(), name='surtido_detail')
     ])),
