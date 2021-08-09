@@ -244,7 +244,7 @@ class SurtidoUpdateView(SgeUpdateView):
     model = Surtido
     form_class = SurtidoForm
     template_name = 'surtidos/create.html'
-    success_url = reverse_lazy('surtidos_list')
+    success_url = reverse_lazy('surtido_list')
 
 
 class SurtidoDetailView(SgeDetailView):
