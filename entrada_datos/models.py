@@ -107,7 +107,7 @@ class Suplemento(BaseUrls, models.Model):
 
 class Surtido(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
-    nombre_abreviado = models.CharField(max_length=10, blank=False, null=False)
+    codigo = models.CharField(max_length=10, blank=False, null=False)
 
     def __str__(self):
         return '{}'.format(self.nombre)
