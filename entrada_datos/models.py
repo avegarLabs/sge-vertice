@@ -152,23 +152,29 @@ class Etapa(BaseUrls, models.Model):
 
 class Clientes(BaseUrls, models.Model):
     nombre = models.CharField(max_length=160, blank=False, null=False)
-    codigo_reup = models.CharField(max_length=20, blank=False, null=False)
-    codigo_compartido = models.CharField(max_length=20, blank=False, null=False)
-    organismo = models.CharField(max_length=100, blank=False, null=False)
-    resolucion_const = models.CharField(max_length=60, blank=False, null=False)
-    direccion = models.CharField(max_length=160, blank=False, null=False)
-    telefono = models.CharField(max_length=50, blank=False, null=False)
+    codigo_reup = models.CharField(verbose_name='Código Reup',max_length=20, blank=False, null=False)
+    codigo_compartido = models.CharField(verbose_name='Código Compartido', max_length=20, blank=False, null=False)
+    organismo = models.CharField(verbose_name='Organismo', max_length=100, blank=False, null=False)
+    resolucion_const = models.CharField(verbose_name='Resolución Constitucion', max_length=60, blank=False, null=False)
+    direccion = models.CharField(verbose_name='Dirección', max_length=160, blank=False, null=False)
+    telefono = models.CharField(verbose_name='Teléfono', max_length=50, blank=False, null=False)
     fax = models.CharField(max_length=50, blank=False, null=False)
     nit = models.CharField(max_length=20, blank=False, null=False)
-    acronimo = models.CharField(max_length=20, blank=False, null=False)
-    grupo_empresarial = models.CharField(max_length=60, blank=False, null=False)
+    acronimo = models.CharField(verbose_name='Acrónimo', max_length=20, blank=False, null=False)
+    grupo_empresarial = models.CharField(verbose_name='Grupo Empresarial', max_length=60, blank=False, null=False)
     fecha = models.DateField()
     email = models.EmailField()
+
+    def __str__(self):
+        return '{}'.format(self.nombre)
 
 class Banco(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)
     codigo = models.CharField(max_length=10, blank=False, null=False)
     denominacion = models.CharField(max_length=100, blank=False, null=False)
+
+    def __str__(self):
+        return '{} - {}'.format(self.nombre, self.codigo)
 
 class Moneda(BaseUrls, models.Model):
     nombre = models.CharField(max_length=100, blank=False, null=False)

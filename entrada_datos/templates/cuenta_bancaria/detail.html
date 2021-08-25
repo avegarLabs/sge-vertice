@@ -1,0 +1,19 @@
+{% extends 'layouts/crud/_base_detail.html' %}
+{% load filters %}
+
+{% block detail_elements %}
+    <dt class="col-md-4 col-sm-12">Empresa:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.empresa }}</dd>
+    <dt class="col-md-4 col-sm-12">Moneda:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.moneda }}</dd>
+    <dt class="col-md-4 col-sm-12">Banco:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.banco }}</dd>
+    <dt class="col-md-4 col-sm-12">Cuenta Bancaria:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.cuenta_bancaria }}</dd>
+    <dt class="col-md-4 col-sm-12">Número de Cuenta:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.numero_cuenta }}</dd>
+    <dt class="col-md-4 col-sm-12">Licencia:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.licencia }}</dd>
+    <dt class="col-md-4 col-sm-12">Registro Comercial:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.registro_comercio }}</dd>
+{% endblock %}

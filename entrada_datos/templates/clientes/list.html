@@ -1,0 +1,56 @@
+{% extends 'layouts/_base_list_datatable.html' %}
+{% load sge_url sge_perms sge_inclusion %}
+
+{% block delete_error_message %}
+    Imposible eliminar Banco porque esta asociado a una o varias Cuentas Bancarias
+{% endblock %}
+
+{% block table_header %}
+    <th>Nombre</th>
+    <th>Reup</th>
+{#    <th>Codigo Compartido</th>#}
+    <th>Organismo</th>
+{#    <th>No. Resolucion Constitucion</th>#}
+    <th>Dirección</th>
+    <th>Teléfono</th>
+    <th>Nit</th>
+    <th>Acrónimo</th>
+{#    <th>Grupo Empresarial</th>#}
+    <th>Fecha</th>
+    <th>Email</th>
+{#    <th>Fax</th>#}
+
+{% endblock %}
+
+{% block table_body %}
+    <td style="width: 400px">{{ item.nombre }}</td>
+    <td>{{ item.codigo_reup }}</td>
+{#    <td>{{ item.codigo_compartido }}</td>#}
+    <td>{{ item.organismo }}</td>
+{#    <td>{{ item.resolucion_const }}</td>#}
+    <td>{{ item.direccion }}</td>
+    <td>{{ item.telefono }}</td>
+{#    <td>{{ item.fax }}</td>#}
+    <td>{{ item.nit }}</td>
+    <td>{{ item.acronimo }}</td>
+{#    <td>{{ item.grupo_empresarial }}</td>#}
+    <td>{{ item.fecha }}</td>
+    <td>{{ item.email }}</td>
+    {% submit_row %}
+{% endblock %}
+
+{% block table_foot %}
+    <th>Nombre</th>
+    <th>Reup</th>
+{#    <th>Codigo Compartido</th>#}
+    <th>Organismo</th>
+{#    <th>No. Resolucion Constitucion</th>#}
+    <th>Dirección</th>
+    <th>Teléfono</th>
+    <th>Nit</th>
+    <th>Acrónimo</th>
+{#    <th>Grupo Empresarial</th>#}
+    <th>Fecha</th>
+    <th>Email</th>
+{#    <th>Fax</th>#}
+{% endblock %}

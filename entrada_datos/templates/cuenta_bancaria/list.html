@@ -1,0 +1,38 @@
+{% extends 'layouts/_base_list_datatable.html' %}
+{% load sge_url sge_perms sge_inclusion %}
+
+{% block delete_error_message %}
+    Imposible eliminar Banco porque esta asociado a una o varias Cuentas Bancarias
+{% endblock %}
+
+{% block table_header %}
+    <th>Empresa</th>
+    <th>Moneda</th>
+    <th>Banco</th>
+    <th>Cuenta Bancaria</th>
+    <th>Número de Cuenta</th>
+    <th>Licencia</th>
+    <th>Registro Comercial</th>
+
+{% endblock %}
+
+{% block table_body %}
+    <td style="width: 400px">{{ item.empresa }}</td>
+    <td>{{ item.moneda }}</td>
+    <td>{{ item.banco }}</td>
+    <td>{{ item.cuenta_bancaria }}</td>
+    <td>{{ item.numero_cuenta }}</td>
+    <td>{{ item.licencia }}</td>
+    <td>{{ item.registro_comercio }}</td>
+    {% submit_row %}
+{% endblock %}
+
+{% block table_foot %}
+    <th>Empresa</th>
+    <th>Moneda</th>
+    <th>Banco</th>
+    <th>Cuenta Bancaria</th>
+    <th>Número de Cuenta</th>
+    <th>Licencia</th>
+    <th>Registro Comercial</th>
+{% endblock %}

@@ -465,10 +465,74 @@ class BancoDeleteView(SgeDeleteView):
     success_url = reverse_lazy('banco_list')
 
 
+# Cuenta Bancaria
+class CBancariaListView(SgeListView):
+    model = CuentaBancaria
+    template_name = 'cuenta_bancaria/list.html'
+    permission_required = 'entrada_datos.read_cuentabancaria'
 
 
+class CBancariaCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_cuentabancaria'
+    model = CuentaBancaria
+    form_class = CuentaBancariaForm
+    template_name = 'cuenta_bancaria/create.html'
+    success_url = reverse_lazy('cuentabancaria_create')
 
 
+class CBancariaUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_cuentabancaria'
+    model = CuentaBancaria
+    form_class = CuentaBancariaForm
+    template_name = 'cuenta_bancaria/create.html'
+    success_url = reverse_lazy('cuentabancaria_list')
+
+
+class CBancariaDetailView(SgeDetailView):
+    model = CuentaBancaria
+    template_name = 'cuenta_bancaria/detail.html'
+    permission_required = 'entrada_datos.read_cuentabancaria'
+
+
+class CBancariaDeleteView(SgeDeleteView):
+    model = CuentaBancaria
+    permission_required = 'entrada_datos.delete_cuentabancaria'
+    success_url = reverse_lazy('cuentabancaria_list')
+
+
+# Clientes
+class ClientesListView(SgeListView):
+    model = Clientes
+    template_name = 'clientes/list.html'
+    permission_required = 'entrada_datos.read_clientes'
+
+
+class ClientesCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_clientes'
+    model = Clientes
+    form_class = ClientesForm
+    template_name = 'clientes/create.html'
+    success_url = reverse_lazy('clientes_create')
+
+
+class ClientesUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_clientes'
+    model = Clientes
+    form_class = ClientesForm
+    template_name = 'clientes/create.html'
+    success_url = reverse_lazy('clientes_list')
+
+
+class ClientesDetailView(SgeDetailView):
+    model = Clientes
+    template_name = 'clientes/detail.html'
+    permission_required = 'entrada_datos.read_clientes'
+
+
+class ClientesDeleteView(SgeDeleteView):
+    model = Clientes
+    permission_required = 'entrada_datos.delete_clientes'
+    success_url = reverse_lazy('clientes_list')
 
 
 

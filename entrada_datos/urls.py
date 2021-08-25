@@ -98,6 +98,20 @@ urlpatterns = [
         path('<int:pk>/eliminar/', views.BancoDeleteView.as_view(), name='banco_delete'),
         path('<int:pk>/', views.BancoDetailView.as_view(), name='banco_detail')
     ])),
+    path('cuenta-bancaria/', include([
+        path('', views.CBancariaListView.as_view(), name='cuentabancaria_list'),
+        path('agregar/', views.CBancariaCreateView.as_view(), name='cuentabancaria_create'),
+        path('<int:pk>/actualizar/', views.CBancariaUpdateView.as_view(), name='cuentabancaria_update'),
+        path('<int:pk>/eliminar/', views.CBancariaDeleteView.as_view(), name='cuentabancaria_delete'),
+        path('<int:pk>/', views.CBancariaDetailView.as_view(), name='cuentabancaria_detail')
+    ])),
+    path('clientes/', include([
+        path('', views.ClientesListView.as_view(), name='clientes_list'),
+        path('agregar/', views.ClientesCreateView.as_view(), name='clientes_create'),
+        path('<int:pk>/actualizar/', views.ClientesUpdateView.as_view(), name='clientes_update'),
+        path('<int:pk>/eliminar/', views.ClientesDeleteView.as_view(), name='clientes_delete'),
+        path('<int:pk>/', views.ClientesDetailView.as_view(), name='clientes_detail')
+    ])),
     path('surtido/', include([
         path('', views.SurtidoListView.as_view(), name='surtido_list'),
         path('agregar/', views.SurtidoCreateView.as_view(), name='surtido_create'),

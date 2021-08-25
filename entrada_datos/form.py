@@ -139,6 +139,16 @@ class BancoForm(forms.ModelForm):
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
+class CuentaBancariaForm(forms.ModelForm):
+    class Meta:
+        model = CuentaBancaria
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CuentaBancariaForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
 class SurtidoForm(forms.ModelForm):
     class Meta:
         model = Surtido
@@ -186,5 +196,15 @@ class RolForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(RolForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class ClientesForm(forms.ModelForm):
+    class Meta:
+        model = Clientes
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ClientesForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class': 'form-control'})

@@ -1,0 +1,43 @@
+{% extends 'layouts/crud/_base_create-update.html' %}
+
+{% load widget_tweaks %}
+
+{% block form_elements %}
+    {{ form.non_field_errors }}
+    <div class="col-lg-4 col-12">
+        {{ form.empresa.label_tag }}
+        {{ form.empresa.errors }}
+        {{ form.empresa }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.moneda.label_tag }}
+        {{ form.moneda.errors }}
+        {{ form.moneda }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.banco.label_tag }}
+        {{ form.banco.errors }}
+        {{ form.banco }}
+    </div>
+        <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.cuenta_bancaria.label_tag }}
+        {{ form.cuenta_bancaria.errors }}
+        {{ form.cuenta_bancaria }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.numero_cuenta.label_tag }}
+        {{ form.numero_cuenta.errors }}
+        {{ form.numero_cuenta }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.licencia.label_tag }}
+        {{ form.licencia.errors }}
+        {{ form.licencia }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.registro_comercio.label_tag }}
+        {{ form.registro_comercio.errors }}
+        {{ form.registro_comercio }}
+    </div>
+
+{% endblock %}

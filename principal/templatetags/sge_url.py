@@ -70,6 +70,8 @@ def is_x_menu(my_string, menu):
         menu_list = ['area', 'servicio', 'ot']
     elif menu == 'actividad':
         menu_list = ['tipoactividad', 'actividad']
+    elif menu == 'banco':
+        menu_list = ['moneda', 'banco', 'cuentabancaria']
     elif menu == 'trabajador':
         menu_list = ['trabajador']
     return model_url in menu_list

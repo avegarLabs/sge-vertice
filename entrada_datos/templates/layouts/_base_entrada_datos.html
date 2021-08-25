@@ -127,7 +127,7 @@
                 </li>
                 <li>
                     <a class="{% if model_name == 'clientes' %}active{% endif %}"
-                       href="#">
+                       href="{% url 'clientes_list' %}">
                         Clientes
                     </a>
                 </li>
@@ -140,14 +140,14 @@
             </ul>
         </li>
     {% endwith %}
-    {% with cb=request.resolver_match.url_name|is_x_menu:"cb" %}
+    {% with banco=request.resolver_match.url_name|is_x_menu:"banco" %}
         <li>
             <a href="#CuentaBancaria" data-toggle="collapse" class="dropdown-toggle"
-               aria-expanded="{% if cb %}true{% else %}false{% endif %}">
+               aria-expanded="{% if banco %}true{% else %}false{% endif %}">
                 <i class="fa fa-folder"></i>
                 Cuentas Bancarias
             </a>
-            <ul class="collapse list-unstyled{% if cb %} show{% endif %}" id="CuentaBancaria">
+            <ul class="collapse list-unstyled{% if banco %} show{% endif %}" id="CuentaBancaria">
                 <li>
                     <a class="{% if model_name == 'moneda' %}active{% endif %}"
                        href="{% url 'moneda_list' %}">
@@ -161,8 +161,8 @@
                     </a>
                 </li>
                 <li>
-                    <a class="{% if model_name == 'banco' %}active{% endif %}"
-                       href="#">
+                    <a class="{% if model_name == 'cuentabancaria' %}active{% endif %}"
+                       href="{% url 'cuentabancaria_list' %}">
                         Cuentas Bancarias
                     </a>
                 </li>
