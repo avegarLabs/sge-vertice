@@ -234,3 +234,13 @@ class SolicitudServicio(BaseUrls, models.Model):
     fecha_reanudacion = models.DateField()
     fecha_rechazo = models.DateField()
     fecha_cancelacion = models.DateField()
+
+
+class Ofertas(BaseUrls, models.Model):
+    solicitud_servicio = models.ForeignKey(SolicitudServicio, on_delete=models.DO_NOTHING)
+    fecha_entrega_prep_tec = models.DateField()
+    fecha_terminacion = models.DateField()
+    fecha_entregada = models.DateField()
+    fecha_aprobacion = models.DateField()
+    estado = models.CharField(max_length=100, blank=False, null=False)
+    observaciones = models.CharField(max_length=100, blank=False, null=False)
