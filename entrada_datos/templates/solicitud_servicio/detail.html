@@ -2,31 +2,26 @@
 {% load filters %}
 
 {% block detail_elements %}
-    <dt class="col-md-4 col-sm-12">Nombre:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.nombre }}</dd>
-    <dt class="col-md-4 col-sm-12">Código Reup:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.codigo_reup }}</dd>
-    <dt class="col-md-4 col-sm-12">Código Compartido:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.codigo_compartido }}</dd>
-    <dt class="col-md-4 col-sm-12">Organismo:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.organismo }}</dd>
-    <dt class="col-md-4 col-sm-12">No. Resolucion Constitucion:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.resolucion_const }}</dd>
-    <dt class="col-md-4 col-sm-12">Dirección:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.direccion }}</dd>
-    <dt class="col-md-4 col-sm-12">Teléfono:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.telefono }}</dd>
-    <dt class="col-md-4 col-sm-12">Nit:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.nit }}</dd>
-    <dt class="col-md-4 col-sm-12">Acrónimo:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.acronimo }}</dd>
-    <dt class="col-md-4 col-sm-12">Grupo Empresarial:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.grupo_empresarial }}</dd>
-    <dt class="col-md-4 col-sm-12">Fecha:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.fecha }}</dd>
-    <dt class="col-md-4 col-sm-12">Email:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.email }}</dd>
-    <dt class="col-md-4 col-sm-12">Fax:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.fax }}</dd>
+    <dt class="col-md-4 col-sm-12">Consecutivo:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.consecutivo }}</dd>
+    <dt class="col-md-4 col-sm-12">Orden de Trabajo:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.orden_trabajo }}</dd>
+    <dt class="col-md-4 col-sm-12">Num. Contrato:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.num_contrato }}</dd>
+    <dt class="col-md-4 col-sm-12">Fecha Recepción:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.fecha_recepcion }}</dd>
+    <dt class="col-md-4 col-sm-12">Fecha Aprobación:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.fecha_aprobacion }}</dd>
+    <dt class="col-md-4 col-sm-12">Servicio:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.servicio }}</dd>
+    <dt class="col-md-4 col-sm-12">Cliente:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.cliente }}</dd>
+    <dt class="col-md-4 col-sm-12">Representado Por:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.representado_por }}</dd>
+    <dt class="col-md-4 col-sm-12">Unidad Org:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.unidad_org }}</dd>
+    <dt class="col-md-4 col-sm-12">Estado:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.estado }}</dd>
+
 {% endblock %}
 
