@@ -1,0 +1,73 @@
+{% extends 'layouts/crud/_base_create-update.html' %}
+
+{% load widget_tweaks %}
+
+{% block form_elements %}
+    {{ form.non_field_errors }}
+    <div class="col-lg-12 col-12">
+        {{ form.nombre.label_tag }}
+        {{ form.nombre.errors }}
+        {{ form.nombre }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.codigo_reup.label_tag }}
+        {{ form.codigo_reup.errors }}
+        {{ form.codigo_reup }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.nit.label_tag }}
+        {{ form.nit.errors }}
+        {{ form.nit }}
+    </div>
+        <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.codigo_compartido.label_tag }}
+        {{ form.codigo_compartido.errors }}
+        {{ form.codigo_compartido }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.acronimo.label_tag }}
+        {{ form.acronimo.errors }}
+        {{ form.acronimo }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.organismo.label_tag }}
+        {{ form.organismo.errors }}
+        {{ form.organismo }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.grupo_empresarial.label_tag }}
+        {{ form.grupo_empresarial.errors }}
+        {{ form.grupo_empresarial }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.resolucion_const.label_tag }}
+        {{ form.resolucion_const.errors }}
+        {{ form.resolucion_const }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.fecha.label_tag }}
+        {{ form.fecha.errors }}
+        {{ form.fecha }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.direccion.label_tag }}
+        {{ form.direccion.errors }}
+        {{ form.direccion }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.email.label_tag }}
+        {{ form.email.errors }}
+        {{ form.email }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.telefono.label_tag }}
+        {{ form.telefono.errors }}
+        {{ form.telefono }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.fax.label_tag }}
+        {{ form.fax.errors }}
+        {{ form.fax }}
+    </div>
+
+{% endblock %}

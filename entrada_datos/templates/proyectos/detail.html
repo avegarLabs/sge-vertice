@@ -1,0 +1,11 @@
+{% extends 'layouts/crud/_base_detail.html' %}
+{% load filters %}
+
+{% block detail_elements %}
+    <dt class="col-md-4 col-sm-12">Nombre:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.nombre }}</dd>
+    <dt class="col-md-4 col-sm-12">Símbolo:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.simbolo }}</dd>
+    <dt class="col-md-4 col-sm-12">Activa:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.activa }}</dd>
+{% endblock %}
