@@ -6,51 +6,48 @@
 {% endblock %}
 
 {% block table_header %}
-    <th>Nombre</th>
-    <th>Reup</th>
-{#    <th>Codigo Compartido</th>#}
-    <th>Organismo</th>
-{#    <th>No. Resolucion Constitucion</th>#}
-    <th>Dirección</th>
-    <th>Teléfono</th>
-    <th>Nit</th>
-    <th>Acrónimo</th>
-{#    <th>Grupo Empresarial</th>#}
-    <th>Fecha</th>
-    <th>Email</th>
-{#    <th>Fax</th>#}
+    <th>Consecutivo</th>
+    <th>LLeva Oferta?</th>
+    <th>Para Contrato?</th>
+    <th>Orden de Trabajo</th>
+    <th>Num. Contrato</th>
+    <th>Fecha Recepción</th>
+    <th>Fecha Aprobación</th>
+    <th>Servicio</th>
+    <th>Cliente</th>
+    <th>Representado Por:</th>
+    <th>Unidad Org:</th>
+    <th>Estado:</th>
 
 {% endblock %}
 
 {% block table_body %}
-    <td style="width: 400px">{{ item.nombre }}</td>
-    <td>{{ item.codigo_reup }}</td>
-{#    <td>{{ item.codigo_compartido }}</td>#}
-    <td>{{ item.organismo }}</td>
-{#    <td>{{ item.resolucion_const }}</td>#}
-    <td>{{ item.direccion }}</td>
-    <td>{{ item.telefono }}</td>
-{#    <td>{{ item.fax }}</td>#}
-    <td>{{ item.nit }}</td>
-    <td>{{ item.acronimo }}</td>
-{#    <td>{{ item.grupo_empresarial }}</td>#}
-    <td>{{ item.fecha }}</td>
-    <td>{{ item.email }}</td>
+    <td style="width: 400px">{{ item.consecutivo }}</td>
+    <td>{{ item.lleva_oferta }}</td>
+    <td>{{ item.para_contrato }}</td>
+    <td>{{ item.orden_trabajo }}</td>
+    <td>{{ item.num_contrato }}</td>
+    <td>{{ item.fecha_recepcion }}</td>
+    <td>{{ item.fecha_aprobacion }}</td>
+    <td>{{ item.servicio }}</td>
+    <td>{{ item.cliente }}</td>
+    <td>{{ item.representado_por }}</td>
+    <td>{{ item.unidad_org }}</td>
+    <td>{{ item.estado }}</td>
     {% submit_row %}
 {% endblock %}
 
 {% block table_foot %}
-    <th>Nombre</th>
-    <th>Reup</th>
-{#    <th>Codigo Compartido</th>#}
-    <th>Organismo</th>
-{#    <th>No. Resolucion Constitucion</th>#}
-    <th>Dirección</th>
-    <th>Teléfono</th>
-    <th>Nit</th>
-    <th>Acrónimo</th>
-{#    <th>Grupo Empresarial</th>#}
-    <th>Fecha</th>
-    <th>Email</th>
-{#    <th>Fax</th>#}
+    <th>Consecutivo</th>
+    <th>LLeva Oferta?</th>
+    <th>Para Contrato?</th>
+    <th>Orden de Trabajo</th>
+    <th>Num. Contrato</th>
+    <th>Fecha Recepción</th>
+    <th>Fecha Aprobación</th>
+    <th>Servicio</th>
+    <th>Cliente</th>
+    <th>Representado Por:</th>
+    <th>Unidad Org:</th>
+    <th>Estado:</th>
 {% endblock %}
