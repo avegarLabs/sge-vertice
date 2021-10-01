@@ -208,6 +208,7 @@ class SolicitudServicio(BaseUrls, models.Model):
     segun_resolucion = models.CharField(max_length=100, blank=True, null=True)
     segun_acuerdo = models.CharField(max_length=100, blank=True, null=True)
     nombre_firma_contrato = models.CharField(verbose_name='Nombre y apellidos del que firmará el Contrato', max_length=100, blank=False, null=False)
+    cargo_firma_contrato = models.CharField(verbose_name='Cargo del que firmará', max_length=100, blank=False, null=False)
     tipo_servicio = models.CharField(max_length=100, blank=False, null=False)
     tipo_obras = models.CharField(max_length=100, blank=False, null=False)
     servicio_ingenieria = models.CharField(max_length=100, blank=False, null=False)
