@@ -45,19 +45,19 @@
         {{ form.representado_por }}
     </div>
     <div class="col-lg-6 col-12 mt-lg-0 mt-2">
+        {{ form.representado_por_cargo.label_tag }}
+        {{ form.representado_por_cargo.errors }}
+        {{ form.representado_por_cargo }}
+    </div>
+    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
         {{ form.segun_resolucion.label_tag }}
         {{ form.segun_resolucion.errors }}
         {{ form.segun_resolucion }}
     </div>
     <div class="col-lg-6 col-12 mt-lg-0 mt-2">
-        {{ form.direccion.label_tag }}
-        {{ form.direccion.errors }}
-        {{ form.direccion }}
-    </div>
-    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
-        {{ form.email.label_tag }}
-        {{ form.email.errors }}
-        {{ form.email }}
+        {{ form.segun_acuerdo.label_tag }}
+        {{ form.segun_acuerdo.errors }}
+        {{ form.segun_acuerdo }}
     </div>
     <div class="col-lg-6 col-12 mt-lg-0 mt-2">
         {{ form.telefono.label_tag }}
