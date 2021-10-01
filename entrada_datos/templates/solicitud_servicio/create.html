@@ -4,20 +4,20 @@
 
 {% block form_elements %}
     {{ form.non_field_errors }}
-    <div class="col-lg-12 col-12">
-        {{ form.nombre.label_tag }}
-        {{ form.nombre.errors }}
-        {{ form.nombre }}
+    <div class="col-lg-3 col-12">
+        {{ form.consecutivo.label_tag }}
+        {{ form.consecutivo.errors }}
+        {{ form.consecutivo }}
     </div>
-    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
-        {{ form.codigo_reup.label_tag }}
-        {{ form.codigo_reup.errors }}
-        {{ form.codigo_reup }}
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.fecha_recepcion.label_tag }}
+        {{ form.fecha_recepcion.errors }}
+        {{ form.fecha_recepcion }}
     </div>
-    <div class="col-lg-6 col-12 mt-lg-0 mt-2">
-        {{ form.nit.label_tag }}
-        {{ form.nit.errors }}
-        {{ form.nit }}
+    <div class="col-lg-5 col-12 mt-lg-0 mt-2">
+        {{ form.servicio.label_tag }}
+        {{ form.servicio.errors }}
+        {{ form.servicio }}
     </div>
         <div class="col-lg-6 col-12 mt-lg-0 mt-2">
         {{ form.codigo_compartido.label_tag }}
