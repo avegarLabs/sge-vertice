@@ -2,10 +2,18 @@
 {% load filters %}
 
 {% block detail_elements %}
-    <dt class="col-md-4 col-sm-12">Nombre:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.nombre }}</dd>
-    <dt class="col-md-4 col-sm-12">Símbolo:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.simbolo }}</dd>
-    <dt class="col-md-4 col-sm-12">Activa:</dt>
-    <dd class="col-md-8 col-sm-12">{{ object.activa }}</dd>
+    <dt class="col-md-4 col-sm-12">Solicitud de Servicio:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.solicitud_servicio }}</dd>
+    <dt class="col-md-4 col-sm-12">Fecha de entrega de Preparación Técnica:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.fecha_entrega_prep_tec }}</dd>
+    <dt class="col-md-4 col-sm-12">Fecha de Terminación:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.fecha_terminacion }}</dd>
+    <dt class="col-md-4 col-sm-12">Fecha de Entregada:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.fecha_entregada }}</dd>
+    <dt class="col-md-4 col-sm-12">Fecha de Aprobación:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.fecha_aprobacion }}</dd>
+    <dt class="col-md-4 col-sm-12">Estado:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.estado }}</dd>
+    <dt class="col-md-4 col-sm-12">Observaciones:</dt>
+    <dd class="col-md-8 col-sm-12">{{ object.observaciones }}</dd>
 {% endblock %}

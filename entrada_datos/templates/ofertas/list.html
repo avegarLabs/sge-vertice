@@ -6,21 +6,33 @@
 {% endblock %}
 
 {% block table_header %}
-    <th>Nombre</th>
-    <th>Símbolo</th>
-    <th>Activa</th>
+    <th>Solicitud de Servicio</th>
+    <th>Fecha de entrega de Preparación Técnica</th>
+    <th>Fecha de Terminación</th>
+    <th>Fecha de Entregada</th>
+    <th>Fecha de Aprobación</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
 
 {% endblock %}
 
 {% block table_body %}
-    <td style="width: 100px">{{ item.nombre }}</td>
-    <td>{{ item.simbolo }}</td>
-    <td>{{ item.activa }}</td>
-    {% submit_row_extra_buttons %}
+    <td style="width: 100px">{{ item.solicitud_servicio }}</td>
+    <td>{{ item.fecha_entrega_prep_tec }}</td>
+    <td>{{ item.fecha_terminacion }}</td>
+    <td style="width: 100px">{{ item.fecha_entregada }}</td>
+    <td>{{ item.fecha_aprobacion }}</td>
+    <td>{{ item.estado }}</td>
+    <td>{{ item.observaciones }}</td>
+    {% submit_row %}
 {% endblock %}
 
 {% block table_foot %}
-    <th>Nombre</th>
-    <th>Simbolo</th>
-    <th>Activa</th>
+    <th>Solicitud de Servicio</th>
+    <th>Fecha de entrega de Preparación Técnica</th>
+    <th>Fecha de Terminación</th>
+    <th>Fecha de Entregada</th>
+    <th>Fecha de Aprobación</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
 {% endblock %}

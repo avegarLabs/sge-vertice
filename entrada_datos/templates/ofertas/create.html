@@ -5,18 +5,38 @@
 {% block form_elements %}
     {{ form.non_field_errors }}
     <div class="col-lg-4 col-12">
-        {{ form.nombre.label_tag }}
-        {{ form.nombre.errors }}
-        {{ form.nombre }}
+        {{ form.solicitud_servicio.label_tag }}
+        {{ form.solicitud_servicio.errors }}
+        {{ form.solicitud_servicio }}
     </div>
     <div class="col-lg-4 col-12 mt-lg-0 mt-2">
-        {{ form.simbolo.label_tag }}
-        {{ form.simbolo.errors }}
-        {{ form.simbolo }}
+        {{ form.fecha_entrega_prep_tec.label_tag }}
+        {{ form.fecha_entrega_prep_tec.errors }}
+        {{ form.fecha_entrega_prep_tec }}
     </div>
     <div class="col-lg-4 col-12 mt-lg-0 mt-2">
-        {{ form.activa.label_tag }}
-        {{ form.activa.errors }}
-        {{ form.activa }}
+        {{ form.fecha_terminacion.label_tag }}
+        {{ form.fecha_terminacion.errors }}
+        {{ form.fecha_terminacion }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.fecha_entregada.label_tag }}
+        {{ form.fecha_entregada.errors }}
+        {{ form.fecha_entregada }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.fecha_aprobacion.label_tag }}
+        {{ form.fecha_aprobacion.errors }}
+        {{ form.fecha_aprobacion }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.estado.label_tag }}
+        {{ form.estado.errors }}
+        {{ form.estado }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.observaciones.label_tag }}
+        {{ form.observaciones.errors }}
+        {{ form.observaciones }}
     </div>
 {% endblock %}
