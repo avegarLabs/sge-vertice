@@ -156,6 +156,12 @@
                     </a>
                 </li>
                 <li>
+                    <a class="{% if model_name == 'ofertas' %}active{% endif %}"
+                       href="{% url 'suplementos_list' %}">
+                        Suplementos
+                    </a>
+                </li>
+                <li>
                     <a class="{% if model_name == 'rol' %}active{% endif %}"
                        href="{% url 'rol_list' %}">
                         Roles

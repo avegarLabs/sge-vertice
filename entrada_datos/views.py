@@ -675,6 +675,41 @@ class ContratosDeleteView(SgeDeleteView):
     success_url = reverse_lazy('contratos_list')
 
 
+# Suplementos
+class SuplementosListView(SgeListView):
+    model = Suplementos
+    template_name = 'suplementos/list.html'
+    permission_required = 'entrada_datos.read_suplementos'
+
+
+class SuplementosCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_suplementos'
+    model = Suplementos
+    form_class = SuplementosForm
+    template_name = 'suplementos/create.html'
+    success_url = reverse_lazy('suplementos_create')
+
+
+class SuplementosUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_suplementos'
+    model = Suplementos
+    form_class = SuplementosForm
+    template_name = 'suplementos/create.html'
+    success_url = reverse_lazy('suplementos_list')
+
+
+class SuplementosDetailView(SgeDetailView):
+    model = Suplementos
+    template_name = 'suplementos/detail.html'
+    permission_required = 'entrada_datos.read_suplementos'
+
+
+class SuplementosDeleteView(SgeDeleteView):
+    model = Suplementos
+    permission_required = 'entrada_datos.delete_suplementos'
+    success_url = reverse_lazy('suplementos_list')
+
+
 
 
 

@@ -175,5 +175,12 @@ urlpatterns = [
         path('<int:pk>/eliminar/', views.ContratosDeleteView.as_view(), name='contratos_delete'),
         path('<int:pk>/', views.ContratosDetailView.as_view(), name='contratos_detail')
     ])),
+    path('suplementos/', include([
+        path('', views.SuplementosListView.as_view(), name='suplementos_list'),
+        path('agregar/', views.SuplementosCreateView.as_view(), name='suplementos_create'),
+        path('<int:pk>/actualizar/', views.SuplementosUpdateView.as_view(), name='suplementos_update'),
+        path('<int:pk>/eliminar/', views.SuplementosDeleteView.as_view(), name='suplementos_delete'),
+        path('<int:pk>/', views.SuplementosDetailView.as_view(), name='suplementos_detail')
+    ])),
 
 ]
