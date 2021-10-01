@@ -204,6 +204,7 @@ class SolicitudServicio(BaseUrls, models.Model):
     lleva_oferta = models.BooleanField(editable=True, default=False)
     para_contrato = models.BooleanField(editable=True, default=False)
     representado_por = models.CharField(max_length=100, blank=False, null=False)
+    representado_por_cargo = models.CharField(max_length=100, blank=False, null=False)
     segun_resolucion = models.CharField(max_length=100, blank=True, null=True)
     segun_acuerdo = models.CharField(max_length=100, blank=True, null=True)
     nombre_firma_contrato = models.CharField(max_length=100, blank=False, null=False)
