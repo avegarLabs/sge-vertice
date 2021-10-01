@@ -237,6 +237,9 @@ class SolicitudServicio(BaseUrls, models.Model):
     fecha_rechazo = models.DateField(blank=True, null=True)
     fecha_cancelacion = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        return '{} - {}'.format(self.consecutivo, self.servicio)
+
 
 class Ofertas(BaseUrls, models.Model):
     solicitud_servicio = models.ForeignKey(SolicitudServicio, on_delete=models.DO_NOTHING)
