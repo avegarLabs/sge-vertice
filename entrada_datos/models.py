@@ -1,7 +1,7 @@
 from django.db import models
 
 from rechum.models import BaseUrls
-from adm.models import Departamento
+from adm.models import Departamento, UnidadOrg
 
 
 class Inversionista(BaseUrls, models.Model):
@@ -194,4 +194,43 @@ class CuentaBancaria(BaseUrls, models.Model):
     registro_comercio = models.CharField(max_length=100, blank=False, null=False)
 
 
-
+class SolicitudServicio(BaseUrls, models.Model):
+    consecutivo = models.CharField(max_length=10, blank=False, null=False)
+    fecha_recepcion = models.DateField()
+    servicio = models.ForeignKey(Servicio, on_delete=models.DO_NOTHING)
+    etapa = models.ForeignKey(Etapa, on_delete=models.DO_NOTHING)
+    cliente = models.ForeignKey(Clientes, on_delete=models.DO_NOTHING)
+    unidad_org = models.ForeignKey(UnidadOrg, on_delete=models.DO_NOTHING)
+    lleva_oferta = models.BooleanField(editable=False, default=False)
+    para_contrato = models.BooleanField(editable=False, default=False)
+    representado_por = models.CharField(max_length=100, blank=False, null=False)
+    segun_resolucion = models.CharField(max_length=100, blank=True, null=True)
+    segun_acuerdo = models.CharField(max_length=100, blank=True, null=True)
+    nombre_firma_contrato = models.CharField(max_length=100, blank=False, null=False)
+    tipo_servicio = models.CharField(max_length=100, blank=False, null=False)
+    tipo_obras = models.CharField(max_length=100, blank=False, null=False)
+    servicio_ingenieria = models.CharField(max_length=100, blank=False, null=False)
+    otros = models.CharField(max_length=100, blank=False, null=False)
+    otros1 = models.CharField(max_length=100, blank=False, null=False)
+    descripcion = models.CharField(max_length=100, blank=False, null=False)
+    area_estudio = models.BooleanField(editable=False, default=False)
+    resp_organos_consulta = models.BooleanField(editable=False, default=False)
+    certif_micro = models.BooleanField(editable=False, default=False)
+    tarea_proyeccion = models.BooleanField(editable=False, default=False)
+    tarea_tecnica = models.BooleanField(editable=False, default=False)
+    info_digital = models.BooleanField(editable=False, default=False)
+    planos = models.BooleanField(editable=False, default=False)
+    licencia_construccion = models.BooleanField(editable=False, default=False)
+    licencia_ambiental = models.BooleanField(editable=False, default=False)
+    est_ing_ecologico = models.BooleanField(editable=False, default=False)
+    otros_documentos = models.CharField(max_length=100, blank=False, null=False)
+    estado = models.CharField(max_length=100, blank=False, null=False)
+    aprobado_por = models.CharField(max_length=100, blank=False, null=False)
+    orden_trabajo = models.CharField(max_length=100, blank=False, null=False)
+    observaciones = models.CharField(max_length=100, blank=False, null=False)
+    num_contrato = models.CharField(max_length=100, blank=False, null=False)
+    fecha_aprobacion = models.DateField()
+    fecha_paralizacion = models.DateField()
+    fecha_reanudacion = models.DateField()
+    fecha_rechazo = models.DateField()
+    fecha_cancelacion = models.DateField()

@@ -34,6 +34,26 @@ class InversionistaForm(forms.ModelForm):
 
 
 class OTForm(forms.ModelForm):
+
+    unidad = forms.ModelChoiceField(
+       queryset=UnidadOrg.objects.all(),
+       label=u'Unidad Organizacional:',
+       widget=ModelSelect2Widget(
+           model=UnidadOrg,
+           search_fields=['nombre__icontains']
+       )
+    )
+
+    area = forms.ModelChoiceField(
+       queryset=Departamento.objects.all(),
+       label=u'Área:',
+       widget=ModelSelect2Widget(
+           model=Departamento,
+           search_fields=['nombre__icontains'],
+           dependent_fields={'unidad': 'unidad'}
+       )
+    )
+
     class Meta:
         model = OT
         fields = '__all__'
