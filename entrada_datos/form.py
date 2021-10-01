@@ -230,3 +230,53 @@ class ClientesForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 
 
+class SolicitudServicioForm(forms.ModelForm):
+    class Meta:
+        model = SolicitudServicio
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(SolicitudServicioForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class OfertasForm(forms.ModelForm):
+    class Meta:
+        model = Ofertas
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(OfertasForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class ProyectosForm(forms.ModelForm):
+    class Meta:
+        model = Proyectos
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ProyectosForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+
+class ContratosForm(forms.ModelForm):
+    class Meta:
+        model = Contratos
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ContratosForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class SuplementosForm(forms.ModelForm):
+    class Meta:
+        model = Suplementos
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(SuplementosForm, self).__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
