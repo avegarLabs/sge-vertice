@@ -132,6 +132,30 @@
                     </a>
                 </li>
                 <li>
+                    <a class="{% if model_name == 'solicitudservicio' %}active{% endif %}"
+                       href="{% url 'solicitudservicio_list' %}">
+                        Solicitud de Servicio
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'ofertas' %}active{% endif %}"
+                       href="{% url 'ofertas_list' %}">
+                        Ofertas
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'ofertas' %}active{% endif %}"
+                       href="{% url 'proyectos_list' %}">
+                        Proyectos
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if model_name == 'ofertas' %}active{% endif %}"
+                       href="{% url 'contratos_list' %}">
+                        Contratos
+                    </a>
+                </li>
+                <li>
                     <a class="{% if model_name == 'rol' %}active{% endif %}"
                        href="{% url 'rol_list' %}">
                         Roles

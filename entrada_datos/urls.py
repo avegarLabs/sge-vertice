@@ -147,5 +147,33 @@ urlpatterns = [
         path('<int:pk>/eliminar/', views.RolDeleteView.as_view(), name='rol_delete'),
         path('<int:pk>/', views.RolDetailView.as_view(), name='rol_detail')
     ])),
+    path('solicitud-servicio/', include([
+        path('', views.SolicitudServicioListView.as_view(), name='solicitudservicio_list'),
+        path('agregar/', views.SolicitudServicioCreateView.as_view(), name='solicitudservicio_create'),
+        path('<int:pk>/actualizar/', views.SolicitudServicioUpdateView.as_view(), name='solicitudservicio_update'),
+        path('<int:pk>/eliminar/', views.SolicitudServicioDeleteView.as_view(), name='solicitudservicio_delete'),
+        path('<int:pk>/', views.SolicitudServicioDetailView.as_view(), name='solicitudservicio_detail')
+    ])),
+    path('ofertas/', include([
+        path('', views.OfertasListView.as_view(), name='ofertas_list'),
+        path('agregar/', views.OfertasCreateView.as_view(), name='ofertas_create'),
+        path('<int:pk>/actualizar/', views.OfertasUpdateView.as_view(), name='ofertas_update'),
+        path('<int:pk>/eliminar/', views.OfertasDeleteView.as_view(), name='ofertas_delete'),
+        path('<int:pk>/', views.OfertasDetailView.as_view(), name='ofertas_detail')
+    ])),
+    path('proyectos/', include([
+        path('', views.ProyectosListView.as_view(), name='proyectos_list'),
+        path('agregar/', views.ProyectosCreateView.as_view(), name='proyectos_create'),
+        path('<int:pk>/actualizar/', views.ProyectosUpdateView.as_view(), name='proyectos_update'),
+        path('<int:pk>/eliminar/', views.ProyectosDeleteView.as_view(), name='proyectos_delete'),
+        path('<int:pk>/', views.ProyectosDetailView.as_view(), name='proyectos_detail')
+    ])),
+    path('contratos/', include([
+        path('', views.ContratosListView.as_view(), name='contratos_list'),
+        path('agregar/', views.ContratosCreateView.as_view(), name='contratos_create'),
+        path('<int:pk>/actualizar/', views.ContratosUpdateView.as_view(), name='contratos_update'),
+        path('<int:pk>/eliminar/', views.ContratosDeleteView.as_view(), name='contratos_delete'),
+        path('<int:pk>/', views.ContratosDetailView.as_view(), name='contratos_detail')
+    ])),
 
 ]

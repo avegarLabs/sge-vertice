@@ -535,6 +535,144 @@ class ClientesDeleteView(SgeDeleteView):
     success_url = reverse_lazy('clientes_list')
 
 
+# Solicitud Servicio
+class SolicitudServicioListView(SgeListView):
+    model = SolicitudServicio
+    template_name = 'solicitud_servicio/list.html'
+    permission_required = 'entrada_datos.read_solicitudservicio'
+
+
+class SolicitudServicioCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_solicitudservicio'
+    model = SolicitudServicio
+    form_class = SolicitudServicioForm
+    template_name = 'solicitud_servicio/create.html'
+    success_url = reverse_lazy('solicitudservicio_create')
+
+
+class SolicitudServicioUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_solicitudservicio'
+    model = SolicitudServicio
+    form_class = SolicitudServicioForm
+    template_name = 'solicitud_servicio/create.html'
+    success_url = reverse_lazy('solicitudservicio_list')
+
+
+class SolicitudServicioDetailView(SgeDetailView):
+    model = SolicitudServicio
+    template_name = 'solicitud_servicio/detail.html'
+    permission_required = 'entrada_datos.read_solicitudservicio'
+
+
+class SolicitudServicioDeleteView(SgeDeleteView):
+    model = SolicitudServicio
+    permission_required = 'entrada_datos.delete_solicitudservicio'
+    success_url = reverse_lazy('solicitudservicio_list')
+
+
+# Ofertas
+class OfertasListView(SgeListView):
+    model = Ofertas
+    template_name = 'ofertas/list.html'
+    permission_required = 'entrada_datos.read_ofertas'
+
+
+class OfertasCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_ofertas'
+    model = Ofertas
+    form_class = OfertasForm
+    template_name = 'ofertas/create.html'
+    success_url = reverse_lazy('ofertas_create')
+
+
+class OfertasUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_ofertas'
+    model = Ofertas
+    form_class = OfertasForm
+    template_name = 'ofertas/create.html'
+    success_url = reverse_lazy('ofertas_list')
+
+
+class OfertasDetailView(SgeDetailView):
+    model = Ofertas
+    template_name = 'ofertas/detail.html'
+    permission_required = 'entrada_datos.read_ofertas'
+
+
+class OfertasDeleteView(SgeDeleteView):
+    model = Ofertas
+    permission_required = 'entrada_datos.delete_ofertas'
+    success_url = reverse_lazy('ofertas_list')
+
+
+# Proyectos
+class ProyectosListView(SgeListView):
+    model = Proyectos
+    template_name = 'proyectos/list.html'
+    permission_required = 'entrada_datos.read_proyectos'
+
+
+class ProyectosCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_proyectos'
+    model = Proyectos
+    form_class = ProyectosForm
+    template_name = 'proyectos/create.html'
+    success_url = reverse_lazy('proyectos_create')
+
+
+class ProyectosUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_proyectos'
+    model = Proyectos
+    form_class = ProyectosForm
+    template_name = 'proyectos/create.html'
+    success_url = reverse_lazy('proyectos_list')
+
+
+class ProyectosDetailView(SgeDetailView):
+    model = Proyectos
+    template_name = 'proyectos/detail.html'
+    permission_required = 'entrada_datos.read_proyectos'
+
+
+class ProyectosDeleteView(SgeDeleteView):
+    model = Proyectos
+    permission_required = 'entrada_datos.delete_proyectos'
+    success_url = reverse_lazy('proyectos_list')
+
+
+# Contratos
+class ContratosListView(SgeListView):
+    model = Contratos
+    template_name = 'contratos/list.html'
+    permission_required = 'entrada_datos.read_contratos'
+
+
+class ContratosCreateView(SgeCreateView):
+    permission_required = 'entrada_datos.add_contratos'
+    model = Contratos
+    form_class = ContratosForm
+    template_name = 'contratos/create.html'
+    success_url = reverse_lazy('contratos_create')
+
+
+class ContratosUpdateView(SgeUpdateView):
+    permission_required = 'entrada_datos.change_contratos'
+    model = Contratos
+    form_class = ContratosForm
+    template_name = 'contratos/create.html'
+    success_url = reverse_lazy('contratos_list')
+
+
+class ContratosDetailView(SgeDetailView):
+    model = Contratos
+    template_name = 'contratos/detail.html'
+    permission_required = 'entrada_datos.read_contratos'
+
+
+class ContratosDeleteView(SgeDeleteView):
+    model = Contratos
+    permission_required = 'entrada_datos.delete_contratos'
+    success_url = reverse_lazy('contratos_list')
 
 
 
