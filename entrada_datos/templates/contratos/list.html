@@ -6,16 +6,28 @@
 {% endblock %}
 
 {% block table_header %}
-    <th>Nombre</th>
-    <th>Símbolo</th>
-    <th>Activa</th>
+    <th>Servicio</th>
+    <th>Solicitud de Servicio</th>
+    <th>Orden de Trabajo</th>
+    <th>Num. Contrato</th>
+    <th>Fecha de Terminación</th>
+    <th>Fecha de Entregada</th>
+    <th>Fecha de Aprobación</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
 
 {% endblock %}
 
 {% block table_body %}
-    <td style="width: 100px">{{ item.nombre }}</td>
-    <td>{{ item.simbolo }}</td>
-    <td>{{ item.activa }}</td>
+    <td style="width: 100px">{{ item.servicio }}</td>
+    <td>{{ item.solicitud_servicio }}</td>
+    <td>{{ item.orden_trabajo }}</td>
+    <td style="width: 100px">{{ item.servicio }}</td>
+    <td>{{ item.solicitud_servicio }}</td>
+    <td>{{ item.orden_trabajo }}</td>
+    <td style="width: 100px">{{ item.servicio }}</td>
+    <td>{{ item.solicitud_servicio }}</td>
+    <td>{{ item.orden_trabajo }}</td>
     {% submit_row_extra_buttons %}
 {% endblock %}
 
