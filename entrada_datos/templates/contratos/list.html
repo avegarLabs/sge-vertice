@@ -22,17 +22,23 @@
     <td style="width: 100px">{{ item.servicio }}</td>
     <td>{{ item.solicitud_servicio }}</td>
     <td>{{ item.orden_trabajo }}</td>
-    <td style="width: 100px">{{ item.servicio }}</td>
-    <td>{{ item.solicitud_servicio }}</td>
-    <td>{{ item.orden_trabajo }}</td>
-    <td style="width: 100px">{{ item.servicio }}</td>
-    <td>{{ item.solicitud_servicio }}</td>
-    <td>{{ item.orden_trabajo }}</td>
-    {% submit_row_extra_buttons %}
+    <td style="width: 100px">{{ item.num_contrato }}</td>
+    <td>{{ item.fecha_terminacion }}</td>
+    <td style="width: 100px">{{ item.fecha_entregada }}</td>
+    <td>{{ item.fecha_aprobacion }}</td>
+    <td>{{ item.estado }}</td>
+    <td>{{ item.observaciones }}</td>
+    {% submit_row %}
 {% endblock %}
 
 {% block table_foot %}
-    <th>Nombre</th>
-    <th>Simbolo</th>
-    <th>Activa</th>
+    <th>Servicio</th>
+    <th>Solicitud de Servicio</th>
+    <th>Orden de Trabajo</th>
+    <th>Num. Contrato</th>
+    <th>Fecha de Terminación</th>
+    <th>Fecha de Entregada</th>
+    <th>Fecha de Aprobación</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
 {% endblock %}

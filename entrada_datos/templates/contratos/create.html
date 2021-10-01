@@ -15,6 +15,11 @@
         {{ form.solicitud_servicio }}
     </div>
     <div class="col-lg-4 col-12 mt-lg-0 mt-2">
+        {{ form.num_contrato.label_tag }}
+        {{ form.num_contrato.errors }}
+        {{ form.num_contrato }}
+    </div>
+    <div class="col-lg-4 col-12 mt-lg-0 mt-2">
         {{ form.orden_trabajo.label_tag }}
         {{ form.orden_trabajo.errors }}
         {{ form.orden_trabajo }}
