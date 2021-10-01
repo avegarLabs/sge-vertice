@@ -198,7 +198,7 @@ class SolicitudServicio(BaseUrls, models.Model):
     consecutivo = models.CharField(max_length=10, blank=False, null=False)
     fecha_recepcion = models.DateField()
     servicio = models.CharField(max_length=100, blank=False, null=False)
-    etapa = models.ForeignKey(Etapa, on_delete=models.DO_NOTHING)
+    etapa = models.ForeignKey(Etapa, on_delete=models.DO_NOTHING, blank=True, null=True)
     cliente = models.ForeignKey(Clientes, on_delete=models.DO_NOTHING)
     unidad_org = models.ForeignKey(UnidadOrg, on_delete=models.DO_NOTHING)
     lleva_oferta = models.BooleanField(editable=True, default=False)
