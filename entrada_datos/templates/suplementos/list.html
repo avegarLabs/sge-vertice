@@ -1,0 +1,44 @@
+{% extends 'layouts/_base_list_datatable.html' %}
+{% load sge_url sge_perms sge_inclusion %}
+
+{% block delete_error_message %}
+    Imposible eliminar Moneda porque esta asociada a una o varias Cuentas Bancarias
+{% endblock %}
+
+{% block table_header %}
+    <th>Servicio</th>
+    <th>Solicitud de Servicio</th>
+    <th>Orden de Trabajo</th>
+    <th>Num. Contrato</th>
+    <th>Fecha de Terminación</th>
+    <th>Fecha de Entregada</th>
+    <th>Fecha de Aprobación</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
+
+{% endblock %}
+
+{% block table_body %}
+    <td style="width: 100px">{{ item.servicio }}</td>
+    <td>{{ item.solicitud_servicio }}</td>
+    <td>{{ item.orden_trabajo }}</td>
+    <td style="width: 100px">{{ item.num_contrato }}</td>
+    <td>{{ item.fecha_terminacion }}</td>
+    <td style="width: 100px">{{ item.fecha_entregada }}</td>
+    <td>{{ item.fecha_aprobacion }}</td>
+    <td>{{ item.estado }}</td>
+    <td>{{ item.observaciones }}</td>
+    {% submit_row %}
+{% endblock %}
+
+{% block table_foot %}
+    <th>Servicio</th>
+    <th>Solicitud de Servicio</th>
+    <th>Orden de Trabajo</th>
+    <th>Num. Contrato</th>
+    <th>Fecha de Terminación</th>
+    <th>Fecha de Entregada</th>
+    <th>Fecha de Aprobación</th>
+    <th>Estado</th>
+    <th>Observaciones</th>
+{% endblock %}
