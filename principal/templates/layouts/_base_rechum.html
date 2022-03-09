@@ -12,7 +12,7 @@
                data-toggle="collapse"
                aria-expanded="{% if request.current_app == 'adm' %}true{% else %}false{% endif %}">
                 <i class="fa fa-gear"></i>
-                Administración
+                Estructuras
             </a>
             <ul class="collapse list-unstyled {% if request.current_app == 'adm' %}show{% endif %}"
                 id="submenuAdministracion">
@@ -31,7 +31,7 @@
                 <li>
                     <a class="{% if model_name == 'departamento' %}active{% endif %}"
                        href="{% url 'departamento_list' %}">
-                        Departamento
+                        Departamentos y Grupos
                     </a>
                 </li>
                 <li>
