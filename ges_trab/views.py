@@ -291,7 +291,7 @@ def adicionar_trabajador_inline(request, trabajador_id=None):
             escala_salarial = (form.cleaned_data['escala_salarial_ref'])
             categoria = (form.cleaned_data['categoria'])
             if not j_laboral:
-                s_escala = trabajador.escala_salarial_ref.salario_escala
+                s_escala = trabajador.escala_salarial_ref.salario_escala_53
                 trabajador.salario_escala_ref = s_escala
                 trabajador.salario_total_reforma = s_escala + sal_plus + trabajador.sal_cat_cient
             else:
@@ -1861,7 +1861,7 @@ def _request_empresarial():
         mujer_cuad = Alta.objects.filter(escala_salarial_ref_id=item.id, categoria='C', sexo='F').count()
         total_grupo = Alta.objects.filter(escala_salarial_ref_id=item.id).count()
         mujeres_grupo = Alta.objects.filter(escala_salarial_ref_id=item.id, sexo='F').count()
-        objects_list.append(Empresarial(grupo=item.grupo, salario_esc=item.salario_escala, operar=operar,
+        objects_list.append(Empresarial(grupo=item.grupo, salario_esc=item.salario_escala_53, operar=operar,
                                         mujer_op=mujer_op, serv=serv, mujer_serv=mujer_serv, admin=admin,
                                         mujer_adm=mujer_adm, tecnic=tecnic, mujer_tec=mujer_tec, cuadro=cuadro,
                                         mujer_cuad=mujer_cuad, total_grupo=total_grupo, mujeres=mujeres_grupo))
