@@ -29,3 +29,32 @@
         {{ form.cant_plazas }}
     </div>
 {% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $('#id_unidad').on('change', select_departamentos);
+    $('#id_unidad').on('ready', select_departamentos);
+
+    function select_departamentos() {
+        var id_seleccionado = this.value | 0;
+        $('#id_departamento').html('');
+
+        $.get(`{% url 'gestionarPlantilla' %}Dpto_por_unidad/${id_seleccionado}/`, function (data) {
+            var departamentos = data[0].result;
+            if (departamentos.length !== 0) {
+                $('#id_departamento').append(`<option>---------</option>`);
+                for (var departamento in departamentos) {
+                    var index_tab = '';
+                    if (departamentos[departamento].dirige_nombre) {index_tab = ' - '}
+                        $('#id_departamento').append(
+                            `<option value="${departamentos[departamento].id}">
+                                ${index_tab} ${departamentos[departamento].nombre}
+                             </option>`
+                        );
+                }
+            } else {
+                $('#id_departamento').append(`<option>No hay departamentos para mostrar.</option>`);
+            }
+        });
+    }
+</script>
+{% endblock javascript %}

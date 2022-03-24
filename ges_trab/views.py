@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 
-from plantilla.models import Cargo
+from plantilla.models import Cargo, Plantilla
 from rechum.utils import generate_pisa_report
 from rechum.views import SgeListView, SgeCreateView, SgeDetailView, SgeUpdateView, SgeDeleteView, TemplateView
 from adm.models import EscalaSalarial, Especialidad, EscalaSalarialReforma
@@ -365,6 +365,8 @@ def adicionar_trabajador_inline(request, trabajador_id=None):
             elif trabajador.escala_salarial_ref_id == 16 and trabajador.unidad_org_id == 2:
                 trabajador.escala_salarial_id = 11
 
+            trabajador.fecha_baja = None
+            trabajador.motivo_baja = None
             form.save()
             inline.save()
             if request.POST.get("guardar"):
@@ -626,6 +628,17 @@ def cargo_por_dpto(request, pk):
     cargos = Cargo.objects.filter(plantilla__departamento_id=pk).annotate(
         plantilla_disp=Sum('plantilla__disponibles')).exclude(plantilla_disp=0).values('id', 'nombre')
     response = [{"success": 1, "result": list(cargos)}]
+    return HttpResponse(json.dumps(response), content_type='application/json')
+
+def trabajador_por_ci(request, ci):
+    try:     
+        trabajador = Trabajador.objects.get(ci=ci)
+        id = trabajador.id 
+        success = 1
+    except:
+        id = 0
+        success = 0   
+    response = [{"success": success, "result": id}]
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 

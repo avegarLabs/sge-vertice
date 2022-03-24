@@ -1,14 +1,16 @@
 from django.db import models
 
+from ges_trab.models import Trabajador
 from rechum.models import BaseUrls
-from adm.models import UnidadOrg, Departamento, Cargo, EscalaSalarial
+from adm.models import Departamento, Cargo, EscalaSalarial
+
 
 
 class Plantilla(BaseUrls, models.Model):
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
     cargo = models.ForeignKey(Cargo, on_delete=models.CASCADE, related_name='plantilla')
     escala_salarial = models.ForeignKey(EscalaSalarial, on_delete=models.SET_NULL, null=True)
-    cant_plazas = models.PositiveIntegerField()
+    cant_plazas = models.PositiveIntegerField(verbose_name="cantidad de plazas")
     disponibles = models.PositiveIntegerField(null=True, blank=True, editable=False)
 
     @property
@@ -22,6 +24,11 @@ class Plantilla(BaseUrls, models.Model):
              update_fields=None):
         if not self.id:
             self.disponibles = self.cant_plazas
+        else:
+            cantidad_plazas_cubiertas = Trabajador.objects.filter(
+            cargo_id = self.cargo, departamento_id = self.departamento).exclude(fecha_baja__isnull=False).count()
+            self.disponibles = self.cant_plazas - cantidad_plazas_cubiertas
+            
         return super(Plantilla, self).save(force_insert, force_update, using, update_fields)
 
     class Meta:

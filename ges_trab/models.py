@@ -8,7 +8,6 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
 from adm import models as adm
-from plantilla.models import Plantilla
 from rechum.models import BaseUrls
 from rechum.validators import *
 

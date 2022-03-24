@@ -16,3 +16,4 @@ __pycache__/
 #/capacitacion/migrations/*
 #/capacitacion/fixtures/*
 /rechum/settings.py
+/.vscode/*
