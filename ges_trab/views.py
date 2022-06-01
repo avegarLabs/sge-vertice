@@ -234,6 +234,7 @@ def gestionar_bajatrabajador(request):
 
 @permission_required('ges_trab.add_trabajador', login_url='home_principal')
 def adicionar_trabajador_inline(request, trabajador_id=None):
+    ID_UGDD = 2
     import datetime as dt_base
     globals()['check'] = False
     if trabajador_id:
@@ -285,13 +286,17 @@ def adicionar_trabajador_inline(request, trabajador_id=None):
                 trabajador.sal_cat_cient = 0
             # Esto es para el salario total
             salario_escala = (form.cleaned_data['salario_escala_ref'])
+          
             sal_plus = (form.cleaned_data['sal_plus'])
             sal_cond_anor = (form.cleaned_data['sal_cond_anor'])
             j_laboral = (form.cleaned_data['j_laboral'])
             escala_salarial = (form.cleaned_data['escala_salarial_ref'])
             categoria = (form.cleaned_data['categoria'])
             if not j_laboral:
-                s_escala = trabajador.escala_salarial_ref.salario_escala_53
+                if trabajador.unidad_org_id == ID_UGDD:
+                    s_escala = trabajador.escala_salarial_ref.salario_escala
+                else:                    
+                    s_escala = trabajador.escala_salarial_ref.salario_escala_53
                 trabajador.salario_escala_ref = s_escala
                 trabajador.salario_total_reforma = s_escala + sal_plus + trabajador.sal_cat_cient
             else:
@@ -300,6 +305,7 @@ def adicionar_trabajador_inline(request, trabajador_id=None):
 
                 salario_total = ((salario_escala / Decimal(
                     190.60)) * 208) + sal_plus + trabajador.sal_cat_cient
+             
                 trabajador.salario_total_reforma = round(salario_total, 2)
             # Esto es para registrar el movimiento
             if trabajador_id:
@@ -608,9 +614,14 @@ def daralta(request, pk):
 # Ajax queries
 ###
 @permission_required('ges_trab.change_trabajador', login_url='home_principal')
-def salarioescala_por_escalasarial(request, pk):
+def salarioescala_por_escalasarial(request, pk, id_unidad = 0):
+    ID_UGDD = 2
     escalasalarialref = EscalaSalarialReforma.objects.filter(pk=pk).get()
-    datos = [{'salario_escala_ref': str(escalasalarialref.salario_escala_53),
+    if id_unidad == ID_UGDD:
+        salario_escala = escalasalarialref.salario_escala
+    else: 
+        salario_escala = escalasalarialref.salario_escala_53
+    datos = [{'salario_escala_ref': str(salario_escala),
               'id': escalasalarialref.id}]
     response = [{"success": 1, "result": datos}]
     return HttpResponse(json.dumps(response), content_type='application/json')
@@ -888,7 +899,7 @@ class MovimientoDeleteView(SgeDeleteView):
 def exportar_movimiento_nomina(request, pk):
     movimiento = Movimiento.objects.get(pk=pk)
     directorrh = Alta.objects.filter(cargo_id=179).get()
-    registrado_por = Alta.objects.filter(cargo_id=27, departamento_id=10, org_plantilla=0).get()
+    registrado_por = Alta.objects.filter(cargo_id=29, departamento_id=10, org_plantilla=0).get()
     template_path = 'Movimiento_Nomina.html'
     context = {'trabajador': movimiento.trabajador, 'movimiento': movimiento,
                'elaborado': request.user, 'director': directorrh,
@@ -902,7 +913,7 @@ def exportar_movimiento_nomina(request, pk):
 def exportar_movimiento_nomina_alta(request, pk):
     trabajador = Alta.objects.get(pk=pk)
     directorrh = Alta.objects.filter(cargo_id=179).get()
-    registrado_por = Alta.objects.filter(cargo_id=27, departamento_id=10, org_plantilla=0).get()
+    registrado_por = Alta.objects.filter(cargo_id=29, departamento_id=10, org_plantilla=0).get()
     template_path = 'Movimiento_Nomina_Alta.html'
     context = {'trabajador': trabajador, 'elaborado': request.user,
                'director': directorrh, 'dia': trabajador.fecha_alta.day,
