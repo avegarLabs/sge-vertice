@@ -337,6 +337,11 @@
                             {{ form.fecha_ingreso }}
                             {{ form.fecha_ingreso.errors }}
                         </div>
+                        <div class="col-lg-3 col-6">
+                            {{ form.resolucion.label_tag }}
+                            {{ form.resolucion }}
+                            {{ form.resolucion.errors }}
+                        </div>
                         <div class="col-lg-6 col-12">
                             {{ form.motivo_alta.label_tag }}
                             {{ form.motivo_alta }}
@@ -815,21 +820,46 @@
         // Datos Laborales OnChange
         $('#id_escala_salarial_ref').on('change', function () {
 
-            var id_seleccionado = this.value;
+            var id_seleccionado = this.value | 0;
            
-            var unidad = $("#id_unidad_org :selected").val()          
+            var codigo_seleccionado = $("#id_resolucion :selected").val(); 
+            if(!codigo_seleccionado){
+                codigo_seleccionado = '00'
+            }         
             $("#id_salario_escala_ref").html("");
-            $.get(`{% url 'ges_trab_home' %}select_salarioescala/${id_seleccionado}/${unidad}/`,
+            $.get(`{% url 'ges_trab_home' %}select_salarioescala_resolucion/${id_seleccionado}/${codigo_seleccionado}`,
                 function (data) {
                     var datos = data[0].result;                   
                     if (datos.length !== 0) {
-                        for (var salario_escala_ref in datos) {
-                            console.info(salario_escala_ref);
-                                 $('#id_salario_escala_ref').val(datos[salario_escala_ref].salario_escala_ref)
-                                 $('#id_salario_escala_ref').val(parseInt($('#id_salario_escala_ref').val()))
-
-                            }
+                        for (var salario_escala_ref in datos) {                            
+                            $('#id_salario_escala_ref').val(datos[salario_escala_ref].salario_escala_ref)
+                            $('#id_salario_escala_ref').val(parseInt($('#id_salario_escala_ref').val()))
                         }
+                    }
+                    else {
+                        $('#id_salario_escala_ref').append('No hay nigun salario asociado');
+                    }
+            });
+        });
+
+        $('#id_resolucion').on('change', function () {
+
+            var codigo_seleccionado = '00'
+            if(this.value){
+                codigo_seleccionado = this.value; 
+            }          
+            var id_escala = $("#id_escala_salarial_ref :selected").val() | 0  
+           
+            $("#id_salario_escala_ref").html("");
+            $.get(`{% url 'ges_trab_home' %}select_salarioescala_resolucion/${id_escala}/${codigo_seleccionado}/`,
+                function (data) {
+                    var datos = data[0].result;                   
+                    if (datos.length !== 0) {
+                        for (var salario_escala_ref in datos) {                           
+                            $('#id_salario_escala_ref').val(datos[salario_escala_ref].salario_escala_ref)
+                            $('#id_salario_escala_ref').val(parseInt($('#id_salario_escala_ref').val()))
+                        }
+                    }
                     else {
                         $('#id_salario_escala_ref').append('No hay nigun salario asociado');
                     }

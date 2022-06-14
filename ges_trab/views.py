@@ -46,6 +46,7 @@ MOTIVOS_BAJA = [
 ]
 
 
+
 class TrabListView(SgeListView):
     permission_required = 'ges_trab.read_trabajador'
     model = Trabajador
@@ -234,7 +235,10 @@ def gestionar_bajatrabajador(request):
 
 @permission_required('ges_trab.add_trabajador', login_url='home_principal')
 def adicionar_trabajador_inline(request, trabajador_id=None):
-    ID_UGDD = 2
+   
+    CODIGO_RESOLUCION_19 = '01'
+    CODIGO_RESOLUCION_53 = '02'
+    
     import datetime as dt_base
     globals()['check'] = False
     if trabajador_id:
@@ -293,10 +297,12 @@ def adicionar_trabajador_inline(request, trabajador_id=None):
             escala_salarial = (form.cleaned_data['escala_salarial_ref'])
             categoria = (form.cleaned_data['categoria'])
             if not j_laboral:
-                if trabajador.unidad_org_id == ID_UGDD:
+                s_escala = 0.00
+                if trabajador.resolucion == CODIGO_RESOLUCION_19:
                     s_escala = trabajador.escala_salarial_ref.salario_escala
-                else:                    
+                elif trabajador.resolucion == CODIGO_RESOLUCION_53:                    
                     s_escala = trabajador.escala_salarial_ref.salario_escala_53
+                    
                 trabajador.salario_escala_ref = s_escala
                 trabajador.salario_total_reforma = s_escala + sal_plus + trabajador.sal_cat_cient
             else:
@@ -614,18 +620,35 @@ def daralta(request, pk):
 # Ajax queries
 ###
 @permission_required('ges_trab.change_trabajador', login_url='home_principal')
-def salarioescala_por_escalasarial(request, pk, id_unidad = 0):
-    ID_UGDD = 2
-    escalasalarialref = EscalaSalarialReforma.objects.filter(pk=pk).get()
-    if id_unidad == ID_UGDD:
-        salario_escala = escalasalarialref.salario_escala
-    else: 
-        salario_escala = escalasalarialref.salario_escala_53
+def salarioescala_por_escalasarial(request, pk):
+    escalasalarialref = EscalaSalarialReforma.objects.filter(pk=pk).get()   
+    salario_escala = escalasalarialref.salario_escala_53
+    
     datos = [{'salario_escala_ref': str(salario_escala),
               'id': escalasalarialref.id}]
     response = [{"success": 1, "result": datos}]
     return HttpResponse(json.dumps(response), content_type='application/json')
 
+@permission_required('ges_trab.change_trabajador', login_url='home_principal')
+def salarioescala_por_resolucion(request, pk, codigo_resolucion):   
+    CODIGO_RESOLUCION_19 = '01'
+    CODIGO_RESOLUCION_53 = '02'
+    print(pk)
+    print(codigo_resolucion)
+    escalasalarialref = EscalaSalarialReforma.objects.filter(pk=pk).get() 
+    salario_escala = 0.00
+    if codigo_resolucion == CODIGO_RESOLUCION_53:  
+        salario_escala = escalasalarialref.salario_escala_53
+    elif codigo_resolucion == CODIGO_RESOLUCION_19:
+        salario_escala = escalasalarialref.salario_escala
+    
+    datos = [
+        {'salario_escala_ref': str(salario_escala),
+        'id': escalasalarialref.id}
+    ]
+    
+    response = [{"success": 1, "result": datos}]
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 @permission_required('ges_trab.change_trabajador', login_url='home_principal')
 def cargos_disponibles(request, departamento_id):

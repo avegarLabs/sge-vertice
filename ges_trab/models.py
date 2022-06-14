@@ -198,6 +198,19 @@ class Trabajador(BaseUrls):
         ('17', 'Otras bajas por fluctuación')
     )
     motivo_baja = models.CharField(max_length=2, choices=MOTIVOS_BAJA, null=True, blank=True)
+    
+    
+    RESOLUCION = (
+        ('01', 'RESOLUCIÓN 19'),
+        ('02', 'RESOLUCIÓN 53')
+    )
+    
+    resolucion = models.CharField(
+        'resolución',
+        max_length=2,
+        choices=RESOLUCION 
+    )
+    
     history = auditlog_models.AuditlogHistoryField()
     objects = models.Manager()
     personas = PersonasManager()
