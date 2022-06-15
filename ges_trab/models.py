@@ -201,7 +201,7 @@ class Trabajador(BaseUrls):
     
     
     RESOLUCION = (
-        ('01', 'RESOLUCIÓN 19'),
+        ('01', 'RESOLUCIÓN 29'),
         ('02', 'RESOLUCIÓN 53')
     )
     

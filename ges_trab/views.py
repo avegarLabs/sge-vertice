@@ -633,8 +633,7 @@ def salarioescala_por_escalasarial(request, pk):
 def salarioescala_por_resolucion(request, pk, codigo_resolucion):   
     CODIGO_RESOLUCION_19 = '01'
     CODIGO_RESOLUCION_53 = '02'
-    print(pk)
-    print(codigo_resolucion)
+    
     escalasalarialref = EscalaSalarialReforma.objects.filter(pk=pk).get() 
     salario_escala = 0.00
     if codigo_resolucion == CODIGO_RESOLUCION_53:  
