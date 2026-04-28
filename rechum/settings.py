@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'prenomina15',
     'principal',
     'parte_tiempo',
-    'productionApi'
     #'corsheaders'
 ]
 
