@@ -1,0 +1,28 @@
+# Asegura que los scripts shell mantengan LF dentro del contenedor Linux,
+# aunque el repositorio se clone en Windows con autocrlf activado.
+*.sh         text eol=lf
+docker/**    text eol=lf
+Dockerfile   text eol=lf
+entrypoint.* text eol=lf
+
+# Defaults razonables
+*.py         text
+*.html       text
+*.css        text
+*.js         text
+*.md         text
+*.txt        text
+*.yml        text
+*.yaml       text
+
+# Binarios — no aplicar conversión de fin de línea
+*.png        binary
+*.jpg        binary
+*.jpeg       binary
+*.gif        binary
+*.ico        binary
+*.woff       binary
+*.woff2      binary
+*.ttf        binary
+*.eot        binary
+*.pdf        binary

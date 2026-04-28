@@ -1,0 +1,42 @@
+# Control de versiones / IDE
+.git
+.gitignore
+.gitattributes
+.idea/
+.vscode/
+
+# Entornos virtuales locales
+venv/
+.venv/
+env/
+
+# Cachés Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Configuración local (NUNCA copiar secretos al image)
+.env
+.env.local
+.env.*.local
+
+# Composición / runtime artifacts
+docker-compose*.yml
+Dockerfile.*
+*.log
+*.sqlite3
+
+# Salvas / artefactos del proyecto que no deben ir en la imagen
+rechum/settings.py.save
+staticfiles/
+media/
+
+# Archivos OS
+Thumbs.db
+.DS_Store
