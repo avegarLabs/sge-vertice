@@ -1,18 +1,41 @@
-django-auditlog==0.4.7
+# =====================================================================
+# sge-vertice — runtime dependencies (Python 3.7 / Django 2.0)
+# =====================================================================
+
+# ---- Core framework -------------------------------------------------
 django==2.0.2
+django-auditlog==0.4.7
 django-filter==2.0.0
-django-nose==1.4.6
 django-widget-tweaks==1.4.3
+django-highcharts==0.1.7
+
+# ---- App-level deps imported in code (previously missing) -----------
+django-decorator-include==2.0
+django-select2==6.3.1
+python-dateutil==2.8.2
+
+# ---- Database driver ------------------------------------------------
+psycopg2==2.7.7
+
+# ---- Reporting / PDF ------------------------------------------------
+Pillow==6.2.0
+PyPDF2==1.26.0
+reportlab==3.5.28
+xhtml2pdf==0.2.3
+# pisa==3.0.33  # DEPRECATED legacy package (Py2-only, 2010). The `pisa`
+#               # symbol used in the code is `from xhtml2pdf import pisa`,
+#               # a submodule of xhtml2pdf — no separate package needed.
+
+# ---- Misc utilities -------------------------------------------------
 html5lib==1.0.1
 jdcal==1.4
-nose==1.3.7
-Pillow==6.2.0
-pisa==3.0.33
-psycopg2==2.7.7
-PyPDF2==1.26.0
 pytz==2018.9
-reportlab==3.5.28
 six==1.12.0
 webencodings==0.5.1
-xhtml2pdf==0.2.3
-django-highcharts==0.1.7
+
+# ---- Production WSGI server ----------------------------------------
+gunicorn==20.1.0
+
+# ---- Testing (kept for compatibility with existing test runner) ----
+django-nose==1.4.6
+nose==1.3.7
