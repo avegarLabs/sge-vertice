@@ -15,5 +15,23 @@ __pycache__/
 #/subsidio/migrations/*
 #/capacitacion/migrations/*
 #/capacitacion/fixtures/*
-/rechum/settings.py
 /.vscode/*
+
+# Local environment overrides (NEVER commit real secrets)
+.env
+.env.local
+.env.*.local
+
+# Python build/runtime artifacts
+*.pyc
+/staticfiles/
+/media/
+
+# Backup file dejado por editores (no debe formar parte del repo)
+/rechum/settings.py.save
+
+# Dumps SQL — no versionar por defecto (pueden ser grandes / contener PII).
+# Para versionar uno pequeño y no sensible: `git add -f db/initdb/<file>.sql`
+db/initdb/*.sql
+db/initdb/*.sql.gz
+db/initdb/*.sql.xz

@@ -18,16 +18,23 @@ from django.urls import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
+# Settings driven by environment variables (see .env.example).
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b-885fkbpc__698+o%j8j24m0cp812c-$cp6kfy6ec7*r38a(z'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'dev-insecure-key-CHANGE-ME-in-production',
+)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '0') == '1'
 
-ALLOWED_HOSTS = ['sge.vertice.com.cu', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.environ.get(
+        'DJANGO_ALLOWED_HOSTS',
+        'localhost,127.0.0.1',
+    ).split(',')
+    if h.strip()
+]
 
 
 # Application definition
@@ -56,7 +63,9 @@ INSTALLED_APPS = [
     'entrada_datos',
     'prenomina15',
     'principal',
-    'parte_tiempo'
+    'parte_tiempo',
+    'productionApi'
+    #'corsheaders'
 ]
 
 
@@ -64,6 +73,7 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,16 +116,11 @@ WSGI_APPLICATION = 'rechum.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rechum',
-        # 'NAME': 'sge_gemm',
-        #'HOST': '192.168.1.155',
-        #'USER': 'sge.vertice',
-        #'PASSWORD': 'Ve2020*',
-        #'PORT': '2345'    
-        'HOST': 'localhost',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'PORT': '5432'               
+        'NAME': os.environ.get('DB_NAME', 'rechum'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -148,9 +153,9 @@ SELECT2_I18N_PATH = 'plugins/select2/i18n'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE', 'es-es')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 
 USE_I18N = True
 
@@ -166,7 +171,40 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/home_principal'
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'adm/static/media/')
-MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'adm/static/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.environ.get(
+    'DJANGO_MEDIA_ROOT',
+    os.path.join(BASE_DIR, 'media'),
+)
+
+STATIC_ROOT = os.environ.get(
+    'DJANGO_STATIC_ROOT',
+    os.path.join(BASE_DIR, 'staticfiles'),
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ORIGINS = [
+    "http://192.168.1.78:4200"
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'autorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
