@@ -65,6 +65,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --no-index --find-links /wheels -r requirements.txt && \
     rm -rf /wheels
 
+# django-highcharts 0.1.7 (unmaintained) imports `django.core.urlresolvers`,
+# which was removed in Django 2.0. The `reverse` symbol is unused in that
+# file, so dropping the import is enough to make the package load.
+RUN sed -i '/from django\.core\.urlresolvers import reverse/d' \
+    /usr/local/lib/python3.7/site-packages/highcharts/templatetags/highcharts_tags.py
+
 # Código fuente al final para maximizar el cache de capas.
 COPY --chown=app:app . /app
 
